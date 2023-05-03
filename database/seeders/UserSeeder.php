@@ -21,7 +21,6 @@ class UserSeeder extends Seeder
                 'username'=>'admin',
                 'email' => 'admin@example.org',
                 'password' => Hash::make('1234'),
-                'direction'=>'Dirección',
                 'email_verified_at' => Carbon::now(),
             ])
             ->each(function ($user) {

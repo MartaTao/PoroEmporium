@@ -43,6 +43,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'users_avatar' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/avatars/users/'),
+            'url' => env('APP_URL').'/storage/avatars/users',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',
