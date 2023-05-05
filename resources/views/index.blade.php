@@ -31,41 +31,7 @@
                     </li>
                 </ul>
             </div>
-            <!--Buscador-->
-            <form action="#">
-                @csrf
-                <div class="grid grid-cols-12">
-                    <div class="relative z-0 w-full mb-6 group">
-                        <select id="categoria" name="categoria" autocomplete="role-name"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:bg-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-                            <option class="dark:text-white" value="categoria">Categorías</option>
-                            <option class="dark:text-white" value="sudaderas">Sudaderas</option>
-                            <option class="dark:text-white" value="toallas">Toallas</option>
-                            <option class="dark:text-white" value="camisetas">Camisetas</option>
-                        </select>
-                    </div>
-                    <div class="relative z-0 w-full mb-6 group col-span-10">
-                        <input type="search" name="buscador" id="floating_user_search"
-                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                            placeholder=" " />
-                        <label for="floating_user_search"
-                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Search
-                            by email
-                        </label>
-                    </div>
-                    <div class="items-center justify-center flex">
-                        <button type="submit"
-                            class="p-2.5 ml-2 text-sm font-medium text-whitefocus:outline-none dark:text-white">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                            <span class="sr-only">Search</span>
-                        </button>
-                    </div>
-                </div>
-            </form>
+
             <div id="myTabContent">
                 <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel"
                     aria-labelledby="profile-tab">

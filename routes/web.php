@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Index\IndexController;
+use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserProfileController\UserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +23,7 @@ Route::get('/', function () {
     return view('index');
 });
 Route::resource('/register', RegisteredUserController::class);
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::resource('/', IndexController::class);
 
 Route::middleware('auth')->group(function () {
     Route::resource('/profile', UserProfileController::class);
@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/configuration/storePass', [ConfigurationController::class, 'storePass'])->name('configuration.storePass');
     Route::post('/configuration/storeEmail', [ConfigurationController::class, 'storeEmail'])->name('configuration.storeEmail');
 });
+Route::resource('/product',ProductController::class);
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('/admin', AdminController::class);
 });

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorie\Categorie;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -13,18 +14,23 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->categoria != 'categoria') {
+        if ($request->categoria != 'Categoria') {
             if($request->buscador!=''){
-                $products= Product::where('categoria',$request->categoria)->where('name', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
+                $products= Product::where('categoria',$request->categoria)->where('nombre', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
             }else{
                 $products= Product::where('categoria',$request->categoria)->paginate(10);
             }
 
         }else{
-            return redirect('/');
-        }
+            if($request->buscador!=''){
+                $products= Product::where('nombre', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
+            }else{
+                return redirect('/');
+            }
 
-        return view('product.index',compact('products'));
+        }
+        $categorias=Categorie::all();
+        return compact('products');
     }
 
     /**
