@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Index\IndexController;
 use App\Http\Controllers\Product\ProductController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserProfileController\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -24,10 +24,8 @@ Route::get('/', function () {
 });
 Route::resource('/register', RegisteredUserController::class);
 Route::resource('/', IndexController::class);
-Route::get('cart', [CartController::class, 'cart'])->name('cart');
-Route::get('add-to-cart/{id}', [ProductsController::class, 'addToCart'])->name('add_to_cart');
-Route::patch('update-cart', [ProductsController::class, 'update'])->name('update_cart');
-Route::delete('remove-from-cart', [ProductsController::class, 'remove'])->name('remove_from_cart');
+Route::resource('/cart', CartController::class);
+Route::get('/cart/add-product/{id}',[CartController::class, 'addToCart'])->name('cart.addToCart');
 Route::middleware('auth')->group(function () {
     Route::resource('/profile', UserProfileController::class);
     Route::get('/configuration/create', [ConfigurationController::class, 'create'])->name('configuration.create');

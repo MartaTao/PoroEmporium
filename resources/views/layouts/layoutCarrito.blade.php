@@ -16,7 +16,7 @@
                 <button type="button" class="btn btn-primary" data-toggle="dropdown">
                     <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart <span class="badge badge-pill badge-danger">{{ count((array) session('cart')) }}</span>
                 </button>
- 
+
                 <div class="dropdown-menu">
                     <div class="row total-header-section">
                         @php $total = 0 @endphp
@@ -42,7 +42,7 @@
                     @endif
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-12 text-center checkout">
-                            <a href="{{ route('cart') }}" class="btn btn-primary btn-block">View all</a>
+                            <a href="{{ route('cart.index') }}" class="btn btn-primary btn-block">View all</a>
                         </div>
                     </div>
                 </div>
@@ -50,19 +50,19 @@
         </div>
     </div>
 </div>
-   
+
 <br/>
 <div class="container">
-   
+
     @if(session('success'))
         <div class="alert alert-success">
           {{ session('success') }}
-        </div> 
+        </div>
     @endif
-   
+
     @yield('content')
 </div>
-   
+
 @yield('scripts')
 </body>
 </html>

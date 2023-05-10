@@ -1,5 +1,5 @@
-@extends('layout')
-   
+@extends('layouts.layoutCarrito')
+
 @section('content')
 <table id="cart" class="table table-hover table-condensed">
     <thead>
@@ -43,28 +43,28 @@
         </tr>
         <tr>
             <td colspan="5" class="text-right">
-                <a href="{{ url('/') }}" class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Continue Shopping</a>
+                <a href="{{ route('product.index')}}" class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Continue Shopping</a>
                 <button class="btn btn-success"><i class="fa fa-money"></i> Checkout</button>
             </td>
         </tr>
     </tfoot>
 </table>
 @endsection
-   
+
 @section('scripts')
 <script type="text/javascript">
-   
+
     $(".cart_update").change(function (e) {
         e.preventDefault();
-   
+
         var ele = $(this);
-   
+
         $.ajax({
-            url: '{{ route('update_cart') }}',
+            url: route('cart.update')
             method: "patch",
             data: {
-                _token: '{{ csrf_token() }}', 
-                id: ele.parents("tr").attr("data-id"), 
+                _token: '{{ csrf_token() }}',
+                id: ele.parents("tr").attr("data-id"),
                 quantity: ele.parents("tr").find(".quantity").val()
             },
             success: function (response) {
@@ -72,18 +72,18 @@
             }
         });
     });
-   
+
     $(".cart_remove").click(function (e) {
         e.preventDefault();
-   
+
         var ele = $(this);
-   
+
         if(confirm("Do you really want to remove?")) {
             $.ajax({
-                url: '{{ route('remove_from_cart') }}',
+                url:route('cart.destroy')
                 method: "DELETE",
                 data: {
-                    _token: '{{ csrf_token() }}', 
+                    _token: '{{ csrf_token() }}',
                     id: ele.parents("tr").attr("data-id")
                 },
                 success: function (response) {
@@ -92,6 +92,6 @@
             });
         }
     });
-   
+
 </script>
 @endsection

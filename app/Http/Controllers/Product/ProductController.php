@@ -9,19 +9,12 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /*
-        public function index()
-    {
-        $products = Product::all();
-        return view('products', compact('products'));
-    }
-    */
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        if ($request->categoria != 'Categoria') {
+        if (!is_null($request->categoria)&&$request->categoria != 'Categoria') {
             if($request->buscador!=''){
                 $products= Product::where('categoria',$request->categoria)->where('nombre', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
             }else{
@@ -32,12 +25,12 @@ class ProductController extends Controller
             if($request->buscador!=''){
                 $products= Product::where('nombre', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
             }else{
-                return redirect('/');
+                $products= Product::all();
             }
 
         }
         $categorias=Categorie::all();
-        return view('products', compact('products'));
+        return  view('product.index',compact('products','categorias'));
     }
 
     /**
@@ -87,5 +80,5 @@ class ProductController extends Controller
     {
         //
     }
-    
+
 }

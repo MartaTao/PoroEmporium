@@ -1,28 +1,30 @@
 <?php
- 
-namespace App\Http\Controllers;
- 
+
+namespace App\Http\Controllers\Cart;
+
+use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Http\Request;
-use App\Models\Product; 
- 
-class ProductsController extends Controller
+
+class CartController extends Controller
 {
+    /**
+    *Render la vista del cart
+    */
     public function index()
     {
-        $products = Product::all();
-        return view('products', compact('products'));
+        return view('cart.cart');
     }
- 
-    public function cart()
-    {
-        return view('cart');
-    }
+
+    /**
+     * Add an item to a cart
+     */
     public function addToCart($id)
     {
         $product = Product::findOrFail($id);
- 
+
         $cart = session()->get('cart', []);
- 
+
         if(isset($cart[$id])) {
             $cart[$id]['quantity']++;
         }  else {
@@ -33,11 +35,13 @@ class ProductsController extends Controller
                 "quantity" => 1
             ];
         }
- 
+
         session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product add to cart successfully!');
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
- 
+    /**
+     * Update the cart
+     */
     public function update(Request $request)
     {
         if($request->id && $request->quantity){
@@ -47,8 +51,10 @@ class ProductsController extends Controller
             session()->flash('success', 'Cart successfully updated!');
         }
     }
- 
-    public function remove(Request $request)
+/**
+ * Remove a product from the cart
+ */
+    public function destroy(Request $request)
     {
         if($request->id) {
             $cart = session()->get('cart');

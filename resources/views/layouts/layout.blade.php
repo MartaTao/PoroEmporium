@@ -38,7 +38,7 @@
                             <div class="relative z-0 w-full mb-6 group">
                                 <select id="categoria" name="categoria" autocomplete="role-name"
                                     class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:bg-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-                                    <option class="dark:text-white" value="Categoria">Categorías</option>
+                                    <option class="dark:text-white" value="Categoria" selected>Categorías</option>
                                     @foreach ($categorias as $categoria )
                                         <option class="dark:text-white" value="{{$categoria->nombre}}">{{$categoria->nombre}}</option>
                                     @endforeach
