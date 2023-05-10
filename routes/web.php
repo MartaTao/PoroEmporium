@@ -24,7 +24,10 @@ Route::get('/', function () {
 });
 Route::resource('/register', RegisteredUserController::class);
 Route::resource('/', IndexController::class);
-
+Route::get('cart', [CartController::class, 'cart'])->name('cart');
+Route::get('add-to-cart/{id}', [ProductsController::class, 'addToCart'])->name('add_to_cart');
+Route::patch('update-cart', [ProductsController::class, 'update'])->name('update_cart');
+Route::delete('remove-from-cart', [ProductsController::class, 'remove'])->name('remove_from_cart');
 Route::middleware('auth')->group(function () {
     Route::resource('/profile', UserProfileController::class);
     Route::get('/configuration/create', [ConfigurationController::class, 'create'])->name('configuration.create');
