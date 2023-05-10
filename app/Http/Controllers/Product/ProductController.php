@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    /*
+        public function index()
+    {
+        $products = Product::all();
+        return view('products', compact('products'));
+    }
+    */
     /**
      * Display a listing of the resource.
      */
@@ -30,7 +37,7 @@ class ProductController extends Controller
 
         }
         $categorias=Categorie::all();
-        return compact('products');
+        return view('products', compact('products'));
     }
 
     /**
@@ -80,4 +87,5 @@ class ProductController extends Controller
     {
         //
     }
+    
 }
