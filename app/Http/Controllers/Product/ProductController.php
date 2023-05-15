@@ -52,9 +52,10 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+        $categorias=Categorie::all();
+        return view('product.product',compact('product','categorias'));
     }
 
     /**

@@ -36,14 +36,26 @@ class RegisteredUserController extends Controller
             'username' => ['required', 'string', 'max:255', 'unique:'.User::class],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'direction' => ['required', 'string', 'max:255'],
+            'name' => 'required|string|regex:/^[a-zA-Z\s]*$/|max:255',
+            'first_surname' => 'required|string|regex:/^[a-zA-Z\s]*$/|max:255',
+            'second_surname' => 'nullable|string|regex:/^[a-zA-Z\s]*$/|max:255',
+            'birthdate' => 'nullable|date',
+            'mobile' => 'nullable|string|max:11|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{3}$/',
+            'adress' => ['required', 'string', 'max:255'],
         ]);
 
         $user = User::create([
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'direction' => $request->direction,
+        ]);
+        $user->userProfile()->create([
+            'name' => $request->name,
+            'first_surname' => $request->first_surname,
+            'second_surname' => $request->second_surname,
+            'adress' => $request->adress,
+            'birthdate' => $request->birthdate,
+            'mobile' => $request->mobile,
         ]);
 
         event(new Registered($user));

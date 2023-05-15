@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\config;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorie\Categorie;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Hash;
@@ -13,15 +14,18 @@ class ConfigurationController extends Controller
 {
     public function create()
     {
-        return view('config.configuration');
+        $categorias=Categorie::all();
+        return view('config.configuration',compact('categorias'));
     }
     public function changePass()
     {
-        return view('config.change_password');
+        $categorias=Categorie::all();
+        return view('config.change_password',compact('categorias'));
     }
     public function changeEmail()
     {
-        return view('config.change_email');
+        $categorias=Categorie::all();
+        return view('config.change_email',compact('categorias'));
     }
 
     public function storePass(Request $request)

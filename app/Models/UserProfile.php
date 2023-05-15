@@ -12,6 +12,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class UserProfile extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia, SoftDeletes;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'first_surname',
+        'second_surname',
+        'adress',
+        'birthdate',
+        'mobile',
+    ];
+
     //Relacion con usuario
     public function user(): BelongsTo
     {

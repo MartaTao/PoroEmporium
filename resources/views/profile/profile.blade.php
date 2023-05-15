@@ -12,7 +12,7 @@
                                         alt="Extra large avatar">
                                 @else
                                     <div
-                                        class="relative inline-flex items-center justify-center  w-36 h-36 overflow-hidden bg-blue-1 rounded-full">
+                                        class="relative inline-flex items-center justify-center  w-36 h-36 overflow-hidden bg-blue-300 rounded-full">
                                         <span
                                             class="font-medium text-5xl text-gray-900 uppercase">{{ $fisrtLetter = substr($profile->name, 0, 1) }}{{ $secondtLetter = substr($profile->first_surname, 0, 1) }}</span>
                                     </div>
@@ -59,16 +59,6 @@
                                             <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
                                                 viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                 <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z">
-                                                </path>
-                                            </svg>
-                                        </span>
-                                    </div>
-                                    <div class="flex-1 flex items-center dark:text-gray-300">
-                                        <span class="flex p-2 rounded-lg">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.5"
-                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
                                                     d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75">
                                                 </path>
                                             </svg>
@@ -99,6 +89,16 @@
                 <div class="relative w-full max-w-md max-h-full">
                     <div
                         class="w-full bg-white dark:bg-gray-900 dark:border dark:border-gray-700 rounded-lg md:mt-0 sm:max-w-md xl:p-0">
+                        <button type="button" data-modal-hide="edit-profile-modal"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center justify-center dark:hover:bg-gray-800 dark:hover:text-white">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
                         <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                             <h1
                                 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
@@ -147,25 +147,25 @@
                                             </div>
                                         @enderror
                                     </div>
-
                                     <div class="relative z-0 w-full mb-6 group">
-                                        <label
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                                            for="file_input">Imagen de perfil</label>
-                                        <input
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer dropify"
-                                            data-height="50" data-width="50" aria-describedby="file_input_help"
-                                            id="file_input" type="file" name="users_avatar">
-                                        <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG
-                                            or JPG .</p>
+                                        <input type="text" name="adress" id="floating_adress"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="{{ $profile->adress }}">
+                                        <label for="floating_adress"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Dirección</label>
                                     </div>
+
                                 </div>
                                 <div class="relative z-0 w-full mb-6 group">
-                                    <textarea name="bio" id="floating_bio"
-                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder=" ">{{ $profile->bio }}</textarea>
-                                    <label for="floating_bio"
-                                        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Bio</label>
+                                    <label
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                                        for="file_input">Imagen de perfil</label>
+                                    <input
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer dropify"
+                                        data-height="50" data-width="50" aria-describedby="file_input_help"
+                                        id="file_input" type="file" name="users_avatar">
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG
+                                        or JPG .</p>
                                 </div>
                                 <button type="submit"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>

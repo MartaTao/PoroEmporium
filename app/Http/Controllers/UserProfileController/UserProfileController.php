@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\UserProfileController;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorie\Categorie;
 use Illuminate\Http\Request;
 use App\Models\UserProfile;
 use App\Services\UserProfileServices\UserProfileService;
@@ -34,22 +35,18 @@ class UserProfileController extends Controller
             'first_surname' => 'required|string|regex:/^[a-zA-Z\s]*$/|max:255',
             'second_surname' => 'nullable|string|regex:/^[a-zA-Z\s]*$/|max:255',
             'birthdate' => 'nullable|date',
-            'bio' => 'nullable|string|max:255',
+            'mobile' => 'nullable|string|max:11|regex:/^[0-9]{3}-[0-9]{3}-[0-9]{3}$/',
         ]);
         $request->user()->userProfile()->create([
             'name' => $request->name,
             'first_surname' => $request->first_surname,
             'second_surname' => $request->second_surname,
-            'bio' => $request->bio,
+            'adress' => $request->adress,
             'birthdate' => $request->birthdate,
+            'mobile' => $request->mobile,
         ]);
-        if ($request->user()->hasRole('Client')) {
-            $ruta = route('client.create');
-        } else {
-            $ruta = "/";
-        }
 
-        return redirect($ruta);
+        return redirect('/');
     }
 
     public function edit(UserProfile $profile)
@@ -61,8 +58,9 @@ class UserProfileController extends Controller
      */
     public function show(UserProfile $profile)
     {
+        $categorias=Categorie::all();
         $profilePhoto = $profile->getMedia('users_avatar')->first();
-        return view('profile.profile', compact('profile', 'profilePhoto'));
+        return view('profile.profile', compact('profile', 'profilePhoto','categorias'));
     }
 
     /**

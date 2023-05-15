@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\config\ConfigurationController;
 use App\Http\Controllers\Index\IndexController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\UserProfileController\UserProfileController;
