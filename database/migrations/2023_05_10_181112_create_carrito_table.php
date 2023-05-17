@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('carrito', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->onDelete('cascade');
+            $table->foreignId('producto');
+            $table->integer('cantidad');
+            $table->float('total');
             $table->timestamps();
         });
     }

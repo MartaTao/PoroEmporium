@@ -1,4 +1,7 @@
-@extends('layouts.layoutCarrito')
+@php
+    use App\Models\Carrito\Carrito;
+@endphp
+@extends('layouts.layout')
 
 @section('content')
 <table id="cart" class="table table-hover table-condensed">
@@ -12,34 +15,25 @@
         </tr>
     </thead>
     <tbody>
-        @php $total = 0 @endphp
-        @if(session('cart'))
-            @foreach(session('cart') as $id => $details)
-                @php $total += $details['price'] * $details['quantity'] @endphp
-                <tr data-id="{{ $id }}">
+                <tr data-id="">
                     <td data-th="Product">
                         <div class="row">
-                            <div class="col-sm-3 hidden-xs"><img src="{{ asset('img') }}/{{ $details['photo'] }}" width="100" height="100" class="img-responsive"/></div>
                             <div class="col-sm-9">
-                                <h4 class="nomargin">{{ $details['product_name'] }}</h4>
+                                <h4 class="nomargin"></h4>
                             </div>
                         </div>
                     </td>
-                    <td data-th="Price">${{ $details['price'] }}</td>
-                    <td data-th="Quantity">
-                        <input type="number" value="{{ $details['quantity'] }}" class="form-control quantity cart_update" min="1" />
-                    </td>
-                    <td data-th="Subtotal" class="text-center">${{ $details['price'] * $details['quantity'] }}</td>
+                    <td data-th="Price">{{auth()->user()->carrito->total}}</td>
+                    <td data-th="Quantity">{{auth()->user()->carrito->cantidad}}</td>
+                    <td data-th="Subtotal" class="text-center"></td>
                     <td class="actions" data-th="">
                         <button class="btn btn-danger btn-sm cart_remove"><i class="fa fa-trash-o"></i> Delete</button>
                     </td>
                 </tr>
-            @endforeach
-        @endif
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="5" class="text-right"><h3><strong>Total ${{ $total }}</strong></h3></td>
+            <td colspan="5" class="text-right"><h3><strong></strong></h3></td>
         </tr>
         <tr>
             <td colspan="5" class="text-right">
@@ -52,46 +46,5 @@
 @endsection
 
 @section('scripts')
-<script type="text/javascript">
 
-    $(".cart_update").change(function (e) {
-        e.preventDefault();
-
-        var ele = $(this);
-
-        $.ajax({
-            url: route('cart.update')
-            method: "patch",
-            data: {
-                _token: '{{ csrf_token() }}',
-                id: ele.parents("tr").attr("data-id"),
-                quantity: ele.parents("tr").find(".quantity").val()
-            },
-            success: function (response) {
-               window.location.reload();
-            }
-        });
-    });
-
-    $(".cart_remove").click(function (e) {
-        e.preventDefault();
-
-        var ele = $(this);
-
-        if(confirm("Do you really want to remove?")) {
-            $.ajax({
-                url:route('cart.destroy')
-                method: "DELETE",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: ele.parents("tr").attr("data-id")
-                },
-                success: function (response) {
-                    window.location.reload();
-                }
-            });
-        }
-    });
-
-</script>
 @endsection

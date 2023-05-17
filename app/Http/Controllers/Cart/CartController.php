@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Cart;
 
 use App\Http\Controllers\Controller;
+use App\Models\Carrito\Carrito;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\Categorie\Categorie;
 
 class CartController extends Controller
 {
@@ -13,31 +15,23 @@ class CartController extends Controller
     */
     public function index()
     {
-        return view('cart.cart');
+        $categorias=Categorie::all();
+        return view('cart.cart',compact('categorias'));
     }
 
     /**
      * Add an item to a cart
      */
-    public function addToCart($id)
+    public function addToCart(Product $product,Request $request)
     {
-        $product = Product::findOrFail($id);
-
-        $cart = session()->get('cart', []);
-
-        if(isset($cart[$id])) {
-            $cart[$id]['quantity']++;
-        }  else {
-            $cart[$id] = [
-                "product_name" => $product->product_name,
-                "photo" => $product->photo,
-                "price" => $product->price,
-                "quantity" => 1
-            ];
-        }
-
-        session()->put('cart', $cart);
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        //Preguntar si deberia user()->carrito()->cliente()->create()
+        // o solo user()->carrito()->create()
+        $carrito=$request->user()->carrito()->cliente()->create([
+            'producto'=>$product->id,
+            'cantidad'=>$request->cantidad,
+            'total'=>$product->precio*$request->cantidad,
+        ]);
+        return $carrito->total;
     }
     /**
      * Update the cart
