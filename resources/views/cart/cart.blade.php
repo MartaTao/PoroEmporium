@@ -10,13 +10,11 @@
             <th style="width:50%">Product</th>
             <th style="width:10%">Price</th>
             <th style="width:8%">Quantity</th>
-            <th style="width:22%" class="text-center">Subtotal</th>
-            <th style="width:10%"></th>
         </tr>
     </thead>
     <tbody>
                 <tr data-id="">
-                    <td data-th="Product">
+                        <td data-th="Product">{{auth()->user()->carrito->nombre}}</td>
                         <div class="row">
                             <div class="col-sm-9">
                                 <h4 class="nomargin"></h4>
@@ -25,7 +23,6 @@
                     </td>
                     <td data-th="Price">{{auth()->user()->carrito->total}}</td>
                     <td data-th="Quantity">{{auth()->user()->carrito->cantidad}}</td>
-                    <td data-th="Subtotal" class="text-center"></td>
                     <td class="actions" data-th="">
                         <button class="btn btn-danger btn-sm cart_remove"><i class="fa fa-trash-o"></i> Delete</button>
                     </td>
