@@ -42,8 +42,11 @@ class CartController extends Controller
         );
 
         if (!empty($hola)) {
-            $registroEncontrado = reset($hola); // Obtener el primer registro encontrado
-            $registroEncontrado['cantidad'] += $request->cantidad;
+            for($i=0;$i< count($cart);$i++){
+                if(data_get($cart[$i],'id')==$id){
+                    data_set($cart[$i],'cantidad',data_get($cart[$i],'cantidad')+ $request->cantidad);
+                }
+            }
         } else {
             $producto=([
                 "id" => $product->id,
@@ -54,8 +57,8 @@ class CartController extends Controller
             array_push($cart,$producto);
         }
         session()->put('cart', $cart);
-        return $request->cantidad;
-        //redirect()->back()->with('message', 'Producto añadido al carrito con éxito');
+        //return $request->cantidad;
+        redirect()->back()->with('message', $request->cantidad);
     }
     /**
      * Update the cart
