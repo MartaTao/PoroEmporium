@@ -20,7 +20,7 @@ class CategorieSeedeer extends Seeder
             'nombre'=>'Figuritas',
         ]);
         Categorie::create([
-            'nombre'=>'Funco Pops',
+            'nombre'=>'Funko Pops',
         ]);
         Categorie::create([
             'nombre'=>'Posters',

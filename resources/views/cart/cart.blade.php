@@ -1,5 +1,5 @@
 @php
-    use App\Models\Carrito\Carrito;
+use App\Models\Carrito\Carrito;
 @endphp
 @extends('layouts.layout')
 
@@ -10,27 +10,26 @@
             <th style="width:50%">Product</th>
             <th style="width:10%">Price</th>
             <th style="width:8%">Quantity</th>
+            <th style="width:8%">total</th>
         </tr>
     </thead>
     <tbody>
-                <tr data-id="">
-                        <td data-th="Product">{{auth()->user()->carrito->nombre}}</td>
-                        <div class="row">
-                            <div class="col-sm-9">
-                                <h4 class="nomargin"></h4>
-                            </div>
-                        </div>
-                    </td>
-                    <td data-th="Price">{{auth()->user()->carrito->total}}</td>
-                    <td data-th="Quantity">{{auth()->user()->carrito->cantidad}}</td>
-                    <td class="actions" data-th="">
-                        <button class="btn btn-danger btn-sm cart_remove"><i class="fa fa-trash-o"></i> Delete</button>
-                    </td>
-                </tr>
+        @for ($i=0;$i< count($cart);$i++) <tr data-id="">
+            <td data-th="Product">{{$cart[$i]['nombre']}}</td>
+            <td data-th="Price">{{$cart[$i]['precio']}}</td>
+            <td data-th="Quantity">{{$cart[$i]['cantidad']}}</td>
+            <td class="actions" data-th="">
+                <button class="btn btn-danger btn-sm cart_remove"><i class="fa fa-trash-o"></i> Delete</button>
+            </td>
+            </tr>
+            @endfor
+            <td data-th="total"></td>
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="5" class="text-right"><h3><strong></strong></h3></td>
+            <td colspan="5" class="text-right">
+                <h3><strong></strong></h3>
+            </td>
         </tr>
         <tr>
             <td colspan="5" class="text-right">
