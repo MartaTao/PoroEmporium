@@ -18,15 +18,15 @@ class CartController extends Controller
     {
         $categorias = Categorie::all();
         $cart = session()->get('cart', []);
-        
+
         $total = 0;
         foreach ($cart as $producto) {
             $total += $producto['precio'] * $producto['cantidad'];
         }
-    
+
         return view('cart.cart', compact('categorias', 'cart', 'total'));
     }
-    
+
 
     /**
      * Add an item to a cart
@@ -48,19 +48,19 @@ class CartController extends Controller
         );
 
         if (!empty($hola)) {
-            for($i=0;$i< count($cart);$i++){
-                if(data_get($cart[$i],'id')==$id){
-                    data_set($cart[$i],'cantidad',data_get($cart[$i],'cantidad')+ $request->cantidad);
+            for ($i = 0; $i < count($cart); $i++) {
+                if (data_get($cart[$i], 'id') == $id) {
+                    data_set($cart[$i], 'cantidad', data_get($cart[$i], 'cantidad') + $request->cantidad);
                 }
             }
         } else {
-            $producto=([
+            $producto = ([
                 "id" => $product->id,
                 "nombre" => $product->nombre,
                 "precio" => $product->precio,
                 "cantidad" => $request->cantidad
             ]);
-            array_push($cart,$producto);
+            array_push($cart, $producto);
         }
 
         session()->put('cart', $cart);
@@ -84,13 +84,17 @@ class CartController extends Controller
      */
     public function destroy(Request $request)
     {
-        if ($request->id) {
+        if ($request->nombre) {
             $cart = session()->get('cart');
-            if (isset($cart[$request->id])) {
-                unset($cart[$request->id]);
-                session()->put('cart', $cart);
+            foreach ($cart as $key => $producto) {
+                if ($producto['nombre'] === $request->nombre) {
+                    unset($cart[$key]);
+                    session()->put('cart', $cart);
+                    break;
+                }
             }
-            session()->flash('success', 'Product successfully removed!');
         }
+
+        return redirect()->route('cart.index')->with('success', 'Product successfully removed from cart!');
     }
 }

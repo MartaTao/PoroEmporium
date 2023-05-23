@@ -27,6 +27,7 @@ Route::resource('/register', RegisteredUserController::class);
 Route::resource('/', IndexController::class);
 Route::resource('/cart', CartController::class);
 Route::get('/cart/add-product/{id}',[CartController::class, 'addToCart'])->name('cart.addToCart');
+Route::delete('cart/remove-product/{nombre}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::middleware('auth')->group(function () {
     Route::resource('/profile', UserProfileController::class);
     Route::get('/configuration/create', [ConfigurationController::class, 'create'])->name('configuration.create');

@@ -4,7 +4,7 @@ use App\Models\Carrito\Carrito;
 @extends('layouts.layout')
 
 @section('content')
-    <table id="cart" class="table table-hover table-condensed">
+<table id="cart" class="table table-hover table-condensed">
     <thead>
         <tr>
             <th style="width:50%">Product</th>
@@ -18,7 +18,13 @@ use App\Models\Carrito\Carrito;
             <td data-th="Price">{{$cart[$i]['precio']}}</td>
             <td data-th="Quantity">{{$cart[$i]['cantidad']}}</td>
             <td class="actions" data-th="">
-                <button class="btn btn-danger btn-sm cart_remove"><i class="fa fa-trash-o"></i> Delete</button>
+                <form action="{{ route('cart.destroy', $cart[$i]['nombre']) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm cart_remove">
+                        <i class="fa fa-trash-o"></i> Delete
+                    </button>
+                </form>
             </td>
             </tr>
             @endfor
