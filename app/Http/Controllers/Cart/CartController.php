@@ -65,7 +65,8 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
         //return $request->cantidad;
-        redirect()->back()->with('message', $request->cantidad);
+        //redirect()->back()->with('message', $request->cantidad);
+        return redirect()->route('cart.index')->with('message', $request->cantidad);
     }
     /**
      * Update the cart
