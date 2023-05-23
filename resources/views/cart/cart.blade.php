@@ -23,7 +23,7 @@ use App\Models\Carrito\Carrito;
             </td>
             </tr>
             @endfor
-            <td data-th="total"></td>
+            <td data-th="total">${{ $total }}</td>
     </tbody>
     <tfoot>
         <tr>

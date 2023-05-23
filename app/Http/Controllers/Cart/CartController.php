@@ -16,11 +16,17 @@ class CartController extends Controller
      */
     public function index()
     {
-        $total=0;
         $categorias = Categorie::all();
         $cart = session()->get('cart', []);
-        return view('cart.cart', compact('categorias', 'cart','total'));
+    
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['precio'] * $item['cantidad'];
+        }
+    
+        return view('cart.cart', compact('categorias', 'cart', 'total'));
     }
+    
 
     /**
      * Add an item to a cart
@@ -56,7 +62,13 @@ class CartController extends Controller
             ]);
             array_push($cart,$producto);
         }
+
         session()->put('cart', $cart);
+
+        $total = 0;
+        foreach ($cart as $item) {
+            $total += $item['precio'] * $item['cantidad'];
+        }
         //return $request->cantidad;
         redirect()->back()->with('message', $request->cantidad);
     }
