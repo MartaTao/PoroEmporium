@@ -20,8 +20,8 @@ class CartController extends Controller
         $cart = session()->get('cart', []);
     
         $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['precio'] * $item['cantidad'];
+        foreach ($cart as $producto) {
+            $total += $producto['precio'] * $producto['cantidad'];
         }
     
         return view('cart.cart', compact('categorias', 'cart', 'total'));
@@ -66,8 +66,8 @@ class CartController extends Controller
         session()->put('cart', $cart);
 
         $total = 0;
-        foreach ($cart as $item) {
-            $total += $item['precio'] * $item['cantidad'];
+        foreach ($cart as $producto) {
+            $total += $producto['precio'] * $producto['cantidad'];
         }
         //return $request->cantidad;
         redirect()->back()->with('message', $request->cantidad);
