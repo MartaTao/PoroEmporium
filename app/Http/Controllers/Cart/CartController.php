@@ -18,7 +18,7 @@ class CartController extends Controller
     {
         $categorias = Categorie::all();
         $cart = session()->get('cart', []);
-    
+        
         $total = 0;
         foreach ($cart as $producto) {
             $total += $producto['precio'] * $producto['cantidad'];
@@ -64,11 +64,6 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-
-        $total = 0;
-        foreach ($cart as $producto) {
-            $total += $producto['precio'] * $producto['cantidad'];
-        }
         //return $request->cantidad;
         redirect()->back()->with('message', $request->cantidad);
     }
