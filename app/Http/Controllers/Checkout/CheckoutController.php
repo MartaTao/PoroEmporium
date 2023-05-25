@@ -10,9 +10,7 @@ class CheckoutController extends Controller
 {
     public function show()
     {
-        $cart = Carrito::all(); // Obtén los datos del carrito
-        $total = 0; // Calcula el total del pedido
     
-        return view('checkout.checkout', compact('cart', 'total'));
+        return view('checkout.checkout');
     }
 }
