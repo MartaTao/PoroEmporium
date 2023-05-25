@@ -40,7 +40,8 @@ use App\Models\Carrito\Carrito;
         <tr>
             <td colspan="5" class="text-right">
                 <a href="{{ route('product.index')}}" class="btn btn-danger"> <i class="fa fa-arrow-left"></i> Continue Shopping</a>
-                <button class="btn btn-success"><i class="fa fa-money"></i> Checkout</button>
+                <br>
+                <a href="" class="btn btn-success"><i class="fa fa-money"></i> Checkout</button>
             </td>
         </tr>
     </tfoot>
