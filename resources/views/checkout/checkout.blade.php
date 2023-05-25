@@ -1,66 +1,50 @@
 @extends('layouts.layout')
 
 @section('content')
-    <h2>Order Summary</h2>
-
-    <table class="table table-hover table-condensed">
-        <thead>
-            <tr>
-                <th style="width:50%">Product</th>
-                <th style="width:10%">Price</th>
-                <th style="width:8%">Quantity</th>
-            </tr>
+<h2>Payment</h2>
+<div class="_wYiJGbRZyFZeCc8y7Sf _Ybd3WwuTVljUT4vEaM3 mveJTCIb2WII7J4sY22F mngKhi_Rv06PF57lblDI _YxZw_O8dWkTljptcO7z SWDELhWFjL8JxEtm91_o _1jTZ8KXRZul60S6czNi">
+    <h3 class="hD0sTTDgbxakubcHVW2X vyo_A8gnQD1QWDPglr3h IOPhczRgtphv6NdNBDjj OyABRrnTV_kvHV7dJ0uE">Card Details</h3>
+    <form action="{{ route('checkout.pay') }}" method="POST">
+        <div class="xCPtuxM4_gihvpPwv9bX Nu4HUn5EQpnNJ1itNkrd Bcw8VuwRWYxPGjWjS6Ig EyjJPKD7jgGRBhaLpRVI AqVNvLG_H6VHhym2yKMp">
+            <div>
+                <label for="full_name" class="_Vb9igHms0hI1PQcvp_S TR_P65x9ie7j6uxFo_Cs c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">Name *</label>
+                <input type="text" name="full_name" id="full_name" class="fzhbbDQ686T8arwvi_bJ jtAJHOc7mn7b4IKRO59D pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk __9sbu0yrzdhGIkLWNXl gx_pYWtAG2cJIqhquLbx mveJTCIb2WII7J4sY22F GdTcGtoKP5_bET3syLDl LceKfSImrGKQrtDGkpBV _Vb9igHms0hI1PQcvp_S t6gkcSf0Bt4MLItXvDJ_ olxDi3yL6f0gpdsOFDhx jqg6J89cvxmDiFpnV56r Mmx5lX7HVdrWCgh3EpTP H7KQDhgKsqZaTUouEUQL OyABRrnTV_kvHV7dJ0uE KpCMWe32PQyrSFbZVput q6szSHqGtBufkToFe_s5" placeholder="Full name on card" required="">
+            </div>
+            <div>
+                <label for="card_number" class="_Vb9igHms0hI1PQcvp_S TR_P65x9ie7j6uxFo_Cs c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">Card Number *</label>
+                <input type="number" name="card_number" id="card_number" class="fzhbbDQ686T8arwvi_bJ jtAJHOc7mn7b4IKRO59D pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk __9sbu0yrzdhGIkLWNXl gx_pYWtAG2cJIqhquLbx mveJTCIb2WII7J4sY22F GdTcGtoKP5_bET3syLDl LceKfSImrGKQrtDGkpBV _Vb9igHms0hI1PQcvp_S t6gkcSf0Bt4MLItXvDJ_ olxDi3yL6f0gpdsOFDhx jqg6J89cvxmDiFpnV56r Mmx5lX7HVdrWCgh3EpTP H7KQDhgKsqZaTUouEUQL OyABRrnTV_kvHV7dJ0uE KpCMWe32PQyrSFbZVput q6szSHqGtBufkToFe_s5" placeholder="xxxx-xxxx-xxxx-xxxx" required="">
+            </div>
+            <div>
+                <label for="cvv" class="_Vb9igHms0hI1PQcvp_S TR_P65x9ie7j6uxFo_Cs c8dCx6gnV43hTOLV6ks5 ezMFUVl744lvw6ht0lFe __9sbu0yrzdhGIkLWNXl OyABRrnTV_kvHV7dJ0uE">CVC *</label>
+                <input type="number" name="cvv" id="cvv" class="fzhbbDQ686T8arwvi_bJ jtAJHOc7mn7b4IKRO59D pXhVRBC8yaUNllmIWxln vpDN1VEJLu5FmLkr5WCk __9sbu0yrzdhGIkLWNXl gx_pYWtAG2cJIqhquLbx mveJTCIb2WII7J4sY22F GdTcGtoKP5_bET3syLDl LceKfSImrGKQrtDGkpBV _Vb9igHms0hI1PQcvp_S t6gkcSf0Bt4MLItXvDJ_ olxDi3yL6f0gpdsOFDhx jqg6J89cvxmDiFpnV56r Mmx5lX7HVdrWCgh3EpTP H7KQDhgKsqZaTUouEUQL OyABRrnTV_kvHV7dJ0uE KpCMWe32PQyrSFbZVput q6szSHqGtBufkToFe_s5" placeholder="•••" required="">
+            </div>
+            <div>
+                <button type="submit" class="btn btn-danger btn-sm cart_remove px-6 py-3">
+                    Pay Now
+                </button>
+            </div>
+    </form>
+</div>
+</div>
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table id="cart" class="w-full text-sm text-left text-gray-500 dark:text-gray-400>
+<thead class=" text-xs text-gray-700 uppercase dark:text-gray-400">
+        <tr>
+            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Product</th>
+            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Price</th>
+            <th scope="col" class="px-6 py-3">Quantity</th>
+        </tr>
         </thead>
         <tbody>
-        @for ($i=0;$i< count($cart);$i++) <tr data-id="">
-            <tr>
-            <td data-th="Product">{{$cart[$i]['nombre']}}</td>
-            <td data-th="Price">{{$cart[$i]['precio']}}</td>
-            <td data-th="Quantity">{{$cart[$i]['cantidad']}}</td>
-            </tr>
-            @endfor
-            <tr>
-                <td>Total</td>
-                <td colspan="2">${{ $total }}</td>
-            </tr>
+            @for ($i=0;$i< count($cart);$i++) <tr data-id="" class="border-b border-gray-200 dark:border-gray-700">
+                <td data-th="Product" scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">{{$cart[$i]['nombre']}}</td>
+                <td data-th="Price" class="px-6 py-4 bg-gray-50 dark:bg-gray-800">{{$cart[$i]['precio']}}</td>
+                <td data-th="Quantity" class="px-6 py-3">{{$cart[$i]['cantidad']}}</td>
+                <td class="actions" data-th="">
+                </td>
+                </tr>
+                @endfor
+                <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Total</th>
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800" data-th="total">${{ $total }}</td>
         </tbody>
-    </table>
-
-    <h2>Payment</h2>
-
-    <form action="{{ route('checkout.pay') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="full_name">Full Name</label>
-            <input type="text" class="form-control" id="full_name" name="full_name" required>
-        </div>
-        <div class="form-group">
-            <label for="address">Address</label>
-            <input type="text" class="form-control" id="address" name="address" required>
-        </div>
-        <div class="form-group">
-            <label for="city">City</label>
-            <input type="text" class="form-control" id="city" name="city" required>
-        </div>
-        <div class="form-group">
-            <label for="postal_code">Postal Code</label>
-            <input type="text" class="form-control" id="postal_code" name="postal_code" required>
-        </div>
-
-        <h2>Payment</h2>
-
-        <div class="form-group">
-            <label for="card_number">Card Number</label>
-            <input type="text" class="form-control" id="card_number" name="card_number" required>
-        </div>
-        <div class="form-group">
-            <label for="expiration_date">Expiration Date</label>
-            <input type="date" class="form-control" id="expiration_date" name="expiration_date" required>
-        </div>
-        <div class="form-group">
-            <label for="cvv">CVV</label>
-            <input type="text" class="form-control" id="cvv" name="cvv" required>
-        </div>
-        <button type="submit" class="btn btn-success">Pay Now</button>
-    </form>
-@endsection
+        @endsection

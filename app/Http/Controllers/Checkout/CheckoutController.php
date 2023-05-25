@@ -8,10 +8,8 @@ use App\Models\Carrito\Carrito;
 use App\Models\Categorie\Categorie;
 use Illuminate\Support\Facades\Validator;
 
-class CheckoutController extends Controller
-{
-    public function show()
-    {
+class CheckoutController extends Controller{
+    public function show(){
         $categorias = Categorie::all();
         $cart = session()->get('cart', []);
         $total = 0;
@@ -22,8 +20,7 @@ class CheckoutController extends Controller
 
         return view('checkout.checkout', compact('categorias', 'cart', 'total'));
     }
-    public function pay(Request $request)
-    {
+    public function pay(Request $request){
         $cardNumber = $request->input('card_number');
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
@@ -32,7 +29,7 @@ class CheckoutController extends Controller
         // Validar los datos del formulario
         $validator = Validator::make($request->all(), [
             'card_number' => 'required|numeric',
-            'expiration_date' => 'required|date_format:m/y',
+            'expiration_date' => 'required|date_format:d/m/y',
             'cvv' => 'required|numeric',
         ]);
 
@@ -44,16 +41,21 @@ class CheckoutController extends Controller
 
         // Verificar la tarjeta de crédito
         $isCardValid = $this->verifyCreditCard($cardNumber, $expirationDate, $cvv);
+   
+        if($isCardValid){
+            $correctBuy=$this->processPayment($cardNumber,$expirationDate, $cvv);
+            if($correctBuy){
+                redirect()->route('producto.index')->with('success', 'Pago realizado correctamente. ¡Gracias por tu compra!');
+            }
+        }
     }
 
-    private function verifyCreditCard($cardNumber, $expirationDate, $cvv)
-    {
+    public function verifyCreditCard($cardNumber, $expirationDate, $cvv){
         $isValidCard = !empty($cardNumber) && !empty($expirationDate) && !empty($cvv);
 
         return $isValidCard;
     }
-    public function processPayment(Request $request)
-    {
+    public function processPayment(Request $request){
         $cardNumber = $request->input('card_number');
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
