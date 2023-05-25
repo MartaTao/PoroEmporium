@@ -55,7 +55,7 @@
         </div>
         <div class="form-group">
             <label for="expiration_date">Expiration Date</label>
-            <input type="text" class="form-control" id="expiration_date" name="expiration_date" required>
+            <input type="date" class="form-control" id="expiration_date" name="expiration_date" required>
         </div>
         <div class="form-group">
             <label for="cvv">CVV</label>

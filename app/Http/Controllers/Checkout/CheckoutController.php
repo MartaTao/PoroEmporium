@@ -76,7 +76,7 @@ class CheckoutController extends Controller
         if (!preg_match($cvvPattern, $cvv)) {
             return redirect()->back()->with('error', 'CVV inválido. Por favor, inténtalo de nuevo.');
         }
-
+        
         return redirect()->route('producto.index')->with('success', 'Pago realizado correctamente. ¡Gracias por tu compra!');
     }
 }
