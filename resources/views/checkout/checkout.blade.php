@@ -28,7 +28,7 @@
 
     <h2>Payment</h2>
 
-    <form action="{{ route('checkout.pay') }}" method="POST">
+    <form action="" method="POST">
         @csrf
         <div class="form-group">
             <label for="card_number">Card Number</label>

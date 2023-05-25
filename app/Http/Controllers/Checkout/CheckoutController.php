@@ -10,7 +10,13 @@ class CheckoutController extends Controller
 {
     public function show()
     {
+        $cart = session()->get('cart', []);
+        $total = 0;
     
-        return view('checkout.checkout');
+        foreach ($cart as $producto) {
+            $total += $producto['precio'] * $producto['cantidad'];
+        }
+    
+        return view('checkout.checkout', compact('cart', 'total'));
     }
-}
+}    
