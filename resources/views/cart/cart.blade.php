@@ -10,19 +10,19 @@ use App\Models\Carrito\Carrito;
         <tr>
             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Product</th>
             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Price</th>
-            <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Quantity</th>
+            <th scope="col" class="px-6 py-3">Quantity</th>
         </tr>
         </thead>
         <tbody>
             @for ($i=0;$i< count($cart);$i++) <tr data-id="" class="border-b border-gray-200 dark:border-gray-700">
                 <td data-th="Product" scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50 dark:text-white dark:bg-gray-800">{{$cart[$i]['nombre']}}</td>
                 <td data-th="Price" class="px-6 py-4 bg-gray-50 dark:bg-gray-800">{{$cart[$i]['precio']}}</td>
-                <td data-th="Quantity" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">{{$cart[$i]['cantidad']}}</td>
+                <td data-th="Quantity" class="px-6 py-3">{{$cart[$i]['cantidad']}}</td>
                 <td class="actions" data-th="">
                     <form action="{{ route('cart.destroy', $cart[$i]['nombre']) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm cart_remove px-6 py-4 bg-gray-50 dark:bg-gray-800">
+                        <button type="submit" class="btn btn-danger btn-sm cart_remove px-6 py-3">
                             <i class="fa fa-trash-o"></i> Delete
                         </button>
                     </form>
