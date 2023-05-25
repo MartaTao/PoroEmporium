@@ -11,6 +11,7 @@ use App\Models\Carrito\Carrito;
             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Product</th>
             <th scope="col" class="px-6 py-3 bg-gray-50 dark:bg-gray-800">Price</th>
             <th scope="col" class="px-6 py-3">Quantity</th>
+            <th scope="col" class="px-6 py-3">Action</th>
         </tr>
         </thead>
         <tbody>
