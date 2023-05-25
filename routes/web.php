@@ -29,6 +29,7 @@ Route::resource('/', IndexController::class);
 Route::resource('/cart', CartController::class);
 Route::get('/cart/add-product/{id}',[CartController::class, 'addToCart'])->name('cart.addToCart');
 Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout');
+Route::post('/checkout', [CheckoutController::class, 'pay'])->name('checkout.pay');
 Route::delete('cart/remove-product/{nombre}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::middleware('auth')->group(function () {
     Route::resource('/profile', UserProfileController::class);

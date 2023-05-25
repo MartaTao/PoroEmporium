@@ -28,8 +28,27 @@
 
     <h2>Payment</h2>
 
-    <form action="" method="POST">
+    <form action="{{ route('checkout.pay') }}" method="POST">
         @csrf
+        <div class="form-group">
+            <label for="full_name">Full Name</label>
+            <input type="text" class="form-control" id="full_name" name="full_name" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address" name="address" required>
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" name="city" required>
+        </div>
+        <div class="form-group">
+            <label for="postal_code">Postal Code</label>
+            <input type="text" class="form-control" id="postal_code" name="postal_code" required>
+        </div>
+
+        <h2>Payment</h2>
+
         <div class="form-group">
             <label for="card_number">Card Number</label>
             <input type="text" class="form-control" id="card_number" name="card_number" required>
