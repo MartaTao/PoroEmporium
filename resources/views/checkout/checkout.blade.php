@@ -43,12 +43,12 @@
                         </div>
                         <div>
                             <label for="full_name" class="block text-sm font-medium text-gray-700 dark:text-white">Name *</label>
-                            <input type="text" name="full_name" id="full_name" class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Full name on card">
+                            <input type="text" name="full_name" id="full_name" class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="Full name on card" maxlength="35">
                         </div>
 
                         <div>
-                            <label for="cvv" class="block text-sm font-medium text-gray-700 dark:text-white">CVC *</label>
-                            <input type="number" name="cvv" id="cvv" class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="•••" required="">
+                            <label for="cvv" class="block text-sm font-medium text-gray-700 dark:text-white">CVV *</label>
+                            <input type="number" name="cvv" id="cvv" class="mt-1 block w-full py-2 px-3 border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-md shadow-sm text-gray-900 dark:text-white focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" placeholder="•••" required="" maxlength="3" pattern="[0-9]{3}">
                         </div>
                         <div>
                             <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -63,4 +63,30 @@
         </div>
     </div>
 </div>
+
+<script>
+    //controlar la longitud maxima de 3 
+    document.getElementById('cvv').addEventListener('input', function(e) {
+        var value = this.value;
+        if (value.length > 3) {
+            this.value = value.slice(0, 3);
+        }
+    });
+    //Controlar los numeros que mete y la cantidad , poniendo espacios cada 4 numeros
+    document.getElementById('card_number').addEventListener('input', function(e) {
+  var value = this.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+  var formattedValue = '';
+  for (var i = 0; i < value.length; i++) {
+    if (i > 0 && i % 4 === 0) {
+      formattedValue += ' ';
+    }
+    formattedValue += value.charAt(i);
+  }
+  if (formattedValue.length > 19) {
+    formattedValue = formattedValue.substr(0, 19);
+  }
+  this.value = formattedValue;
+});
+
+</script>
 @endsection
