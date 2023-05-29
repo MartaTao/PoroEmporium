@@ -66,7 +66,7 @@ class CartController extends Controller
         session()->put('cart', $cart);
         //return $request->cantidad;
         //redirect()->back()->with('message', $request->cantidad);
-        return redirect()->route('cart.index')->with('message', $request->cantidad);
+        return redirect()->route('cart.index')->with('message', 'Ale eres tonto');
     }
     /**
      * Update the cart
@@ -77,7 +77,7 @@ class CartController extends Controller
             $cart = session()->get('cart');
             $cart[$request->id]["quantity"] = $request->quantity;
             session()->put('cart', $cart);
-            session()->flash('success', 'Cart successfully updated!');
+            session()->flash('message', 'Cart successfully updated!');
         }
     }
     /**
@@ -96,6 +96,6 @@ class CartController extends Controller
             }
         }
 
-        return redirect()->route('cart.index')->with('success', 'Product successfully removed from cart!');
+        return redirect()->route('cart.index')->with('message', 'Product successfully removed from cart!');
     }
 }
