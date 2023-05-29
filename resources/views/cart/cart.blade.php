@@ -1,6 +1,3 @@
-@php
-    use App\Models\Carrito\Carrito;
-@endphp
 @extends('layouts.layout')
 
 @section('content')
