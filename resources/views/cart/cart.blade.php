@@ -53,14 +53,14 @@
             </tbody>
         </table>
         <button type="button"
-            class="text-gray-900 bg-blue-600 hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600  dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2">
+        class="text-gray-200 bg-blue-700 hover:bg-blue-800 border border-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
             <a href="{{ route('product.index') }}"> <i class="fa fa-arrow-left"></i> Continue
                 Shopping</a>
         </button>
 
 
         <a href="{{ count($cart) > 0 && Auth::check() ? route('checkout') : route('product.index') }}"
-            class="text-gray-900 bg-blue-600 hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 mr-2 mb-2">
+            class="text-gray-200 bg-emerald-700 hover:bg-emerald-800 border border-emerald-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2">
             <svg class="dark:text-gray-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round"
