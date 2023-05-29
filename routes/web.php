@@ -26,7 +26,7 @@ Route::get('/', function () {
 });
 Route::resource('/register', RegisteredUserController::class);
 Route::resource('/', IndexController::class);
-Route::resource('/cart', CartController::class);
+Route::get('/cart',  [CartController::class, 'index'])->name('cart.index');
 Route::get('/cart/add-product/{id}',[CartController::class, 'addToCart'])->name('cart.addToCart');
 Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout');
 Route::post('/checkout', [CheckoutController::class, 'pay'])->name('checkout.pay');
