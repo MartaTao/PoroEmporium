@@ -24,6 +24,7 @@ class CheckoutController extends Controller{
         $cardNumber = $request->input('card_number');
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
+        $name =$request->input('name');
         
 
         // Validar los datos del formulario
@@ -31,6 +32,7 @@ class CheckoutController extends Controller{
             'card_number' => 'required|numeric',
             'expiration_date' => 'required|date_format:d/m/y',
             'cvv' => 'required|numeric',
+            'name' => 'required|string',
         ]);
 
         if ($validator->fails()) {
