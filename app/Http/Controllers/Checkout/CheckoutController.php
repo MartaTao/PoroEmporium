@@ -44,10 +44,10 @@ class CheckoutController extends Controller
             if ($correctBuy) {
                 return redirect()->route('checkout')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
             } else {
-                return redirect()->route('checkout')->with('message', 'Hubo un error al procesar el pago. Por favor, inténtalo de nuevo.');
+                return redirect()->route('checkout')->with('message', 'Datos introducidos erroneos en el pago. Por favor, inténtalo de nuevo.');
             }
         } else {
-            return redirect()->route('checkout')->with('message', 'Tarjeta de crédito inválida. Por favor, verifica los datos e inténtalo de nuevo.');
+            return redirect()->route('checkout')->with('message', 'Datos no introducidos. Por favor,inténtalo de nuevo.');
         }
     }
 
