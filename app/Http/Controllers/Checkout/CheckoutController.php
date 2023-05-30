@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Validator;
 
 class CheckoutController extends Controller
 {
-    public function show(){
+    public function show()
+    {
 
         $categorias = Categorie::all();
         $cart = session()->get('cart', []);
@@ -23,9 +24,10 @@ class CheckoutController extends Controller
         return view('checkout.checkout', compact('categorias', 'cart', 'total'));
     }
 
-    public function pay(Request $request){
+    public function pay(Request $request)
+    {
 
-        $cardNumber =$request->input('card_number');
+        $cardNumber = $request->input('card_number');
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
 
@@ -65,25 +67,34 @@ class CheckoutController extends Controller
         $cardNumber = str_replace(' ', '', $cardNumber);
         // Convertir a número
         $cardNumber = intval($cardNumber);
+
         $expirationDate = $request->input('expiration_date');
+
+        // Obtener la fecha actual
+        $currentDate = now();
+
         $cvv = $request->input('cvv');
 
         $creditCartPattern = '/^[1-9]{16}$/';
-        $expirationPattern = '/^(0[1-9]|1[0-2])\/([0-9]{2})$/';
         $cvvPattern = '/^[0-9]{3,4}$/';
 
         // Validar la tarjeta de crédito
         if (!preg_match($creditCartPattern, $cardNumber)) {
+
             return false;
         }
 
+
         // Validar la fecha de expiración
-        if (!preg_match($expirationPattern, $expirationDate)) {
+        if ($expirationDate <= $currentDate) {
+
             return false;
         }
+
 
         // Validar el CVV
         if (!preg_match($cvvPattern, $cvv)) {
+
             return false;
         }
 
