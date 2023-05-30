@@ -26,7 +26,7 @@ class CheckoutController extends Controller
 
     public function pay(Request $request)
     {
-
+        //Datos traidos de la vista
         $cardNumber = $request->input('card_number');
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
@@ -34,11 +34,11 @@ class CheckoutController extends Controller
 
 
 
-        // Verificar la tarjeta de crédito
+        // Verificar  si a introducido datos
         $isCardValid = $this->verifyCreditCard($cardNumber, $expirationDate, $cvv);
 
         if ($isCardValid) {
-            // Procesar el pago
+            // Verifica que los datos introducidos sean correctos
             $correctBuy = $this->processPayment($request);
 
             if ($correctBuy) {
@@ -50,7 +50,7 @@ class CheckoutController extends Controller
             return redirect()->route('checkout')->with('message', 'Datos no introducidos. Por favor,inténtalo de nuevo.');
         }
     }
-
+    //Función que verifica que tenga datos dentro
     public function verifyCreditCard($cardNumber, $expirationDate, $cvv)
     {
 
@@ -58,7 +58,7 @@ class CheckoutController extends Controller
 
         return $isValidCard;
     }
-
+    //comprueba que los datos sean correctos
     public function processPayment(Request $request)
     {
 
@@ -69,12 +69,11 @@ class CheckoutController extends Controller
         $cardNumber = intval($cardNumber);
 
         $expirationDate = $request->input('expiration_date');
-
         // Obtener la fecha actual
         $currentDate = now();
 
         $cvv = $request->input('cvv');
-
+        //pattern para la tarjeta de credito y el cvv
         $creditCartPattern = '/^[1-9]{16}$/';
         $cvvPattern = '/^[0-9]{3,4}$/';
 
