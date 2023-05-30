@@ -109,7 +109,7 @@
                 this.value = value.slice(0, 3);
             }
         });
-        /*
+
         //Controlar los numeros que mete y la cantidad , poniendo espacios cada 4 numeros
         document.getElementById('card_number').addEventListener('input', function(e) {
             var value = this.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
@@ -125,6 +125,6 @@
             }
             this.value = formattedValue;
         });
-        */
+        
     </script>
 @endsection

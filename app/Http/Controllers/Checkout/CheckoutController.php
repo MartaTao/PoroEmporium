@@ -30,6 +30,8 @@ class CheckoutController extends Controller
         $cvv = $request->input('cvv');
 
 
+
+
         // Verificar la tarjeta de crédito
         $isCardValid = $this->verifyCreditCard($cardNumber, $expirationDate, $cvv);
 
@@ -59,10 +61,14 @@ class CheckoutController extends Controller
     {
 
         $cardNumber = $request->input('card_number');
+        // Eliminar espacios en blanco del número de tarjeta de crédito
+        $cardNumber = str_replace(' ', '', $cardNumber);
+        // Convertir a número
+        $cardNumber = intval($cardNumber);
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
 
-        $creditCartPattern = '/^(?:4\d([\- ])?\d{6}\1\d{5}|(?:4\d{3}|5[1-5]\d{2}|6011)([\- ])?\d{4}\2\d{4}\2\d{4})$/';
+        $creditCartPattern = '/^[1-9]{16}$/';
         $expirationPattern = '/^(0[1-9]|1[0-2])\/([0-9]{2})$/';
         $cvvPattern = '/^[0-9]{3,4}$/';
 
@@ -70,7 +76,7 @@ class CheckoutController extends Controller
         if (!preg_match($creditCartPattern, $cardNumber)) {
             return false;
         }
-/*
+
         // Validar la fecha de expiración
         if (!preg_match($expirationPattern, $expirationDate)) {
             return false;
@@ -81,7 +87,7 @@ class CheckoutController extends Controller
             return false;
         }
 
-*/
+
         return true;
     }
 }
