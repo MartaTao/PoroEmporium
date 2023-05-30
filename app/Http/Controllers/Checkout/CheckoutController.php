@@ -8,8 +8,10 @@ use App\Models\Carrito\Carrito;
 use App\Models\Categorie\Categorie;
 use Illuminate\Support\Facades\Validator;
 
-class CheckoutController extends Controller{
+class CheckoutController extends Controller
+{
     public function show(){
+
         $categorias = Categorie::all();
         $cart = session()->get('cart', []);
         $total = 0;
@@ -20,19 +22,18 @@ class CheckoutController extends Controller{
 
         return view('checkout.checkout', compact('categorias', 'cart', 'total'));
     }
+
     public function pay(Request $request){
-        $cardNumber = $request->input('card_number');
+
+        $cardNumber = str_replace(' ', '', $request->input('card_number'));
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
-        $name =$request->input('name');
-        
 
         // Validar los datos del formulario
         $validator = Validator::make($request->all(), [
             'card_number' => 'required|numeric',
             'expiration_date' => 'required|date_format:d/m/y',
             'cvv' => 'required|numeric',
-            'name' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -45,20 +46,31 @@ class CheckoutController extends Controller{
         // Verificar la tarjeta de crédito
         $isCardValid = $this->verifyCreditCard($cardNumber, $expirationDate, $cvv);
 
-        if($isCardValid){
-            $correctBuy=$this->processPayment($cardNumber,$expirationDate, $cvv);
-            if($correctBuy){
-                redirect()->route('producto.index')->with('success', 'Pago realizado correctamente. ¡Gracias por tu compra!');
+        if ($isCardValid) {
+            // Procesar el pago
+            $correctBuy = $this->processPayment($request);
+
+            if ($correctBuy) {
+                return redirect()->route('producto.index')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
+            } else {
+                return redirect()->route('checkout')->with('message', 'Hubo un error al procesar el pago. Por favor, inténtalo de nuevo.');
             }
+        } else {
+            return redirect()->route('checkout')->with('message', 'Tarjeta de crédito inválida. Por favor, verifica los datos e inténtalo de nuevo.');
         }
     }
 
-    public function verifyCreditCard($cardNumber, $expirationDate, $cvv){
+    public function verifyCreditCard($cardNumber, $expirationDate, $cvv)
+    {
+
         $isValidCard = !empty($cardNumber) && !empty($expirationDate) && !empty($cvv);
 
         return $isValidCard;
     }
-    public function processPayment(Request $request){
+
+    public function processPayment(Request $request)
+    {
+
         $cardNumber = $request->input('card_number');
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
@@ -69,19 +81,20 @@ class CheckoutController extends Controller{
 
         // Validar la tarjeta de crédito
         if (!preg_match($creditCartPattern, $cardNumber)) {
-            return redirect()->back()->with('message', 'Número de tarjeta de crédito inválido. Por favor, inténtalo de nuevo.');
+            return false;
         }
 
         // Validar la fecha de expiración
         if (!preg_match($expirationPattern, $expirationDate)) {
-            return redirect()->back()->with('message', 'Fecha de expiración inválida. Por favor, inténtalo de nuevo.');
+            return false;
         }
 
         // Validar el CVV
         if (!preg_match($cvvPattern, $cvv)) {
-            return redirect()->back()->with('message', 'CVV inválido. Por favor, inténtalo de nuevo.');
+            return false;
         }
 
-        return redirect()->route('producto.index')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
+
+        return true;
     }
 }
