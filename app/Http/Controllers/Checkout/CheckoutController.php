@@ -24,7 +24,7 @@ class CheckoutController extends Controller{
         $cardNumber = $request->input('card_number');
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
-
+        
 
         // Validar los datos del formulario
         $validator = Validator::make($request->all(), [
@@ -36,7 +36,8 @@ class CheckoutController extends Controller{
         if ($validator->fails()) {
             return redirect()->route('checkout')
                 ->withErrors($validator)
-                ->withInput();
+                ->withInput()
+                ->with('message', 'incorrect data please enter the data again!');
         }
 
         // Verificar la tarjeta de crédito
@@ -66,19 +67,19 @@ class CheckoutController extends Controller{
 
         // Validar la tarjeta de crédito
         if (!preg_match($creditCartPattern, $cardNumber)) {
-            return redirect()->back()->with('error', 'Número de tarjeta de crédito inválido. Por favor, inténtalo de nuevo.');
+            return redirect()->back()->with('message', 'Número de tarjeta de crédito inválido. Por favor, inténtalo de nuevo.');
         }
 
         // Validar la fecha de expiración
         if (!preg_match($expirationPattern, $expirationDate)) {
-            return redirect()->back()->with('error', 'Fecha de expiración inválida. Por favor, inténtalo de nuevo.');
+            return redirect()->back()->with('message', 'Fecha de expiración inválida. Por favor, inténtalo de nuevo.');
         }
 
         // Validar el CVV
         if (!preg_match($cvvPattern, $cvv)) {
-            return redirect()->back()->with('error', 'CVV inválido. Por favor, inténtalo de nuevo.');
+            return redirect()->back()->with('message', 'CVV inválido. Por favor, inténtalo de nuevo.');
         }
 
-        return redirect()->route('producto.index')->with('success', 'Pago realizado correctamente. ¡Gracias por tu compra!');
+        return redirect()->route('producto.index')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
     }
 }
