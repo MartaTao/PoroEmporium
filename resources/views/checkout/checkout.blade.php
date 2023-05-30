@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-2 gap-4 ml-10">
         <div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table id="cart" class="min-w-full divide-y divide-gray-200 my-4 ">
