@@ -9,6 +9,7 @@ use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\UserProfileController\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Checkout\CheckoutController;
+use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Order\OrderController;
 
 /*
@@ -40,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/configuration/changeEmail', [ConfigurationController::class, 'changeEmail'])->name('configuration.changeEmail');
     Route::post('/configuration/storePass', [ConfigurationController::class, 'storePass'])->name('configuration.storePass');
     Route::post('/configuration/storeEmail', [ConfigurationController::class, 'storeEmail'])->name('configuration.storeEmail');
+    Route::resource('/comment',CommentController::class);
 });
 Route::resource('/product',ProductController::class);
 Route::middleware(['auth', 'role:Admin'])->group(function () {

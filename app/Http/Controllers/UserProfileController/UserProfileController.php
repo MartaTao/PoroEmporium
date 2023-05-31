@@ -22,7 +22,8 @@ class UserProfileController extends Controller
 
     public function create()
     {
-        return view('profile.create');
+        $categorias=Categorie::all();
+        return view('profile.create',compact('categorias'));
     }
 
     /**
