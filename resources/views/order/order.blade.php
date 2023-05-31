@@ -8,11 +8,6 @@
         <p>Fecha: {{ $order->created_at }}</p>
         <p>Total: {{ $order->total }}</p>
         <h3>Productos:</h3>
-        <ul>
-            @foreach ($order->products as $product)
-                <li>{{ $product->name }}</li>
-            @endforeach
-        </ul>
     @else
         <p>No se encontró la orden.</p>
     @endif
