@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Carrito\Carrito;
 use App\Models\Categorie\Categorie;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Order\Order;
+use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
@@ -42,7 +44,9 @@ class CheckoutController extends Controller
             $correctBuy = $this->processPayment($request);
 
             if ($correctBuy) {
-                return redirect()->route('checkout')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
+                $this->saveOrder($request);
+                session()->forget('cart');
+                return redirect()->route('product.index')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
             } else {
                 return redirect()->route('checkout')->with('message', 'Datos introducidos erroneos en el pago. Por favor, inténtalo de nuevo.');
             }
@@ -99,5 +103,26 @@ class CheckoutController extends Controller
 
 
         return true;
+    }
+    public function saveOrder(Request $request)
+    {
+        $user = Auth::user();
+        $cart = session()->get('cart', []);
+        $total = 0;
+
+        foreach ($cart as $producto) {
+            $total += $producto['precio'] * $producto['cantidad'];
+        }
+
+        // Creamos una nueva instancia del modelo Order y guardar los datos
+        $order = new Order();
+        $order->user_id = $user->id;
+        $order->total = $total;
+        $order->save();
+
+        // Guardar los productos asociados a la orden en una tabla pivote
+        foreach ($cart as $producto) {
+            $order->products()->attach($producto['id'], ['quantity' => $producto['cantidad']]);
+        }
     }
 }
