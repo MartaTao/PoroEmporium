@@ -18,8 +18,19 @@ class OrderController extends Controller
         // Obtener todas las órdenes del usuario actual
         $orders = Order::where('user_id', $user->id)->get();
         
-        return view('order.order', compact('categorias', 'orders'));
+        // Verificar si hay un ID de orden en la sesión
+        $order_id = session('order_id');
+    
+        if ($order_id) {
+            // Obtener la orden correspondiente al ID
+            $order = Order::find($order_id);
+        } else {
+            $order = null;
+        }
+    
+        return view('order.order', compact('categorias', 'orders', 'order'));
     }
+    
     
 
 }

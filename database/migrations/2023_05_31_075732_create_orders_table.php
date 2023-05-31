@@ -16,11 +16,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->dateTime('date')->default(now());
-            $table->decimal('price', 8, 2);
             $table->decimal('total', 8, 2);
-            $table->string('status');
+            $table->string('status')->default('pending');
             $table->timestamps();
-            
         });
     }
 
@@ -32,3 +30,4 @@ return new class extends Migration
         Schema::dropIfExists('orders');
     }
 };
+

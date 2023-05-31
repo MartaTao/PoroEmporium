@@ -33,9 +33,6 @@ class CheckoutController extends Controller
         $expirationDate = $request->input('expiration_date');
         $cvv = $request->input('cvv');
 
-
-
-
         // Verificar  si a introducido datos
         $isCardValid = $this->verifyCreditCard($cardNumber, $expirationDate, $cvv);
 
@@ -44,7 +41,32 @@ class CheckoutController extends Controller
             $correctBuy = $this->processPayment($request);
 
             if ($correctBuy) {
+
+                /*
+                // Clonar datos del carrito en una nueva orden
+                $cart = session()->get('cart', []);
+                $total = 0;
+
+                foreach ($cart as $producto) {
+                    $total += $producto['precio'] * $producto['cantidad'];
+                }
+
+                $user = Auth::user();
+                $order = new Order();
+                $order->user_id = $user->id;
+                $order->total = $total;
+                $order->status = 'pending';
+                $order->save();
+                $cart = session()->get('cart', []);
+                foreach ($cart as $producto) {
+                    $order->products()->attach($producto['id']);
+                }
+                */
+                // Borrar la sesión del carrito
                 session()->forget('cart');
+
+                // Guardar el ID de la orden en la sesión
+                //session()->put('order_id', $order->id);
                 return redirect()->route('product.index')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
             } else {
                 return redirect()->route('checkout')->with('message', 'Datos introducidos erroneos en el pago. Por favor, inténtalo de nuevo.');
@@ -103,5 +125,5 @@ class CheckoutController extends Controller
 
 
         return true;
-    }  
+    }
 }
