@@ -77,8 +77,9 @@ class CheckoutController extends Controller
         $currentDate = now();
 
         $cvv = $request->input('cvv');
-        //pattern para la tarjeta de credito y el cvv
-        $creditCartPattern = '/^[1-9]{16}$/';
+        //pattern para la tarjeta de credito mastercard
+        $creditCartPattern = '/^5[1-5][0-9]{14}|^(222[1-9]|22[3-9]\\d|2[3-6]\\d{2}|27[0-1]\\d|2720)[0-9]{12}$/';
+        //pattern cvv
         $cvvPattern = '/^[0-9]{3,4}$/';
 
         // Validar la tarjeta de crédito
