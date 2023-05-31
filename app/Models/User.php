@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Carrito\Carrito;
+use App\Models\Comment\Comment;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -57,5 +59,9 @@ class User extends Authenticatable
     public function carrito(): HasOne
     {
         return $this->hasOne(Carrito::class,'user_id');
+    }
+    public function comment(): HasMany
+    {
+        return $this->hasmany(Comment::class);
     }
 }

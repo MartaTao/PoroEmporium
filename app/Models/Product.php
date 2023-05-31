@@ -9,6 +9,7 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Traits\MediaLibraryTrait;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
@@ -20,8 +21,8 @@ class Product extends Model
        'precio',
        'cantidad',
     ];
-
-    public function carrito():BelongsToMany{
-        return $this->belongsToMany(Carrito::class);
+    public function comment(): HasMany
+    {
+        return $this->hasmany(Comment::class);
     }
 }

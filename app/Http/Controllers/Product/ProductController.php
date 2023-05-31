@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
 use App\Models\Categorie\Categorie;
+use App\Models\Comment\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -55,7 +56,11 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $categorias=Categorie::all();
-        return view('product.product',compact('product','categorias'));
+        $comentarios = Comment::with('user.userProfile')->where('product_id',$product->id)->paginate(10);
+        $mediaValoraciones = Comment::avg('valoracion');
+        $mediaValoraciones=number_format($mediaValoraciones,1);
+        $mediaTruncada =floor($mediaValoraciones);
+        return view('product.product',compact('product','categorias','comentarios','mediaValoraciones','mediaTruncada'));
     }
 
     /**
