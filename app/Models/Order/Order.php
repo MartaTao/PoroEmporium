@@ -15,6 +15,7 @@ class Order extends Model
         'user_id',
         'date',
         'price',
+        'total',
         'status',
     ];
 
