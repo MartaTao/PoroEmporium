@@ -19,12 +19,12 @@ class Order extends Model
         'status',
     ];
 
-    public function cliente(): HasOne
+    public function user(): HasOne
     {
-        return $this->hasOne(cliente::class);
+        return $this->hasOne(user::class);
     }
 
-    public function producto():HasMany{
+    public function product():HasMany{
         return $this->HasMany(Product::class);
     }
 
