@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order\Order;
+use App\Models\Product\Product;
 use App\Models\Categorie\Categorie;
 use Illuminate\Support\Facades\Auth;
 

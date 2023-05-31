@@ -1,8 +1,13 @@
 @extends('layouts.layout')
+
 @section('content')
-    @foreach ($orders as $order)
-        <p>Orden ID: {{ $order->id }}</p>
-    @endforeach
+    <h1>Detalles de la orden</h1>
+    <h2>Productos:</h2>
+    <p>Fecha</p>
+    <p>Total</p>
+
+
 @endsection
+
 @section('scripts')
 @endsection
