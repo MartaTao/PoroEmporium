@@ -9,6 +9,7 @@ use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\UserProfileController\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Checkout\CheckoutController;
+use App\Http\Controllers\Order\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::get('/cart/add-product/{id}',[CartController::class, 'addToCart'])->name(
 Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout');
 Route::post('/checkout', [CheckoutController::class, 'pay'])->name('checkout.pay');
 Route::delete('cart/remove-product/{nombre}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::get('/order',[OrderController::class,'index'])->name('order.index');
 Route::middleware('auth')->group(function () {
     Route::resource('/profile', UserProfileController::class);
     Route::get('/configuration/create', [ConfigurationController::class, 'create'])->name('configuration.create');
