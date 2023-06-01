@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Carrito\Carrito;
+use App\Models\Order\Order;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -24,5 +25,9 @@ class Product extends Model
     public function comment(): HasMany
     {
         return $this->hasmany(Comment::class);
+    }
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'order_product', 'product_id', 'order_id');
     }
 }

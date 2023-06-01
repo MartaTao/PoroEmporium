@@ -42,7 +42,7 @@ class CheckoutController extends Controller
 
             if ($correctBuy) {
 
-                /*
+                
                 // Clonar datos del carrito en una nueva orden
                 $cart = session()->get('cart', []);
                 $total = 0;
@@ -61,7 +61,7 @@ class CheckoutController extends Controller
                 foreach ($cart as $producto) {
                     $order->products()->attach($producto['id']);
                 }
-                */
+                
                 // Borrar la sesión del carrito
                 session()->forget('cart');
 
