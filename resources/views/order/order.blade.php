@@ -20,6 +20,7 @@
                         @endforeach
                     </ul>
                 </li>
+                <hr>
             @endforeach
         </ul>
     @endif
