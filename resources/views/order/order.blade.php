@@ -1,28 +1,27 @@
 @extends('layouts.layout')
 
 @section('content')
-    <h1>Mis órdenes</h1>
+<h1>Mis órdenes</h1>
+<hr>
+@if ($orders->isEmpty())
+<p>No se encontraron órdenes.</p>
+@else
+<ul>
+    @foreach ($orders as $order)
+    <li>
+        <p>Número de orden: {{ $order->id }}</p>
+        <p>Total: {{ $order->total }}</p>
+        <p>Fecha: {{ $order->created_at }}</p>
 
-    @if ($orders->isEmpty())
-        <p>No se encontraron órdenes.</p>
-    @else
+        <h2>Productos:</h2>
         <ul>
-            @foreach ($orders as $order)
-                <li>
-                    <p>Número de orden: {{ $order->id }}</p>
-                    <p>Total: {{ $order->total }}</p>
-                    <p>Fecha: {{ $order->created_at }}</p>
-
-                    <h2>Productos:</h2>
-                    <ul>
-                        @foreach ($order->products as $product)
-                            <li>{{ $product->nombre }} - Cantidad = {{ $product->pivot->cantidad }}</li>
-                        @endforeach
-                    </ul>
-                </li>
-                <hr>
+            @foreach ($order->products as $product)
+            <li>{{ $product->nombre }} - Cantidad = {{ $product->pivot->cantidad }}</li>
             @endforeach
         </ul>
-    @endif
+    </li>
+    <hr>
+    @endforeach
+</ul>
+@endif
 @endsection
-
