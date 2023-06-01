@@ -41,7 +41,6 @@ class CheckoutController extends Controller
             $correctBuy = $this->processPayment($request);
 
             if ($correctBuy) {
-
                 
                 // Clonar datos del carrito en una nueva orden
                 $cart = session()->get('cart', []);
@@ -57,16 +56,12 @@ class CheckoutController extends Controller
                 $order->total = $total;
                 $order->status = 'pending';
                 $order->save();
-                $cart = session()->get('cart', []);
+
                 foreach ($cart as $producto) {
-                    $order->products()->attach($producto['id']);
+                    $order->products()->attach($producto['id'], ['cantidad' => $producto['cantidad']]);
                 }
-                
                 // Borrar la sesión del carrito
                 session()->forget('cart');
-
-                // Guardar el ID de la orden en la sesión
-                //session()->put('order_id', $order->id);
                 return redirect()->route('product.index')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
             } else {
                 return redirect()->route('checkout')->with('message', 'Datos introducidos erroneos en el pago. Por favor, inténtalo de nuevo.');

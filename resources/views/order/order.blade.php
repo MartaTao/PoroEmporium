@@ -16,8 +16,7 @@
                     <h2>Productos:</h2>
                     <ul>
                         @foreach ($order->products as $product)
-                            <li>{{ $product->nombre }} - Cantidad = {{$order->cantidad}}</li>
-                            
+                            <li>{{ $product->nombre }} - Cantidad = {{ $product->pivot->cantidad }}</li>
                         @endforeach
                     </ul>
                 </li>
@@ -25,3 +24,4 @@
         </ul>
     @endif
 @endsection
+
