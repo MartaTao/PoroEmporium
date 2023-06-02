@@ -50,6 +50,21 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'products_avatar' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/avatars/products/'),
+            'url' => env('APP_URL').'/storage/avatars/products',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'products_images' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/products/'),
+            'url' => env('APP_URL').'/storage/products',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',

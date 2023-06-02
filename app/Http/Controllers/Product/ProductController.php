@@ -7,6 +7,7 @@ use App\Models\Categorie\Categorie;
 use App\Models\Comment\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -15,23 +16,21 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        if (!is_null($request->categoria)&&$request->categoria != 'Categoria') {
-            if($request->buscador!=''){
-                $products= Product::where('categoria',$request->categoria)->where('nombre', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
-            }else{
-                $products= Product::where('categoria',$request->categoria)->paginate(10);
+        if (!is_null($request->categoria) && $request->categoria != 'Categoria') {
+            if ($request->buscador != '') {
+                $products = Product::where('categoria', $request->categoria)->where('nombre', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
+            } else {
+                $products = Product::where('categoria', $request->categoria)->paginate(10);
             }
-
-        }else{
-            if($request->buscador!=''){
-                $products= Product::where('nombre', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
-            }else{
-                $products= Product::all();
+        } else {
+            if ($request->buscador != '') {
+                $products = Product::where('nombre', 'LIKE', '%' . $request->buscador . '%')->paginate(10);
+            } else {
+                $products = Product::all();
             }
-
         }
-        $categorias=Categorie::all();
-        return  view('product.index',compact('products','categorias'));
+        $categorias = Categorie::all();
+        return  view('product.index', compact('products', 'categorias'));
     }
 
     /**
@@ -47,7 +46,30 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre'=>['required','string','max:255','regex:/^[a-zA-Z\s]*$/'],
+            'categoria'=>['required', Rule::in(Categorie::pluck('nombre')->toArray())],
+            'descripcion'=>['required','string','max:255',],
+            'precio'=>['required'],
+            'cantidad'=>['required'],
+        ]);
+        $producto = Product::create([
+            'nombre'=>$request->nombre,
+            'categoria'=>$request->categoria,
+            'descripcion'=>$request->descripcion,
+            'precio'=>$request->precio,
+            'cantidad'=>$request->cantidad,
+        ]);
+        if (isset($request->product_avatar)) {
+            $producto->addMediaFromRequest('product_avatar')->toMediaCollection('products_avatar');
+        }
+        if (isset($request->product_images)) {
+            $images = array_slice($request->product_images, 0, 5);
+            foreach ($images as $image) {
+                $producto->addMedia($image)->toMediaCollection('products_images');
+            }
+        }
+        return redirect(route('admin.index'))->with('message', 'Prodcuto añadido correctamente.')->with('tab','products');
     }
 
     /**
@@ -55,12 +77,12 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $categorias=Categorie::all();
-        $comentarios = Comment::with('user.userProfile')->where('product_id',$product->id)->paginate(10);
-        $mediaValoraciones = Comment::avg('valoracion');
-        $mediaValoraciones=number_format($mediaValoraciones,1);
-        $mediaTruncada =floor($mediaValoraciones);
-        return view('product.product',compact('product','categorias','comentarios','mediaValoraciones','mediaTruncada'));
+        $categorias = Categorie::all();
+        $comentarios = Comment::with('user.userProfile')->where('product_id', $product->id)->paginate(10);
+        /* $mediaValoraciones = Comment::where('product_id',$product)->avg('valoracion');
+        $mediaValoraciones = number_format($mediaValoraciones, 1); */
+        $mediaTruncada = floor($product->valoracion);
+        return view('product.product', compact('product', 'categorias', 'comentarios', 'mediaTruncada'));
     }
 
     /**
@@ -86,5 +108,4 @@ class ProductController extends Controller
     {
         //
     }
-
 }

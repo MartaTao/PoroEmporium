@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Comment;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comment\Comment;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -32,6 +34,12 @@ class CommentController extends Controller
             'product_id' => $request->id_product,
             'valoracion' => $request->rating,
             'comentario' => $request->comment,
+        ]);
+        $valoracion = Comment::where('product_id', $request->id_product)->avg('valoracion');
+        $valoracion = number_format($valoracion, 1);
+        $producto = Product::where('id', $request->id_product);
+        $producto->update([
+            'valoracion' => $valoracion,
         ]);
         return redirect(route('product.show', $request->id_product,));
     }

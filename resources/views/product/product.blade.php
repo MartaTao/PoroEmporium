@@ -7,30 +7,25 @@
                 <div>
                     <div class="grid gap-4">
                         <div>
-                            <img class="h-auto max-w-full rounded-lg"
-                                src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
+                            @if (!is_null($product->getMedia('products_avatar')->first()))
+                                <img class="h-auto max-w-full rounded-lg product_images " id="imagen_principal" data-src="{{ $product->getMedia('products_avatar')->first()->getUrl() }}"
+                                    src="{{ $product->getMedia('products_avatar')->first()->getUrl() }}"
+                                    alt="Imagen principal del producto">
+                            @else
+                                <img class="h-auto max-w-full rounded-lg"
+                                    src="https://flowbite.s3.amazonaws.com/docs/gallery/featured/image.jpg" alt="">
+                            @endif
                         </div>
                         <div class="grid grid-cols-5 gap-4">
-                            <div>
-                                <img class="h-auto max-w-full rounded-lg"
-                                    src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-1.jpg" alt="">
-                            </div>
-                            <div>
-                                <img class="h-auto max-w-full rounded-lg"
-                                    src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-2.jpg" alt="">
-                            </div>
-                            <div>
-                                <img class="h-auto max-w-full rounded-lg"
-                                    src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-3.jpg" alt="">
-                            </div>
-                            <div>
-                                <img class="h-auto max-w-full rounded-lg"
-                                    src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-4.jpg" alt="">
-                            </div>
-                            <div>
-                                <img class="h-auto max-w-full rounded-lg"
-                                    src="https://flowbite.s3.amazonaws.com/docs/gallery/square/image-5.jpg" alt="">
-                            </div>
+                            @if (!is_null($product->getMedia('products_images')->first()))
+                                @foreach ($product->getMedia('products_images') as $media)
+                                    <div>
+                                        <img class="h-auto max-w-full rounded-lg  product_images" data-src="{{ $media->getUrl() }}" src="{{ $media->getUrl() }}"
+                                            alt="Imagenes del producto">
+                                            <div class="lupa"></div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
 
@@ -43,40 +38,59 @@
 
                     <!--Rating-->
                     <div class="flex items-center mt-2.5 mb-5">
-                        @for ($i = 1; $i < $mediaTruncada; $i++)
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
-                                stroke-width="0.5" class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5"
-                                viewBox="0 0 16 16">
-                                <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
-                                <path
-                                    d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
-                            </svg>
-                        @endfor
-                        @if ($mediaTruncada < $mediaValoraciones)
-                            <svg xmlns="http://www.w3.org/2000/svg" stroke-width="0.5"
-                                class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5" viewBox="0 0 16 16">
-                                <path d="M 8 7.5 a 0.5 0.5 0 1 0 0 1 z" fill="#C3DDFD" stroke="#C3DDFD" />
-                                <path d="M 8 7.5 a 0.5 0.5 0 0 1 0 1 z" fill="#76A9FA" stroke="#76A9FA" />
-                                <path
-                                    d="M 8 16 a 0.5 0.5 0 0 1 -0.5 -0.5 v -1.293 l -0.646 0.647 a 0.5 0.5 0 0 1 -0.707 -0.708 L 7.5 12.793 v -1.51 l -2.053 -1.232 l -1.348 0.778 l -0.495 1.85 a 0.5 0.5 0 1 1 -0.966 -0.26 l 0.237 -0.882 l -1.12 0.646 a 0.5 0.5 0 0 1 -0.5 -0.866 l 1.12 -0.646 l -0.883 -0.237 a 0.5 0.5 0 1 1 0.258 -0.966 l 1.85 0.495 L 5 9.155 v -2.31 l -1.4 -0.808 l -1.85 0.495 a 0.5 0.5 0 1 1 -0.259 -0.966 l 0.884 -0.237 l -1.12 -0.646 a 0.5 0.5 0 0 1 0.5 -0.866 l 1.12 0.646 l -0.237 -0.883 a 0.5 0.5 0 1 1 0.966 -0.258 l 0.495 1.849 l 1.348 0.778 L 7.5 4.717 v -1.51 L 6.147 1.854 a 0.5 0.5 0 1 1 0.707 -0.708 l 0.646 0.647 V 0.5 a 0.5 0.5 0 0 1 0.5 -0.5 L 7.955 5.479 L 5.999 6.816 L 5.999 9.291 L 8.004 10.578z "
-                                    fill="#C3DDFD" stroke="#C3DDFD" />
-                                <path
-                                    d="M 7.991 10.431 L 9.948 9.465 V 6.814 L 8.016 5.501 V 5.424 a 0 0.5 0 0 0 -0.013 -5.424 A 2 -9 0 0 1 8.457 0.505 v 1.293 l 0.647 -0.647 a 0.5 0.5 0 1 1 0.707 0.708 L 8.5 3.207 v 1.51 l 2.053 1.232 l 1.348 -0.778 l 0.495 -1.85 a 0.5 0.5 0 1 1 0.966 0.26 l -0.236 0.882 l 1.12 -0.646 a 0.5 0.5 0 0 1 0.5 0.866 l -1.12 0.646 l 0.883 0.237 a 0.5 0.5 0 1 1 -0.26 0.966 l -1.848 -0.495 l -1.4 0.808 v 2.31 l 1.4 0.808 l 1.849 -0.495 a 0.5 0.5 0 1 1 0.259 0.966 l -0.883 0.237 l 1.12 0.646 a 0.5 0.5 0 0 1 -0.5 0.866 l -1.12 -0.646 l 0.236 0.883 a 0.5 0.5 0 1 1 -0.966 0.258 l -0.495 -1.849 l -1.348 -0.778 L 8.5 11.283 v 1.51 l 1.354 1.353 a 0.5 0.5 0 0 1 -0.707 0.708 l -0.647 -0.647 V 15.512 a 0.5 0.5 0 0 1 -0.5 0.5 z"
-                                    fill="#76A9FA" stroke="#76A9FA" />
-                            </svg>
+                        @if (is_null($product->valoracion))
+                            @for ($i = 1; $i <= 5; $i++)
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                                    stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
+                                    viewBox="0 0 16 16">
+                                    <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
+                                    <path
+                                        d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
+                                </svg>
+                            @endfor
                         @else
+                            @for ($i = 1; $i < $mediaTruncada; $i++)
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                                    stroke-width="0.5" class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5"
+                                    viewBox="0 0 16 16">
+                                    <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
+                                    <path
+                                        d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
+                                </svg>
+                            @endfor
+                            @if ($mediaTruncada < $product->valoracion)
+                                <svg xmlns="http://www.w3.org/2000/svg" stroke-width="0.5"
+                                    class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5" viewBox="0 0 16 16">
+                                    <path d="M 8 7.5 a 0.5 0.5 0 1 0 0 1 z" fill="#C3DDFD" stroke="#C3DDFD" />
+                                    <path d="M 8 7.5 a 0.5 0.5 0 0 1 0 1 z" fill="#76A9FA" stroke="#76A9FA" />
+                                    <path
+                                        d="M 8 16 a 0.5 0.5 0 0 1 -0.5 -0.5 v -1.293 l -0.646 0.647 a 0.5 0.5 0 0 1 -0.707 -0.708 L 7.5 12.793 v -1.51 l -2.053 -1.232 l -1.348 0.778 l -0.495 1.85 a 0.5 0.5 0 1 1 -0.966 -0.26 l 0.237 -0.882 l -1.12 0.646 a 0.5 0.5 0 0 1 -0.5 -0.866 l 1.12 -0.646 l -0.883 -0.237 a 0.5 0.5 0 1 1 0.258 -0.966 l 1.85 0.495 L 5 9.155 v -2.31 l -1.4 -0.808 l -1.85 0.495 a 0.5 0.5 0 1 1 -0.259 -0.966 l 0.884 -0.237 l -1.12 -0.646 a 0.5 0.5 0 0 1 0.5 -0.866 l 1.12 0.646 l -0.237 -0.883 a 0.5 0.5 0 1 1 0.966 -0.258 l 0.495 1.849 l 1.348 0.778 L 7.5 4.717 v -1.51 L 6.147 1.854 a 0.5 0.5 0 1 1 0.707 -0.708 l 0.646 0.647 V 0.5 a 0.5 0.5 0 0 1 0.5 -0.5 L 7.955 5.479 L 5.999 6.816 L 5.999 9.291 L 8.004 10.578z "
+                                        fill="#C3DDFD" stroke="#C3DDFD" />
+                                    <path
+                                        d="M 7.991 10.431 L 9.948 9.465 V 6.814 L 8.016 5.501 V 5.424 a 0 0.5 0 0 0 -0.013 -5.424 A 2 -9 0 0 1 8.457 0.505 v 1.293 l 0.647 -0.647 a 0.5 0.5 0 1 1 0.707 0.708 L 8.5 3.207 v 1.51 l 2.053 1.232 l 1.348 -0.778 l 0.495 -1.85 a 0.5 0.5 0 1 1 0.966 0.26 l -0.236 0.882 l 1.12 -0.646 a 0.5 0.5 0 0 1 0.5 0.866 l -1.12 0.646 l 0.883 0.237 a 0.5 0.5 0 1 1 -0.26 0.966 l -1.848 -0.495 l -1.4 0.808 v 2.31 l 1.4 0.808 l 1.849 -0.495 a 0.5 0.5 0 1 1 0.259 0.966 l -0.883 0.237 l 1.12 0.646 a 0.5 0.5 0 0 1 -0.5 0.866 l -1.12 -0.646 l 0.236 0.883 a 0.5 0.5 0 1 1 -0.966 0.258 l -0.495 -1.849 l -1.348 -0.778 L 8.5 11.283 v 1.51 l 1.354 1.353 a 0.5 0.5 0 0 1 -0.707 0.708 l -0.647 -0.647 V 15.512 a 0.5 0.5 0 0 1 -0.5 0.5 z"
+                                        fill="#76A9FA" stroke="#76A9FA" />
+                                </svg>
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                                    stroke-width="0.5" class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5"
+                                    viewBox="0 0 16 16">
+                                    <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
+                                    <path
+                                        d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
+                                </svg>
+                            @endif
+                            @for ($i = $mediaTruncada; $i < 5; $i++)
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                                    stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
+                                    viewBox="0 0 16 16">
+                                    <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
+                                    <path
+                                        d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
+                                </svg>
+                            @endfor
                         @endif
-                        @for ($i = $mediaTruncada; $i < 5; $i++)
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
-                                stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
-                                viewBox="0 0 16 16">
-                                <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
-                                <path
-                                    d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
-                            </svg>
-                        @endfor
                         <span
-                            class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ $mediaValoraciones }}</span>
+                            class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ !is_null($product->valoracion) ? $product->valoracion : '0.0' }}</span>
                     </div>
                 </div>
 
@@ -172,15 +186,15 @@
                     <div class="col-span-2">
                         @foreach ($comentarios as $comentario)
                             <div class="p-6 flex space-x-2">
-                                @if (!is_null( $comentario->user->userProfile->getMedia('users_avatar')->first()))
+                                @if (!is_null($comentario->user->userProfile->getMedia('users_avatar')->first()))
                                     <img class="w-8 h-8 rounded-full"
-                                        src="{{  $comentario->user->userProfile->getMedia('users_avatar')->first()->getUrl() }}"
+                                        src="{{ $comentario->user->userProfile->getMedia('users_avatar')->first()->getUrl() }}"
                                         alt="user photo">
                                 @else
                                     <div
                                         class="relative inline-flex items-center justify-center  w-8 h-8 overflow-hidden bg-blue-200 rounded-full">
                                         <span
-                                            class="font-medium text-base text-gray-900 uppercase">{{ $fisrtLetter = substr( $comentario->user->userProfile->name, 0, 1) }}{{ $secondtLetter = substr( $comentario->user->userProfile->first_surname, 0, 1) }}</span></span>
+                                            class="font-medium text-base text-gray-900 uppercase">{{ $fisrtLetter = substr($comentario->user->userProfile->name, 0, 1) }}{{ $secondtLetter = substr($comentario->user->userProfile->first_surname, 0, 1) }}</span></span>
                                     </div>
                                 @endif
                                 <div class="flex-1">
@@ -280,5 +294,15 @@
             }
             $('#rating').val(value);
         });
+
+        $('.product_images').on('click',function(){
+            var src= $(this).data('src');
+            var imagen_principal=$('#imagen_principal').data('src');
+            $('#imagen_principal').attr('src',src);
+            $('#imagen_principal').data('src', src);
+            $(this).attr('src',imagen_principal);
+            $(this).data('src', imagen_principal);
+        });
+
     </script>
 @endsection

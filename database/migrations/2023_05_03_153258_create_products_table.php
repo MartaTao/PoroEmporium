@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('descripcion');
             $table->float('precio');
             $table->integer('cantidad');
+            $table->float('valoracion')->nullable();
             $table->timestamps();
         });
     }

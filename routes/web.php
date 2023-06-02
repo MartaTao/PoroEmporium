@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Comment\CommentController;
 use App\Http\Controllers\Order\OrderController;
+use App\Http\Controllers\User\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::post('/checkout', [CheckoutController::class, 'pay'])->name('checkout.pay
 Route::delete('cart/remove-product/{nombre}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::get('/order',[OrderController::class,'index'])->name('order.index');
 Route::middleware('auth')->group(function () {
+    Route::resource('/user',UserController::class);
     Route::resource('/profile', UserProfileController::class);
     Route::get('/configuration/create', [ConfigurationController::class, 'create'])->name('configuration.create');
     Route::get('/configuration/changePass', [ConfigurationController::class, 'changePass'])->name('configuration.changePass');

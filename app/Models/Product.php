@@ -12,9 +12,9 @@ use App\Traits\MediaLibraryTrait;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Product extends Model
+class Product extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory,InteractsWithMedia;
     protected $fillable = [
        'nombre',
        'categoria',
@@ -22,10 +22,26 @@ class Product extends Model
        'precio',
        'cantidad',
     ];
+
+    //Media
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('products_avatar')
+            ->singleFile()
+            ->useDisk('products_avatar')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+
+            $this->addMediaCollection('products_images')
+            ->useDisk('products_images')
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
+    }
+    //relacion con comentarios y valoración
     public function comment(): HasMany
     {
         return $this->hasmany(Comment::class);
     }
+
+    //Relación con los pedidos
     public function orders(): BelongsToMany
     {
         return $this->belongsToMany(Order::class, 'order_product', 'product_id', 'order_id');

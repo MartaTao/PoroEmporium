@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorie\Categorie;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
@@ -15,12 +15,12 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $roles = Role::whereNotIn('name', ['Admin'])->paginate(10);
-        $permissions = Permission::all();
+        $categorias=Categorie::all();
+        $productos=Product::paginate(10);
         $users = User::with('userProfile')->whereDoesntHave('roles', function ($query) {
             $query->where('name', 'Admin');
         })->paginate(10);
-        return view('admin.index', compact('users','roles','permissions'));
+        return view('admin.index', compact('users','productos','categorias'));
     }
 
     /**
