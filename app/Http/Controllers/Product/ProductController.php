@@ -69,7 +69,7 @@ class ProductController extends Controller
                 $producto->addMedia($image)->toMediaCollection('products_images');
             }
         }
-        return redirect(route('admin.index'))->with('message', 'Prodcuto añadido correctamente.')->with('tab','products');
+        return redirect(route('admin.index'))->with('message', 'Producto añadido correctamente.')->with('tab','products');
     }
 
     /**
@@ -119,7 +119,7 @@ class ProductController extends Controller
                 $producto->addMedia($image)->toMediaCollection('products_images');
             }
         }
-        return redirect(route('admin.index'))->with('message', 'Prodcuto editado correctamente.')->with('tab','products');
+        return redirect(route('admin.index'))->with('message', 'Producto editado correctamente.')->with('tab','products');
     }
 
     /**
@@ -127,6 +127,8 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $producto=Product::where('id',$id)->first();
+        $producto->delete();
+        return redirect(route('admin.index'))->with('message', 'Producto eliminado correctamente.')->with('tab','products');
     }
 }

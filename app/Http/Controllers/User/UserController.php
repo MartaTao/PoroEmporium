@@ -55,7 +55,7 @@ class UserController extends Controller
             'mobile' => $request->mobile,
         ]);
         if (isset($request->users_avatar)) {
-            $profile->addMediaFromRequest('users_avatar')->toMediaCollection('users_avatar');
+            $user->userProfile->addMediaFromRequest('users_avatar')->toMediaCollection('users_avatar');
         }
 
         return redirect(route('admin.index'))->with('message', 'Usuario creado correctamente.')->with('tab', 'users');
@@ -123,6 +123,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::where('id', $id)->first();
+        $user->delete();
+        return redirect(route('admin.index'))->with('message', 'Usuario eliminado correctamente.')->with('tab', 'users');
     }
 }

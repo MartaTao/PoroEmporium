@@ -17,18 +17,6 @@
                             aria-controls="product"
                             aria-selected="{{ Session::get('tab') === 'products' ? 'true' : 'false' }}">Productos</button>
                     </li>
-                    <li class="mr-2" role="presentation">
-                        <button
-                            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="settings-tab" data-tabs-target="#settings" type="button" role="tab"
-                            aria-controls="settings" aria-selected="false">Settings</button>
-                    </li>
-                    <li role="presentation">
-                        <button
-                            class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="contacts-tab" data-tabs-target="#contacts" type="button" role="tab"
-                            aria-controls="contacts" aria-selected="false">Contacts</button>
-                    </li>
                 </ul>
             </div>
 
@@ -220,7 +208,7 @@
                                                 </li>
                                                 <li>
                                                     <a href="#"
-                                                        class="delete-user-btn block px-4 py-2 bg-red-500 hover:bg-red-800 text-white"
+                                                        class="delete-user_btn block px-4 py-2 bg-red-500 hover:bg-red-800 text-white"
                                                         data-id="{{ $user->id }}">
                                                         <div class="grid grid-cols-4">
                                                             <div>
@@ -408,6 +396,30 @@
                                                         </div>
                                                     </a>
                                                 </li>
+                                                {{-- @if ($producto->cantidad < 1)
+                                                    <li>
+                                                        <a href="#"
+                                                            class="block px-4 py-2 bg-emerald-400 hover:bg-emerald-500 text-white">
+                                                            <div class="grid grid-cols-4">
+                                                                <div>
+                                                                    <svg class="w-6 h-6" fill="none"
+                                                                        stroke="currentColor" stroke-width="1.5"
+                                                                        viewBox="0 0 24 24"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        aria-hidden="true">
+                                                                        <path stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12">
+                                                                        </path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="w-6 h-6 text-start col-span-3 text-base">
+                                                                    Reponer
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                @endif --}}
                                                 <li>
                                                     <a href="#"
                                                         class="block px-4 py-2 bg-purple-400 hover:bg-purple-500 text-white">
@@ -417,7 +429,7 @@
                                                                     stroke-width="1.5" viewBox="0 0 24 24"
                                                                     xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                                                                     <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75">
+                                                                        d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185zM9.75 9h.008v.008H9.75V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 4.5h.008v.008h-.008V13.5zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z">
                                                                     </path>
                                                                 </svg>
                                                             </div>
@@ -454,20 +466,6 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel"
-                    aria-labelledby="settings-tab">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                            class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>.
-                        Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                        classes to control the content visibility and styling.</p>
-                </div>
-                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="contacts" role="tabpanel"
-                    aria-labelledby="contacts-tab">
-                    <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong
-                            class="font-medium text-gray-800 dark:text-white">Contacts tab's associated content</strong>.
-                        Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps
-                        classes to control the content visibility and styling.</p>
-                </div>
             </div>
             <!--Modals-->
 
@@ -494,7 +492,7 @@
                                 class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
                                 New user
                             </h1>
-                            <form method="POST" action="{{ route('user.store') }}">
+                            <form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="grid md:grid-cols-2 md:gap-6">
                                     <div class="relative z-0 w-full mb-6 group">
@@ -610,7 +608,15 @@
                                         @enderror
                                     </div>
                                 </div>
-
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <label class="text-gray-500" for="file_user_input">Imagen de perfil</label>
+                                    <input
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer dropify"
+                                        data-height="50" data-width="50" aria-describedby="file_input_help"
+                                        id="file_user_input" type="file" name="users_avatar">
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG
+                                        or JPG .</p>
+                                </div>
                                 <button type="submit"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
                             </form>
@@ -654,9 +660,9 @@
                                         @enderror
                                     </div>
                                     <div class="relative z-0 w-full mb-6 group">
-                                        <label for="categoria"
+                                        <label for="categoria_prod"
                                             class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Categoria</label>
-                                        <select id="categoria" name="categoria" autocomplete="role-name"
+                                        <select id="categoria_prod" name="categoria" autocomplete="role-name"
                                             class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">
                                             @foreach ($categorias as $categoria)
                                                 <option class="dark:bg-gray-900" value="{{ $categoria->nombre }}">
@@ -701,10 +707,11 @@
                                     @enderror
                                 </div>
                                 <div class="relative z-0 w-full mb-6 group">
-                                    <label class=" text-gray-500 " for="file_input">Imagen principal del producto</label>
+                                    <label class=" text-gray-500 " for="file_avatar_input">Imagen principal del
+                                        producto</label>
                                     <input
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600  dropify"
-                                        aria-describedby="file_input_help" id="file_input" type="file"
+                                        aria-describedby="file_input_help" id="file_avatar_input" type="file"
                                         name="product_avatar">
                                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or
                                         JPG
@@ -722,99 +729,6 @@
                                 <button type="submit"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
                             </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Delete-->
-
-            <!--User-->
-            <div id="deleteUserModal" tabindex="-1"
-                class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full items-center justify-center">
-                <div class="relative w-full max-w-md max-h-full">
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <button type="button"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center justify-center dark:hover:bg-gray-800 dark:hover:text-white">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                        <div class="p-6 text-center">
-                            <svg class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200 cancel" fill="none"
-                                stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Seguro que desea
-                                elimianar a este usuario? Si lo desea puede recuperarlo de ser necesario en el futuro.
-                            </h3>
-                            <div class="grid grid-cols-2">
-                                <div>
-                                    <form id="confirm"
-                                        class="px-4 py-2 bg-red-500 hover:bg-red-800 text-white rounded-md" method="POST"
-                                        action="{{ http_build_query(request()->except('_token')) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit">Yes, I'm sure</button>
-                                    </form>
-                                </div>
-                                <div>
-                                    <button type="button"
-                                        class="cancel text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
-                                        cancel
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Product-->
-            <div id="deleteProductModal" tabindex="-1"
-                class="fixed top-0 left-0 right-0 z-50 hidden p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full items-center justify-center">
-                <div class="relative w-full max-w-md max-h-full">
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <button type="button"
-                            class="cancelProduct absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center justify-center dark:hover:bg-gray-800 dark:hover:text-white">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                        <div class="p-6 text-center">
-                            <svg class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200 cancelProduct"
-                                fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to
-                                delete this client?</h3>
-                            <div class="grid grid-cols-2">
-                                <div>
-                                    <form id="confirmProduct"
-                                        class="px-4 py-2 bg-red-500 hover:bg-red-800 text-white rounded-md" method="POST"
-                                        action="{{ http_build_query(request()->except('_token')) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit">Yes, I'm sure</button>
-                                    </form>
-                                </div>
-                                <div>
-                                    <button type="button"
-                                        class="cancelProduct text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No,
-                                        cancel</button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -987,7 +901,8 @@
                 }
             });
         });
-        //product
+
+        //Product
         $('.edit-product-btn').click(function() {
             var id = $(this).data('id');
             var nombre = $(this).data('nombre');
@@ -1022,7 +937,7 @@
                                         <select id="categoria_edit" name="categoria" autocomplete="role-name"
                                             class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" value="${categoria}">
                                             @foreach ($categorias as $categoria)
-                                                <option class="dark:bg-gray-900" value="{{ $categoria->nombre }}" {{ $producto->categoria == $categoria->nombre ? 'selected' : '' }}>
+                                                <option class="dark:bg-gray-900" value="{{ $categoria->nombre }}">
                                                     {{ $categoria->nombre }}</option>
                                             @endforeach
                                         </select>
@@ -1086,21 +1001,76 @@
             });
         });
 
-        //Elimianr
-        //Cliente
+        //Eliminar
+
+        //User
+        $('.delete-user_btn').click(function() {
+            var id = $(this).data('id');
+            var url = "{{ route('user.destroy', ':id') }}";
+            url = url.replace(':id', id);
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Eliminar usuario",
+                text: "Eliminar usuario",
+                icon: 'warning',
+                iconColor: '#E02424',
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Seguro que desea
+                                        elimianar a este usuario? Si lo desea puede recuperarlo de ser necesario en el futuro.
+                                    </h3>
+                                    <form method="POST" action="${url}" id="eliminar_usuario_form">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form
+                            </div>`,
+                confirmButtonText: "Eliminar",
+                confirmButtonColor: '#F05252',
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#eliminar_usuario_form').submit();
+                }
+            });
+
+
+        });
+
+        //Producto
         $('.delete-product_btn').click(function() {
             var id = $(this).data('id');
-            var filter = decodeURIComponent($('#confirmProduct').attr('action'));
-            $('#deleteProductModal').removeClass('hidden');
-            $('#deleteProductModal').addClass('flex');
             var url = "{{ route('product.destroy', ':id') }}";
             url = url.replace(':id', id);
-            url += '?' + filter;
-            $('#confirmProduct').attr('action', url);
-            $('.cancelProduct').click(function() {
-                $('#deleteProductModal').addClass('hidden');
-                $('#deleteProductModal').removeClass('flex');
-            })
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Eliminar producto",
+                text: "Eliminar producto",
+                icon: 'warning',
+                iconColor: '#E02424',
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Seguro que desea
+                                        elimianar a este producto?
+                                    </h3>
+                                    <form method="POST" action="${url}" id="eliminar_prodcuto_form">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form
+                            </div>`,
+                confirmButtonText: "Eliminar",
+                confirmButtonColor: '#F05252',
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#eliminar_prodcuto_form').submit();
+                }
+            });
+
+
         });
     </script>
 @endsection
