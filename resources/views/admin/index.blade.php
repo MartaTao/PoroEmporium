@@ -14,7 +14,8 @@
                         <button
                             class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                             id="product-tab" data-tabs-target="#product" type="button" role="tab"
-                            aria-controls="product" aria-selected="false">Productos</button>
+                            aria-controls="product"
+                            aria-selected="{{ Session::get('tab') === 'products' ? 'true' : 'false' }}">Productos</button>
                     </li>
                     <li class="mr-2" role="presentation">
                         <button
@@ -168,14 +169,39 @@
                                         </div>
                                         <!-- Dropdown menu -->
                                         <div id="dropdownUser{{ $user->id }}"
-                                            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-900">
+                                            class="z-10 hidden bg-transparent divide-y divide-gray-100 rounded-lg shadow w-44">
                                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                                 aria-labelledby="dropdownDefaultButton">
                                                 <li>
                                                     <a href="#"
-                                                        class="edit-user-btn block px-4 py-2 bg-blue-2 hover:bg-blue-900 text-white"
+                                                        class="block px-4 py-2 bg-blue-300 hover:bg-blue-400 text-white">
+                                                        <div class="grid grid-cols-4">
+                                                            <div>
+                                                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                                    stroke-width="1.5" viewBox="0 0 24 24"
+                                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                                        d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z">
+                                                                    </path>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="w-6 h-6 text-start col-span-3 text-base">
+                                                                Ver perfil
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#"
+                                                        class="edit-user-btn block px-4 py-2 bg-pink-300 hover:bg-pink-400 text-white"
                                                         data-id="{{ $user->id }}" data-email="{{ $user->email }}"
-                                                        data-role="{{ $user->roles }}">
+                                                        data-username="{{ $user->username }}"
+                                                        data-name="{{ $user->userProfile->name }}"
+                                                        data-first_surname="{{ $user->userProfile->first_surname }}"
+                                                        data-second_surname="{{ $user->userProfile->second_surname }}"
+                                                        data-birthdate="{{ $user->userProfile->birthdate }}"
+                                                        data-mobile="{{ $user->userProfile->mobile }}"
+                                                        data-adress="{{ $user->userProfile->adress }}">
                                                         <div class="grid grid-cols-4">
                                                             <div>
                                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor"
@@ -191,30 +217,6 @@
                                                             </div>
                                                         </div>
                                                     </a>
-                                                </li>
-                                                <li>
-                                                    @if (!is_null($user->userProfile))
-                                                        <a href="#"
-                                                            class="block px-4 py-2 bg-blue-1 hover:bg-blue-2 text-white">
-                                                            <div class="grid grid-cols-4">
-                                                                <div>
-                                                                    <svg class="w-6 h-6" fill="none"
-                                                                        stroke="currentColor" stroke-width="1.5"
-                                                                        viewBox="0 0 24 24"
-                                                                        xmlns="http://www.w3.org/2000/svg"
-                                                                        aria-hidden="true">
-                                                                        <path stroke-linecap="round"
-                                                                            stroke-linejoin="round"
-                                                                            d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z">
-                                                                        </path>
-                                                                    </svg>
-                                                                </div>
-                                                                <div class="w-6 h-6 text-start col-span-3 text-base">
-                                                                    Ver perfil
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    @endif
                                                 </li>
                                                 <li>
                                                     <a href="#"
@@ -249,6 +251,7 @@
                         {{ $users->links('pagination::simple-tailwind') }}
                     </div>
                 </div>
+                <!--Prodcutos-->
                 <div class="{{ Session::get('tab') === 'products' ? '' : 'hidden' }} max-w-10xl  p-4" id="product"
                     role="tabpanel" aria-labelledby="product-tab">
 
@@ -358,7 +361,7 @@
                                         </div>
                                         <!-- Dropdown menu -->
                                         <div id="dropdownproducto{{ $producto->id }}"
-                                            class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-900">
+                                            class="z-10 hidden bg-transparent divide-y divide-gray-100 rounded-lg shadow w-44">
                                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                                 aria-labelledby="dropdownDefaultButton">
                                                 <li>
@@ -384,10 +387,11 @@
                                                 </li>
                                                 <li>
                                                     <a href="#" data-id="{{ $producto->id }}"
-                                                        data-name="{{ $producto->nombre }}"
-                                                        data-description="{{ $producto->descripcion }}"
+                                                        data-nombre="{{ $producto->nombre }}"
+                                                        data-categoria="{{ $producto->categoria }}"
+                                                        data-descripcion="{{ $producto->descripcion }}"
                                                         data-precio="{{ $producto->precio }}"
-                                                        class="edit-producto-btn block px-4 py-2 bg-pink-300 hover:bg-pink-400 text-white">
+                                                        class="edit-product-btn block px-4 py-2 bg-pink-300 hover:bg-pink-400 text-white">
                                                         <div class="grid grid-cols-4">
                                                             <div>
                                                                 <svg class="w-6 h-6" fill="none" stroke="currentColor"
@@ -418,7 +422,7 @@
                                                                 </svg>
                                                             </div>
                                                             <div class="w-6 h-6 text-start col-span-3 text-base">
-                                                                Ver tareas
+                                                                Hacer descuento
                                                             </div>
                                                         </div>
                                                     </a>
@@ -723,262 +727,6 @@
                 </div>
             </div>
 
-            <!--Edit-->
-
-            <!--User-->
-            <div id="editUserModal" tabindex="-1" aria-hidden="true" data-modal-backdrop="static"
-                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full items-center justify-center">
-                <div class="relative w-full max-w-md max-h-full">
-                    <div
-                        class="w-full bg-white dark:bg-gray-900 dark:border dark:border-gray-700 rounded-lg md:mt-0 sm:max-w-md xl:p-0">
-                        <button type="button" id="close-edit-suer-btn"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center justify-center dark:hover:bg-gray-800 dark:hover:text-white">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                            <h1
-                                class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
-                                Edit user
-                            </h1>
-                            <form method="POST" action="{{ http_build_query(request()->except('_token')) }}">
-                                @csrf
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="text" name="email" id="floating_email_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_email"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
-                                        @error('email')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="text" name="username" id="floating_username_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_username_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
-                                        @error('username')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="password" name="password" id="floating_password_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_password_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contraseña</label>
-                                        @error('password')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="password" name="password_confirmation"
-                                            id="floating_repeat_password_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_repeat_password_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirmar
-                                            contraseña</label>
-                                        @error('password_confirmation')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                </div>
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="string" name="name" id="floating_name_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_name_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
-                                        @error('name')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="string" name="first_surname" id="floating_first_surname_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_first_surname_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
-                                            surname</label>
-                                        @error('first_surname')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="string" name="second_surname" id="floating_second_surname_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_second_surname_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Second
-                                            surname</label>
-                                        @error('second_surname')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="date" name="birthdate" id="floating_birthdate_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_birthdate_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">birthdate</label>
-                                    </div>
-                                </div>
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="text" name="adress" id="floating_adress_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" ">
-                                        <label for="floating_adress_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Dirección</label>
-                                        @error('adress')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="text" name="mobile" id="floating_mobile_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" ">
-                                        <label for="floating_mobile_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile</label>
-                                        @error('mobile')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <button type="submit"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Product-->
-            <div id="edit_product_modal" tabindex="-1" aria-hidden="true" data-modal-backdrop="static"
-                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative w-full max-w-md max-h-full">
-                    <div
-                        class="w-full bg-white dark:bg-gray-900 dark:border dark:border-gray-700 rounded-lg md:mt-0 sm:max-w-md xl:p-0">
-                        <button type="button" data-modal-hide="create_product_modal"
-                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center justify-center dark:hover:bg-gray-800 dark:hover:text-white">
-                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                            <h1
-                                class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
-                                Nuevo producto
-                            </h1>
-                            <form method="POST" action="" enctype="multipart/form-data">
-                                @csrf
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="text" name="nombre" id="floating_prod_name_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_prod_name_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombre</label>
-                                        @error('name')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <label for="categoria_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Categoria</label>
-                                        <select id="categoria_edit" name="categoria" autocomplete="role-name"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-                                            @foreach ($categorias as $categoria)
-                                                <option class="dark:bg-gray-900" value="{{ $categoria->nombre }}">
-                                                    {{ $categoria->nombre }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('categoria')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="text" name="precio" id="floating_precio_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_precio_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Precio</label>
-                                        @error('precio')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="relative z-0 w-full mb-6 group">
-                                        <input type="text" name="cantidad" id="floating_cantidad_edit"
-                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                            placeholder=" " />
-                                        <label for="floating_cantidad_edit"
-                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cantidad</label>
-                                        @error('cantidad')
-                                            <div class="text-red-500 text-xs">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="relative z-0 w-full mb-6 group">
-                                    <textarea type="text" name="descripcion" id="floating_descripcion_edit"
-                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                        placeholder=" "></textarea>
-                                    <label for="floating_descripcion_edit"
-                                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Descripcion</label>
-                                    @error('descripcion')
-                                        <div class="text-red-500 text-xs">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="relative z-0 w-full mb-6 group">
-                                    <label class=" text-gray-500 " for="file_input_edit">Imagen principal del producto</label>
-                                    <input
-                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600  dropify"
-                                        aria-describedby="file_input_help" id="file_input_edit" type="file"
-                                        name="product_avatar">
-                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or
-                                        JPG
-                                        .</p>
-                                </div>
-                                <div class="relative z-0 w-full mb-6 group">
-                                    <label class=" text-gray-500 " for="file_input_edit">Imagenes del producto</label>
-                                    <input
-                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600  dropify"
-                                        aria-describedby="file_input_help" id="file_input_edit" type="file"
-                                        name="product_images[]" multiple>
-                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or
-                                        JPG (solo se puede añadir un máximo de 5 imágenes).</p>
-                                </div>
-                                <button type="submit"
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!--Delete-->
 
             <!--User-->
@@ -1083,39 +831,263 @@
         $('.edit-user-btn').click(function() {
             var id = $(this).data('id');
             var email = $(this).data('email');
-            var filter = decodeURIComponent($('#updateUser').attr('action'));
-            $('#editUserModal').removeClass('hidden');
-            $('#editUserModal').addClass('flex');
-            $('#floating_email_edit').attr('value', email);
+            var username = $(this).data('username');
+            var name = $(this).data('name');
+            var first_surname = $(this).data('first_surname');
+            var second_surname = $(this).data('second_surname');
+            var birthdate = $(this).data('birthdate');
+            var mobile = $(this).data('mobile');
+            var adress = $(this).data('adress');
             var url = "{{ route('user.update', ':id') }}";
             url = url.replace(':id', id);
-            url += '?' + filter;
-            $('#updateUser').attr('action', url);
-            $('#close-edit-suer-btn').click(function() {
-                $('#editUserModal').addClass('hidden');
-                $('#editUserModal').removeClass('flex');
-            })
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Editar usario",
+                text: "Editar usuario",
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            <form method="POST" action="${url}" id="editar_user_form" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="text" name="email" id="floating_email_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" "  value="${email}"/>
+                                        <label for="floating_email"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email</label>
+                                        @error('email')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="text" name="username" id="floating_username_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" "  value="${username}"/>
+                                        <label for="floating_username_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Username</label>
+                                        @error('username')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="password" name="password" id="floating_password_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " />
+                                        <label for="floating_password_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Contraseña</label>
+                                        @error('password')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="password" name="password_confirmation"
+                                            id="floating_repeat_password_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " />
+                                        <label for="floating_repeat_password_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirmar
+                                            contraseña</label>
+                                        @error('password_confirmation')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="string" name="name" id="floating_name_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${name}"/>
+                                        <label for="floating_name_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
+                                        @error('name')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="string" name="first_surname" id="floating_first_surname_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${first_surname}"/>
+                                        <label for="floating_first_surname_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
+                                            surname</label>
+                                        @error('first_surname')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="string" name="second_surname" id="floating_second_surname_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${second_surname}"/>
+                                        <label for="floating_second_surname_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Second
+                                            surname</label>
+                                        @error('second_surname')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="date" name="birthdate" id="floating_birthdate_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${birthdate}"/>
+                                        <label for="floating_birthdate_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">birthdate</label>
+                                    </div>
+                                </div>
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="text" name="adress" id="floating_adress_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${adress}"/>
+                                        <label for="floating_adress_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Dirección</label>
+                                        @error('adress')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="text" name="mobile" id="floating_mobile_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${mobile}"/>
+                                        <label for="floating_mobile_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Mobile</label>
+                                        @error('mobile')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <label
+                                        class="text-gray-500"
+                                        for="file_input">Imagen de perfil</label>
+                                    <input
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer dropify"
+                                        data-height="50" data-width="50" aria-describedby="file_input_help"
+                                        id="file_input" type="file" name="users_avatar">
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG
+                                        or JPG .</p>
+                                </div>
+                            </from>
+                        </div>`,
+                confirmButtonText: "Guardar",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#editar_user_form').submit();
+                }
+            });
         });
-        //Usuario
+        //product
         $('.edit-product-btn').click(function() {
             var id = $(this).data('id');
-            var email = $(this).data('email');
-            var filter = decodeURIComponent($('#updateUser').attr('action'));
-            $('#editUserModal').removeClass('hidden');
-            $('#editUserModal').addClass('flex');
-            $('#floating_email_edit').attr('value', email);
-            var url = "{{ route('user.update', ':id') }}";
+            var nombre = $(this).data('nombre');
+            var categoria = $(this).data('categoria');
+            var descripcion = $(this).data('descripcion');
+            var precio = $(this).data('precio');
+            var url = "{{ route('product.update', ':id') }}";
             url = url.replace(':id', id);
-            url += '?' + filter;
-            $('#updateUser').attr('action', url);
-            $('#close-edit-suer-btn').click(function() {
-                $('#editUserModal').addClass('hidden');
-                $('#editUserModal').removeClass('flex');
-            })
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Editar producto",
+                text: "Editar producto",
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            <form method="POST" action="${url}" enctype="multipart/form-data" id="editar_prodcuto_form">
+                                @csrf
+                                @method('PUT')
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="text" name="nombre" id="floating_prod_name_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${nombre}"/>
+                                        <label for="floating_prod_name_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nombre</label>
+                                        @error('name')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <label for="categoria_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Categoria</label>
+                                        <select id="categoria_edit" name="categoria" autocomplete="role-name"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" value="${categoria}">
+                                            @foreach ($categorias as $categoria)
+                                                <option class="dark:bg-gray-900" value="{{ $categoria->nombre }}" {{ $producto->categoria == $categoria->nombre ? 'selected' : '' }}>
+                                                    {{ $categoria->nombre }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('categoria')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="text" name="precio" id="floating_precio_edit"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${precio}"/>
+                                        <label for="floating_precio_edit"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Precio</label>
+                                        @error('precio')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <textarea type="text" name="descripcion" id="floating_descripcion_edit"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder=" ">${descripcion}</textarea>
+                                    <label for="floating_descripcion_edit"
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Descripcion</label>
+                                    @error('descripcion')
+                                        <div class="text-red-500 text-xs">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <label class=" text-gray-500 " for="file_input_edit">Imagen principal del
+                                        producto</label>
+                                    <input
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600  dropify"
+                                        aria-describedby="file_input_help" id="file_input_edit" type="file"
+                                        name="product_avatar">
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or
+                                        JPG
+                                        .</p>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <label class=" text-gray-500 " for="file_input_edit">Imagenes del producto</label>
+                                    <input
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600  dropify"
+                                        aria-describedby="file_input_help" id="file_input_edit" type="file"
+                                        name="product_images[]" multiple>
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or
+                                        JPG (solo se puede añadir un máximo de 5 imágenes).</p>
+                                </div>
+                            </form>
+                        </div>`,
+                confirmButtonText: "Guardar",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#editar_prodcuto_form').submit();
+                }
+            });
         });
 
         //Elimianr
-         //Cliente
+        //Cliente
         $('.delete-product_btn').click(function() {
             var id = $(this).data('id');
             var filter = decodeURIComponent($('#confirmProduct').attr('action'));

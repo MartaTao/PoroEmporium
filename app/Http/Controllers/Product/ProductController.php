@@ -79,10 +79,9 @@ class ProductController extends Controller
     {
         $categorias = Categorie::all();
         $comentarios = Comment::with('user.userProfile')->where('product_id', $product->id)->paginate(10);
-        /* $mediaValoraciones = Comment::where('product_id',$product)->avg('valoracion');
-        $mediaValoraciones = number_format($mediaValoraciones, 1); */
+        $images= $product->getMedia('products_images')->sortByDesc('created_at')->take(5);
         $mediaTruncada = floor($product->valoracion);
-        return view('product.product', compact('product', 'categorias', 'comentarios', 'mediaTruncada'));
+        return view('product.product', compact('product', 'categorias', 'comentarios', 'mediaTruncada','images'));
     }
 
     /**
@@ -96,9 +95,31 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request,  $id)
     {
-        //
+        $producto=Product::where('id',$id)->first();
+        $request->validate([
+            'nombre'=>['required','string','max:255','regex:/^[a-zA-Z\s]*$/'],
+            'categoria'=>['required', Rule::in(Categorie::pluck('nombre')->toArray())],
+            'descripcion'=>['required','string','max:255',],
+            'precio'=>['required'],
+        ]);
+        $producto->update([
+            'nombre'=>$request->nombre,
+            'categoria'=>$request->categoria,
+            'descripcion'=>$request->descripcion,
+            'precio'=>$request->precio,
+        ]);
+        if (isset($request->product_avatar)) {
+            $producto->addMediaFromRequest('product_avatar')->toMediaCollection('products_avatar');
+        }
+        if (isset($request->product_images)) {
+            $images = array_slice($request->product_images, 0, 5);
+            foreach ($images as $image) {
+                $producto->addMedia($image)->toMediaCollection('products_images');
+            }
+        }
+        return redirect(route('admin.index'))->with('message', 'Prodcuto editado correctamente.')->with('tab','products');
     }
 
     /**

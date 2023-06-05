@@ -17,15 +17,13 @@
                             @endif
                         </div>
                         <div class="grid grid-cols-5 gap-4">
-                            @if (!is_null($product->getMedia('products_images')->first()))
-                                @foreach ($product->getMedia('products_images') as $media)
+                                @foreach ($images as $media)
                                     <div>
                                         <img class="h-auto max-w-full rounded-lg  product_images" data-src="{{ $media->getUrl() }}" src="{{ $media->getUrl() }}"
                                             alt="Imagenes del producto">
                                             <div class="lupa"></div>
                                     </div>
                                 @endforeach
-                            @endif
                         </div>
                     </div>
 
