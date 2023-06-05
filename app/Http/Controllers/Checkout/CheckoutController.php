@@ -62,12 +62,12 @@ class CheckoutController extends Controller
                 }
                 // Borrar la sesión del carrito
                 session()->forget('cart');
-                return redirect()->route('product.index')->with('message', 'Pago realizado correctamente. ¡Gracias por tu compra!');
+                return redirect()->route('product.index')->with('message', 'Thank you for your purchase!');
             } else {
-                return redirect()->route('checkout')->with('message', 'Datos introducidos erroneos en el pago. Por favor, inténtalo de nuevo.');
+                return redirect()->route('checkout')->with('message', 'Wrong data entered in the payment. Please try again.');
             }
         } else {
-            return redirect()->route('checkout')->with('message', 'Datos no introducidos. Por favor,inténtalo de nuevo.');
+            return redirect()->route('checkout')->with('message', 'Data not entered. Please try again.');
         }
     }
     //Función que verifica que tenga datos dentro
