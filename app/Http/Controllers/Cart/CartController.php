@@ -3,23 +3,21 @@
 namespace App\Http\Controllers\Cart;
 
 use App\Http\Controllers\Controller;
-use App\Models\Carrito\Carrito;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Categorie\Categorie;
-use Illuminate\Support\Arr;
 
 class CartController extends Controller
 {
     /**
-     *Render la vista del cart
+     * Render la vista del carrito
      */
     public function index()
     {
         $categorias = Categorie::all();
         $cart = session()->get('cart', []);
-
         $total = 0;
+
         foreach ($cart as $producto) {
             $total += $producto['precio'] * $producto['cantidad'];
         }
@@ -27,60 +25,55 @@ class CartController extends Controller
         return view('cart.cart', compact('categorias', 'cart', 'total'));
     }
 
-
     /**
-     * Add an item to a cart
+     * Agregar un producto al carrito
      */
+
     public function addToCart($id, Request $request)
     {
-
-
+        //se busca el producto por su id
         $product = Product::findOrFail($id);
-
+        //con la sesion obtenemos los elementos del carrito
         $cart = session()->get('cart', []);
-
-        $hola = array_filter(
-            $cart,
-            function ($registro)
-            use ($id) {
-                return $registro['id'] == $id;
-            }
-        );
-
-        if (!empty($hola)) {
-            for ($i = 0; $i < count($cart); $i++) {
-                if (data_get($cart[$i], 'id') == $id) {
-                    data_set($cart[$i], 'cantidad', data_get($cart[$i], 'cantidad') + $request->cantidad);
-                }
-            }
-        } else {
-            $producto = ([
+        //Cogemos la cantidad que ha sido seleccionada
+        $cantidadSeleccionada = $request->cantidad;
+        //y la cantidad disponible de ese producto en particular
+        $cantidadDisponible = $product->cantidad;
+        //si la cantidad seleccionada es menor o igual que la disponible , se crea el elemento de ese producto en el carrito con la cantidad seleccionada
+        if ($cantidadSeleccionada <= $cantidadDisponible) {
+            $producto = [
                 "id" => $product->id,
                 "nombre" => $product->nombre,
                 "precio" => $product->precio,
-                "cantidad" => $request->cantidad
-            ]);
+                "cantidad" => $cantidadSeleccionada
+            ];
             array_push($cart, $producto);
+            $product->cantidad -= $cantidadSeleccionada;
+            $product->save();
+
+            $message = 'Product successfully added to cart!';
+        } else {
+            //si la cantidad selecionada supera a la disponible , solo se añadira al carrito la cantidad máxima que hay de dicho producto al carrito
+            $producto = [
+                "id" => $product->id,
+                "nombre" => $product->nombre,
+                "precio" => $product->precio,
+                "cantidad" => $cantidadDisponible
+            ];
+            array_push($cart, $producto);
+            $product->cantidad = 0;
+            $product->save();
+
+            $message = 'Only the maximum available quantity of the product could be added to the cart!';
         }
 
         session()->put('cart', $cart);
 
-        return redirect()->route('cart.index')->with('message', 'Product successfully add to cart!');
+        return redirect()->route('cart.index')->with('message', $message);
     }
+
     /**
-     * Update the cart
-     */
-    public function update(Request $request)
-    {
-        if ($request->id && $request->quantity) {
-            $cart = session()->get('cart');
-            $cart[$request->id]["quantity"] = $request->quantity;
-            session()->put('cart', $cart);
-            session()->flash('message', 'Cart successfully updated!');
-        }
-    }
-    /**
-     * Remove a product from the cart
+     * Eliminar un producto del carrito
      */
     public function destroy(Request $request)
     {
@@ -88,6 +81,9 @@ class CartController extends Controller
             $cart = session()->get('cart');
             foreach ($cart as $key => $producto) {
                 if ($producto['nombre'] === $request->nombre) {
+                    $product = Product::findOrFail($producto['id']);
+                    $product->cantidad += $producto['cantidad'];
+                    $product->save();
                     unset($cart[$key]);
                     session()->put('cart', $cart);
                     break;
