@@ -6,7 +6,7 @@
 
     <p>Agradecemos que se haya puesto en contacto con nosotros para seguir vendiendo nuestro producto. Su solicitud ha sido rechaza. Lamentablemente no quedan existencias del producto o es parte de una edición limitada</p>
 
-    <p>Gracias por tu atención.</p>
+    <p>Gracias por su atención.</p>
     <p>Saludos,</p>
     <p>{{ $product->seller->nombre }}</p>
 </div>

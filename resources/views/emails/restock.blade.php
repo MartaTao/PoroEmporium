@@ -9,7 +9,7 @@
             <p><strong>Producto:</strong> {{ $product->nombre }}</p>
             <p><strong>Cantidad deseada:</strong> {{ $quantity }}</p>
 
-            <p>Gracias por tu atención.</p>
+            <p>Gracias por su atención.</p>
             <div class="flex">
                 <div>
                     <a class="block px-4 py-2 bg-red-500 hover:bg-red-600 text-white" href="{{route('product.restockRejected',$product->id)}}">
