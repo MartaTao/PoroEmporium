@@ -13,6 +13,6 @@ class CartHasProducts
             return $next($request);
         }
 
-        return redirect()->route('cart.index')->with('error', 'Debes tener productos en el carrito para continuar.');
+        return redirect()->route('cart.index')->with('message', 'Debes tener productos en el carrito para continuar.');
     }
 }
