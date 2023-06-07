@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RestockDone;
+use App\Mail\RestockProduct;
+use App\Mail\RestockRejected;
 use App\Models\Categorie\Categorie;
 use App\Models\Comment\Comment;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
@@ -130,5 +134,31 @@ class ProductController extends Controller
         $producto=Product::where('id',$id)->first();
         $producto->delete();
         return redirect(route('admin.index'))->with('message', 'Producto eliminado correctamente.')->with('tab','products');
+    }
+    public function restockRequest( Product $product, Request $request)
+    {
+        Mail::to($product->seller->email)->send(new RestockProduct($product, $request->cantidad),function ($message) use ($product) {
+            $message->from("poro@Emporium.com");
+        });
+        return redirect(route('admin.index'))->with('message', 'Correo enviado correctamente al proveedor.')->with('tab','products');
+
+    }
+    public function restock( Product $product,  $cantidad)
+    {
+        $product->update([
+            'cantidad'=>$cantidad,
+        ]);
+        Mail::to("poro@Emporium.com")->send(new RestockDone($product), function ($message) use ($product) {
+            $message->from($product->seller->email, $product->seller->nombre);
+        });
+        return response()->view('close-window')->header('Content-Type', 'text/html');
+
+    }
+    public function restockRejected( Product $product)
+    {
+        Mail::to("poro@Emporium.com")->send(new RestockRejected($product), function ($message) use ($product) {
+            $message->from($product->seller->email, $product->seller->nombre);
+        });
+        return response()->view('close-window')->header('Content-Type', 'text/html');
     }
 }

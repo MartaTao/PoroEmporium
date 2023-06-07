@@ -45,9 +45,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/configuration/storeEmail', [ConfigurationController::class, 'storeEmail'])->name('configuration.storeEmail');
     Route::resource('/comment',CommentController::class);
 });
-Route::resource('/product',ProductController::class);
 Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::resource('/admin', AdminController::class);
+    Route::post('/admin/restock/{product}',[ProductController::class,'restockRequest'])->name('product.restockRequest');
+    Route::post('/admin/restock/rejected/{product}',[ProductController::class,'restockRejected'])->name('product.restockRejected');
+    Route::get('/admin/restock/{product}/{cantidad}',[ProductController::class,'restock'])->name('product.restock');
+
+    Route::resource('/product',ProductController::class);
 });
 
 require __DIR__.'/auth.php';

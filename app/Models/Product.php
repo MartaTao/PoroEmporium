@@ -4,11 +4,13 @@ namespace App\Models;
 
 use App\Models\Carrito\Carrito;
 use App\Models\Order\Order;
+use App\Models\Seller\Seller;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use App\Traits\MediaLibraryTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -39,6 +41,11 @@ class Product extends Model implements HasMedia
     public function comment(): HasMany
     {
         return $this->hasmany(Comment::class);
+    }
+
+    public function seller(): BelongsTo
+    {
+        return $this->belongsTo(Seller::class);
     }
 
     //Relación con los pedidos

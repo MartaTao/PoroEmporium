@@ -276,6 +276,9 @@
                                     Cantidad</th>
                                 <th scope="col"
                                     class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
+                                    Proveedor</th>
+                                <th scope="col"
+                                    class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
                                     Manage
                                 </th>
                             </tr>
@@ -331,6 +334,11 @@
                                     <td class="px-6 py-4 whitespace-nowrap dark:text-white">
                                         <div class="flex items-center justify-center">
                                             {{ $producto->cantidad }}
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap dark:text-white">
+                                        <div class="flex items-center justify-center">
+                                            {{ $producto->seller->nombre }}
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap items-center">
@@ -396,10 +404,11 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                                {{-- @if ($producto->cantidad < 1)
+                                                @if ($producto->cantidad < 1)
                                                     <li>
                                                         <a href="#"
-                                                            class="block px-4 py-2 bg-emerald-400 hover:bg-emerald-500 text-white">
+                                                            class="block px-4 py-2 bg-emerald-400 hover:bg-emerald-500 text-white restock"
+                                                            data-id="{{ $producto->id }}">
                                                             <div class="grid grid-cols-4">
                                                                 <div>
                                                                     <svg class="w-6 h-6" fill="none"
@@ -419,7 +428,7 @@
                                                             </div>
                                                         </a>
                                                     </li>
-                                                @endif --}}
+                                                @endif
                                                 <li>
                                                     <a href="#"
                                                         class="block px-4 py-2 bg-purple-400 hover:bg-purple-500 text-white">
@@ -1071,6 +1080,43 @@
             });
 
 
+        });
+
+        //Reponer
+        $('.restock').click(function() {
+            var id = $(this).data('id');
+            var url = "{{ route('product.restockRequest', ':id') }}";
+            url = url.replace(':id', id);
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Reponer producto",
+                text: "Eliminar producto",
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                                    <form method="POST" action="${url}" id="reponer_producto">
+                                        @csrf
+                                        <div class="relative z-0 w-full mb-6 group">
+                                        <input type="text" name="cantidad" id="floating_cantidad_reponer"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " />
+                                        <label for="floating_cantidad_reponer"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Cantidad</label>
+                                        @error('cantidad')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    </form
+                            </div>`,
+                confirmButtonText: "Reponer",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#reponer_producto').submit();
+                }
+
+            });
         });
     </script>
 @endsection
