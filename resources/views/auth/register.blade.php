@@ -3,10 +3,6 @@
     <div class=" py-4 my-7 sm:pt-0">
         <div class="max-w-2xl mx-auto sm:px-6 lg:px-8">
             <div class="flex flex-col items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900">
-                    <img class="h-8 mr-3" src="https://www.alianzafpdual.es/wp-content/uploads/2022/01/Logo_10Code_-1.png"
-                        alt="logo">
-                </a>
                 <div class="w-full rounded-lg md:mt-0  sm:max-w-md xl:p-0">
                     <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1
