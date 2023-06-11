@@ -16,19 +16,20 @@
             </tr>
         </thead>
         <tbody>
-            @for ($i = 0; $i < count($cart); $i++) <tr data-id="" class="border-b border-gray-200 dark:border-gray-700">
+            @foreach ( $cart as $producto)
+            <tr data-id="" class="border-b border-gray-200 dark:border-gray-700">
                 <td data-th="Product" scope="row" class="px-6 py-4 whitespace-nowrap dark:text-white">
-                    <div class="flex items-center justify-center">{{ $cart[$i]['nombre'] }}</div>
+                    <div class="flex items-center justify-center">{{ $producto['nombre'] }}</div>
                 </td>
                 <td data-th="Price" class="px-6 py-4 whitespace-nowrap dark:text-white">
-                    <div class="flex items-center justify-center">{{ $cart[$i]['precio'] }}</div>
+                    <div class="flex items-center justify-center">{{ $producto['precio'] }}</div>
                 </td>
                 <td data-th="Quantity" class="px-6 py-4 whitespace-nowrap dark:text-white">
-                    <div class="flex items-center justify-center">{{ $cart[$i]['cantidad'] }}</div>
+                    <div class="flex items-center justify-center">{{ $producto['cantidad'] }}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap dark:text-white" data-th="">
                     <div class="flex items-center justify-center">
-                        <form action="{{ route('cart.destroy', $cart[$i]['nombre']) }}" method="POST">
+                        <form action="{{ route('cart.destroy', $producto['nombre']) }}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger btn-sm cart_remove px-6 py-3">
@@ -38,7 +39,7 @@
                     </div>
                 </td>
                 </tr>
-                @endfor
+                @endforeach
                 <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
                     Total</th>
                 <td class="px-6 py-4 whitespace-nowrap dark:text-white" data-th="total">
@@ -52,7 +53,7 @@
             <a href="{{ route('product.index') }}"> <i class="fa fa-arrow-left"></i> Continue
                 Shopping</a>
         </button>
-        
+
         <a href="{{ count($cart) > 0 && Auth::check() ? route('checkout') : (Auth::check() ? route('product.index') : route('login')) }}" class="text-gray-200 bg-emerald-700 hover:bg-emerald-800 border border-emerald-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 mb-2 ml-4">
             <svg class="dark:text-gray-200" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z">
