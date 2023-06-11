@@ -28,45 +28,55 @@ class CartController extends Controller
     /**
      * Agregar un producto al carrito
      */
-
     public function addToCart($id, Request $request)
     {
         //se busca el producto por su id
         $product = Product::findOrFail($id);
-        //con la sesion obtenemos los elementos del carrito
-        $cart = session()->get('cart', []);
+
         //Cogemos la cantidad que ha sido seleccionada
         $cantidadSeleccionada = $request->cantidad;
-        //y la cantidad disponible de ese producto en particular
-        $cantidadDisponible = $product->cantidad;
-        //si la cantidad seleccionada es menor o igual que la disponible , se crea el elemento de ese producto en el carrito con la cantidad seleccionada
-        if ($cantidadSeleccionada <= $cantidadDisponible) {
-            $producto = [
-                "id" => $product->id,
-                "nombre" => $product->nombre,
-                "precio" => $product->precio,
-                "cantidad" => $cantidadSeleccionada
-            ];
-            array_push($cart, $producto);
+
+        // Obtener el carrito de la sesión
+        $cart = session()->get('cart', []);
+
+        // Busca si el producto ya está en el carrito
+        $productoEnCarritoIndex = null;
+        foreach ($cart as $index => $producto) {
+            if ($producto['id'] === $product->id) {
+                $productoEnCarritoIndex = $index;
+                break;
+            }
+        }
+
+        // Verifica si el producto ya está en el carrito
+        if ($productoEnCarritoIndex !== null) {
+            // Agregar la cantidad seleccionada al producto existente en el carrito
+            $cart[$productoEnCarritoIndex]['cantidad'] += $cantidadSeleccionada;
             $product->cantidad -= $cantidadSeleccionada;
             $product->save();
 
-            $message = 'Product successfully added to cart!';
+            $message = 'Product quantity updated in the cart!';
         } else {
-            //si la cantidad selecionada supera a la disponible , solo se añadira al carrito la cantidad máxima que hay de dicho producto al carrito
-            $producto = [
-                "id" => $product->id,
-                "nombre" => $product->nombre,
-                "precio" => $product->precio,
-                "cantidad" => $cantidadDisponible
-            ];
-            array_push($cart, $producto);
-            $product->cantidad = 0;
-            $product->save();
+            //si la cantidad seleccionada es menor o igual que la disponible , se crea el elemento de ese producto en el carrito con la cantidad seleccionada
+            if ($cantidadSeleccionada <= $product->cantidad) {
+                // Agregar el producto al carrito con la cantidad seleccionada
+                $producto = [
+                    "id" => $product->id,
+                    "nombre" => $product->nombre,
+                    "precio" => $product->precio,
+                    "cantidad" => $cantidadSeleccionada
+                ];
+                array_push($cart, $producto);
+                $product->cantidad -= $cantidadSeleccionada;
+                $product->save();
 
-            $message = 'Only the maximum available quantity of the product could be added to the cart!';
+                $message = 'Product successfully added to cart!';
+            } else {
+                $message = 'Only the maximum available quantity of the product could be added to the cart!';
+            }
         }
 
+        // Actualizar el carrito en la sesión
         session()->put('cart', $cart);
 
         return redirect()->route('cart.index')->with('message', $message);
