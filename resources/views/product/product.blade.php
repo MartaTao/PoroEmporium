@@ -33,7 +33,12 @@
                 <div>
                     <p class="text-left text-gray-500 dark:text-gray-400">{{ $product->descripcion }}</p>
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product->precio }}€</p>
+                    @if (!is_null($product->discount))
+                    <p class="text-3xl font-bold text-gray-900 dark:text-white"><span class="line-through text-red-500">{{ $product->precio }}€ </span>{{$product->precio - $product->discount->precio}}€</p>
+                    @else
+                        <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product->precio }}€</p>
+                    @endif
+
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
                     <!--Rating-->
@@ -126,7 +131,7 @@
                             <div class="flex items-center justify-center">
                                 <button href="{{ route('cart.addToCart', $product->id) }}"
                                     onclick="this.parentNode.submit();" {{ $product->cantidad > 0 ? '' : 'disabled' }}
-                                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    class="text-white  {{ $product->cantidad > 0 ? 'bg-blue-700' : 'bg-gray-700' }} {{ $product->cantidad > 0 ? 'hover:bg-blue-800' : '' }}  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path

@@ -10,6 +10,7 @@ use App\Http\Controllers\UserProfileController\UserProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Checkout\CheckoutController;
 use App\Http\Controllers\Comment\CommentController;
+use App\Http\Controllers\Discount\DiscountController;
 use App\Http\Controllers\Especifications\EspecificationsController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Seller\SellerController;
@@ -57,7 +58,7 @@ Route::middleware(['auth', 'role:Admin'])->group(function () {
     Route::get('/admin/restock-accepted/{product}/{cantidad}',[ProductController::class,'restock'])->name('product.restock');
     Route::resource('/seller',SellerController::class);
     Route::resource('/especificacion',EspecificationsController::class);
-
+    Route::resource('/discount',DiscountController::class);
 
 });
 

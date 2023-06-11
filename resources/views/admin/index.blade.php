@@ -437,25 +437,55 @@
                                                         </a>
                                                     </li>
                                                 @endif
-                                                <li>
-                                                    <a href="#"
-                                                        class="block px-4 py-2 bg-purple-400 hover:bg-purple-500 text-white">
-                                                        <div class="grid grid-cols-4">
-                                                            <div>
-                                                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
-                                                                    stroke-width="1.5" viewBox="0 0 24 24"
-                                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                                        d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185zM9.75 9h.008v.008H9.75V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 4.5h.008v.008h-.008V13.5zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z">
-                                                                    </path>
-                                                                </svg>
+                                                @if ($producto->discount)
+                                                    <li>
+                                                        <a href="#"
+                                                            class="delete-descuento_btn block px-4 py-2 bg-purple-400 hover:bg-purple-500 text-white"
+                                                            data-id="{{ $producto->id }}">
+                                                            <div class="grid grid-cols-4">
+                                                                <div>
+                                                                    <svg class="w-6 h-6" fill="none"
+                                                                        stroke="currentColor" stroke-width="1.5"
+                                                                        viewBox="0 0 24 24"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        aria-hidden="true">
+                                                                        <path stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185zM9.75 9h.008v.008H9.75V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 4.5h.008v.008h-.008V13.5zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z">
+                                                                        </path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="w-6 h-6 text-start col-span-3 text-base">
+                                                                    Quitar descuento
+                                                                </div>
                                                             </div>
-                                                            <div class="w-6 h-6 text-start col-span-3 text-base">
-                                                                Hacer descuento
+                                                        </a>
+                                                    </li>
+                                                @else
+                                                    <li>
+                                                        <a href="#"
+                                                            class="disctount_btn block px-4 py-2 bg-purple-400 hover:bg-purple-500 text-white"
+                                                            data-id="{{ $producto->id }}">
+                                                            <div class="grid grid-cols-4">
+                                                                <div>
+                                                                    <svg class="w-6 h-6" fill="none"
+                                                                        stroke="currentColor" stroke-width="1.5"
+                                                                        viewBox="0 0 24 24"
+                                                                        xmlns="http://www.w3.org/2000/svg"
+                                                                        aria-hidden="true">
+                                                                        <path stroke-linecap="round"
+                                                                            stroke-linejoin="round"
+                                                                            d="M9 14.25l6-6m4.5-3.493V21.75l-3.75-1.5-3.75 1.5-3.75-1.5-3.75 1.5V4.757c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0c1.1.128 1.907 1.077 1.907 2.185zM9.75 9h.008v.008H9.75V9zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm4.125 4.5h.008v.008h-.008V13.5zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z">
+                                                                        </path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="w-6 h-6 text-start col-span-3 text-base">
+                                                                    Hacer descuento
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                </li>
+                                                        </a>
+                                                    </li>
+                                                @endif
                                                 <li>
                                                     <a href="#" data-id="{{ $producto->id }}"
                                                         class="delete-product_btn block px-4 py-2 bg-red-500 hover:bg-red-600 text-white">
@@ -1365,7 +1395,7 @@
                 background: "#111827",
                 color: "#fff",
                 title: "Reponer producto",
-                text: "Eliminar producto",
+                text: "Reponer producto",
                 html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                                     <form method="POST" action="${url}" id="reponer_producto">
                                         @csrf
@@ -1390,6 +1420,79 @@
                     $('#reponer_producto').submit();
                 }
 
+            });
+        });
+
+        //Descuento
+        $('.disctount_btn').click(function() {
+            var id = $(this).data('id');
+            var url = "{{ route('discount.store') }}";
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Realizar descuento al producto",
+                text: "Realizar descuento al producto",
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                                    <form method="POST" action="${url}" id="descontar_producto">
+                                        @csrf
+                                        <input type="hidden" name="id"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="${id}"/>
+                                        <div class="relative z-0 w-full mb-6 group">
+                                        <input type="text" name="cantidad" id="floating_cantidad_descuento"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " />
+                                        <label for="floating_cantidad_descuento"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Porcenjate a descontar</label>
+                                        @error('cantidad')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    </form
+                            </div>`,
+                confirmButtonText: "Realizar descuento",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#descontar_producto').submit();
+                }
+
+            });
+        });
+
+        //Quitar descuento
+
+        $('.delete-descuento_btn').click(function(){
+            var id = $(this).data('id');
+            var url = "{{ route('discount.destroy', ':id') }}";
+            url = url.replace(':id', id);
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Quitar descuento",
+                text: "Quitar descuento",
+                icon: 'warning',
+                iconColor: '#E02424',
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Seguro que desea
+                                        elimianar a este usuario? Si lo desea puede recuperarlo de ser necesario en el futuro.
+                                    </h3>
+                                    <form method="POST" action="${url}" id="eliminar_descuento_form">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form
+                            </div>`,
+                confirmButtonText: "Eliminar",
+                confirmButtonColor: '#F05252',
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#eliminar_descuento_form').submit();
+                }
             });
         });
     </script>

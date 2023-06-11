@@ -2,30 +2,29 @@
 
 namespace App\Models;
 
-use App\Models\Carrito\Carrito;
+use App\Models\Discount\Discount;
 use App\Models\Especifications\Especification;
-use App\Models\Especifications\Especifications;
 use App\Models\Order\Order;
 use App\Models\Seller\Seller;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use App\Traits\MediaLibraryTrait;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Product extends Model implements HasMedia
 {
-    use HasFactory,InteractsWithMedia;
+    use HasFactory, InteractsWithMedia;
     protected $fillable = [
         'seller_id',
-       'nombre',
-       'categoria',
-       'descripcion',
-       'precio',
-       'cantidad',
+        'nombre',
+        'categoria',
+        'descripcion',
+        'precio',
+        'cantidad',
     ];
 
     //Media
@@ -36,7 +35,7 @@ class Product extends Model implements HasMedia
             ->useDisk('products_avatar')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
 
-            $this->addMediaCollection('products_images')
+        $this->addMediaCollection('products_images')
             ->useDisk('products_images')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
@@ -45,7 +44,7 @@ class Product extends Model implements HasMedia
     {
         return $this->hasmany(Comment::class);
     }
-//Relación con el proveedor
+    //Relación con el proveedor
     public function seller(): BelongsTo
     {
         return $this->belongsTo(Seller::class);
@@ -56,9 +55,14 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsToMany(Order::class, 'order_product', 'product_id', 'order_id');
     }
-     //Relacion con especificacioens
-     public function especificaciones(): HasMany
+    //Relacion con especificacioens
+    public function especificaciones(): HasMany
+    {
+        return $this->hasmany(Especification::class);
+    }
+     //Relacion con descuento
+     public function discount(): HasOne
      {
-         return $this->hasmany(Especification::class);
+         return $this->hasOne(Discount::class);
      }
 }

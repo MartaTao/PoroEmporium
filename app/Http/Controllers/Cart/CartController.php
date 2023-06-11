@@ -63,7 +63,7 @@ class CartController extends Controller
                 $producto = [
                     "id" => $product->id,
                     "nombre" => $product->nombre,
-                    "precio" => $product->precio,
+                    "precio" => $product->discount?  $product->precio-$product->discount->precio : $product->precio,
                     "cantidad" => $cantidadSeleccionada
                 ];
                 array_push($cart, $producto);

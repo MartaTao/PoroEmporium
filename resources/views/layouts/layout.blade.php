@@ -28,24 +28,30 @@
         <div
             class="max-w-screen-8xl flex-wrap items-center justify-between mx-auto p-4 grid lg:grid-cols-12 md:grid-cols-6 sm:grid-cols-3">
             <div class="col-span-2">
-                <div class="flex">
-                    <a href="/" class=" items-center">
-                        <img src="/images/PoroEmporium.png" class="h-8 mr-3" alt="Flowbite Logo" />
-                        <span
-                            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PoroEmporium</span>
-                    </a>
-                    <a href="{{ route('cart.index') }}" class="relative inline-flex items-center p-3 dark:text-white">
-                        <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                            <path
-                                d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5ZM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1Zm0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z" />
-                        </svg>
-                        <span class="sr-only">Carrito</span>
-                        <div
-                            class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-blue-400 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
-                            {{ count((array) session('cart')) }}
-                        </div>
-                    </a>
+                <div class="grid grid-cols-3 col-span-2">
+                    <div class="col-span-2 justify-center items-center">
+                        <a href="/" class="flex  items-center">
+                            <img src="/images/PoroEmporium.png" class="h-8 mr-3" alt="PoroEmporium Logo" />
+                            <span
+                                class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PoroEmporium</span>
+                        </a>
+                    </div>
+                    <div class="col-span-1 text-center justify-center">
+                        <a href="{{ route('cart.index') }}"
+                            class="relative inline-flex items-center p-3 dark:text-white">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                <path
+                                    d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5ZM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1Zm0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z" />
+                            </svg>
+                            <span class="sr-only">Carrito</span>
+                            <div
+                                class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-blue-400 border-2 border-white rounded-full -top-2 -right-2 dark:border-gray-900">
+                                {{ count((array) session('cart')) }}
+                            </div>
+                        </a>
+                    </div>
+
                 </div>
             </div>
             <div class="col-span-8">
