@@ -168,7 +168,7 @@
                                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                                 aria-labelledby="dropdownDefaultButton">
                                                 <li>
-                                                    <a href="#"
+                                                    <a href="{{route('profile.show',$user->userProfile->id)}}"
                                                         class="block px-4 py-2 bg-blue-300 hover:bg-blue-400 text-white">
                                                         <div class="grid grid-cols-4">
                                                             <div>

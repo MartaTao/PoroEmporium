@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
 use App\Models\Categorie\Categorie;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -11,7 +12,7 @@ class IndexController extends Controller
     public function index()
     {
         $categorias=Categorie::all();
-
-        return view('index',compact('categorias'));
+        $products = Product::all();
+        return view('index',compact('categorias','products'));
     }
 }

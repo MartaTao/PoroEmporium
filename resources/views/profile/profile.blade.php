@@ -70,10 +70,6 @@
                         </div>
                     </div>
                     <div class="col-span-2 max-w-2lg p-6">
-                        <div class="max-w-lg text-2xl font-bold dark:text-white col-span-3">
-                            <p>Bio</p>
-                        </div>
-                        <p class="dark:text-gray-300">{{ $profile->bio }}</p>
                     </div>
 
                 </div>
