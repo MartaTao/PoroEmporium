@@ -84,8 +84,8 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->first();
         $request->validate([
-            'username' => ['required', 'string', 'max:255', 'unique:users,email,' . $user->email],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,username,' . $user->username],
+            'username' => ['required', 'string', 'max:255', 'unique:users,email,' . $user->id],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,username,' . $user->id],
             'password' => ['nullable', 'confirmed', Rules\Password::defaults()],
             'name' => 'required|string|regex:/^[a-zA-Z\s]*$/|max:255',
             'first_surname' => 'required|string|regex:/^[a-zA-Z\s]*$/|max:255',

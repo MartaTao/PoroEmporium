@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Carrito\Carrito;
+use App\Models\Especifications\Especifications;
 use App\Models\Order\Order;
 use App\Models\Seller\Seller;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,6 +19,7 @@ class Product extends Model implements HasMedia
 {
     use HasFactory,InteractsWithMedia;
     protected $fillable = [
+        'seller_id',
        'nombre',
        'categoria',
        'descripcion',
@@ -37,12 +39,12 @@ class Product extends Model implements HasMedia
             ->useDisk('products_images')
             ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/webp']);
     }
-    //relacion con comentarios y valoración
+    //Relacion con comentarios y valoración
     public function comment(): HasMany
     {
         return $this->hasmany(Comment::class);
     }
-
+//Relación con el proveedor
     public function seller(): BelongsTo
     {
         return $this->belongsTo(Seller::class);
@@ -53,4 +55,9 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsToMany(Order::class, 'order_product', 'product_id', 'order_id');
     }
+     //Relacion con especificacioens
+     public function especificaciones(): HasMany
+     {
+         return $this->hasmany(Especifications::class);
+     }
 }

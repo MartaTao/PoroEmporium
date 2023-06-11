@@ -2,7 +2,7 @@
 @section('content')
     <div class=" relative flex items-top min-h-screen  py-4 my-7 sm:pt-0">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-            <h1 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $product->nombre }}</h1>
+            <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $product->nombre }}</h1>
             <div class="grid grid-cols-3 gap-5">
                 <div>
                     <div class="grid gap-4">
@@ -36,7 +36,7 @@
 
                     <!--Rating-->
                     <div class="flex items-center mt-2.5 mb-5">
-                        @if (is_null($product->valoracion))
+                        @if ($product->valoracion==0)
                             @for ($i = 1; $i <= 5; $i++)
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
                                     stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
@@ -97,8 +97,8 @@
                     <div class="flex items-center justify-center">
                         <form method="get" action="{{ route('cart.addToCart', $product->id) }}">
                             <div class="grid grid-cols-3">
-                                <a href="#" class="flex items-center justify-center">
-                                    <svg class="dark:text-white w-8 h-8 quitar" fill="none" stroke="currentColor"
+                                <a href="#" class="flex items-center justify-center quitar">
+                                    <svg class="dark:text-white w-8 h-8" fill="none" stroke="currentColor"
                                         stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                         aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -107,12 +107,12 @@
                                 </a>
                                 <div class="flex items-center justify-center">
                                     <input type="number" name="cantidad"
-                                        class="bg-transparent w-[50px] text-gray-300 border-0 cantidad" readonly
+                                        class="bg-transparent w-[55px] text-gray-300 border-0 cantidad" readonly
                                         value="1">
                                 </div>
 
-                                <a href="#" class="flex items-center justify-center">
-                                    <svg class="dark:text-white w-8 h-8 aniadir" fill="none" stroke="currentColor"
+                                <a href="#" class="flex items-center justify-center aniadir" data-cantidad="{{ $product->cantidad }}">
+                                    <svg class="dark:text-white w-8 h-8" fill="none" stroke="currentColor"
                                         stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                         aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -140,13 +140,21 @@
             </div>
             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
             <div>
-                <h1 class="text-gray-200">Especificaciones</h1>
+                <h1 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Especificaciones</h1>
+                <ul>
+                    @foreach ($product->especificaciones as $especificacion )
+                     <li class="text-gray-500 dark:text-gray-400">
+                        {{$especificacion->descripcion}}
+                     </li>
+                @endforeach
+                </ul>
+
             </div>
             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
 
             <!--Valoración-->
             <div>
-                <h1 class="text-gray-200">Comentarios y valoraciones</h1>
+                <h1 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Comentarios y valoraciones</h1>
                 <div class="grid grid-cols-3">
                     <div class="col-span-1 border-r-2 border-gray-700">
                         <form action="{{ route('comment.store') }}" method="POST">
@@ -246,8 +254,12 @@
     <script>
         $('.aniadir').click(function() {
             var cant = parseInt($('.cantidad').val());
+            var cantProd = $(this).data('cantidad');
             var suma = cant + 1;
-            $('.cantidad').val(suma);
+            if(suma <= cantProd){
+                $('.cantidad').val(suma);
+            }
+
         })
         $('.quitar').click(function() {
             var cant = parseInt($('.cantidad').val());

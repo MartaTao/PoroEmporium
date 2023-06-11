@@ -24,7 +24,7 @@
 <body class="antialiased bg-white dark:bg-gray-950">
 
     <!--Nav-->
-    <nav class="bg-white border-gray-200 dark:bg-gray-950">
+    <nav class="border-gray-200">
         <div class="max-w-screen-8xl flex-wrap items-center justify-between mx-auto p-4 grid grid-cols-12">
             <div class="grid grid-cols-2 col-span-2">
                 <div>
@@ -56,8 +56,8 @@
                     <div class="grid grid-cols-12">
                         <div class="relative z-0 w-full mb-6 group">
                             <select id="categoria" name="categoria"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-                                <option class="dark:text-white" value="Categoria" selected>Categorías</option>
+                                class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-950 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                                <option class="dark:text-white" value="Categoria">Categorías</option>
                                 @foreach ($categorias as $categoria)
                                     <option class="dark:text-white" value="{{ $categoria->nombre }}">
                                         {{ $categoria->nombre }}
