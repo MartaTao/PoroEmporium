@@ -245,7 +245,7 @@
                                     @if (!is_null($product->discount))
                                         <p class="text-3xl font-bold text-gray-900 dark:text-white"><span
                                                 class="line-through text-red-500">{{ $product->precio }}€
-                                            </span>{{ $product->precio-$prodct->discount->precio }}€</p>
+                                            </span>{{ $product->precio-$product->discount->precio }}€</p>
                                     @else
                                         <p class="text-3xl font-bold text-gray-900 dark:text-white">
                                             {{ $product->precio }}€</p>
