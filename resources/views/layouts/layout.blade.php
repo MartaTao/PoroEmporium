@@ -205,7 +205,7 @@
                 @endguest
             </div>
     </nav>
-    <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700">
+    <hr class="h-px  bg-gray-200 border-0 dark:bg-gray-700 my-4">
 
     <!--Mensajes-->
     @if (Session::has('message'))

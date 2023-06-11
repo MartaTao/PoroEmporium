@@ -20,8 +20,7 @@
                     <li class="mr-2" role="presentation">
                         <button
                             class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
-                            id="seller-tab" data-tabs-target="#seller" type="button" role="tab"
-                            aria-controls="seller"
+                            id="seller-tab" data-tabs-target="#seller" type="button" role="tab" aria-controls="seller"
                             aria-selected="{{ Session::get('tab') === 'sellers' ? 'true' : 'false' }}">Proveedores</button>
                     </li>
                 </ul>
@@ -168,7 +167,7 @@
                                             <ul class="py-2 text-sm text-gray-700 dark:text-gray-200"
                                                 aria-labelledby="dropdownDefaultButton">
                                                 <li>
-                                                    <a href="{{route('profile.show',$user->userProfile->id)}}"
+                                                    <a href="{{ route('profile.show', $user->userProfile->id) }}"
                                                         class="block px-4 py-2 bg-blue-300 hover:bg-blue-400 text-white">
                                                         <div class="grid grid-cols-4">
                                                             <div>
@@ -344,9 +343,11 @@
                                         </div>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap dark:text-white">
-                                        <div class="flex items-center justify-center">
-                                            {{ $producto->seller->nombre }}
-                                        </div>
+                                        @if (!is_null($producto->seller))
+                                            <div class="flex items-center justify-center">
+                                                {{ $producto->seller->nombre }}
+                                            </div>
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap items-center">
                                         <div class="flex items-center justify-center">
@@ -411,7 +412,7 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                                @if ($producto->cantidad < 1)
+                                                @if ($producto->cantidad < 1 && !is_null($producto->seller))
                                                     <li>
                                                         <a href="#"
                                                             class="block px-4 py-2 bg-emerald-400 hover:bg-emerald-500 text-white restock"

@@ -12,7 +12,7 @@ class IndexController extends Controller
     public function index()
     {
         $categorias=Categorie::all();
-        $products = Product::all();
+        $products = Product::where('cantidad' ,'>',0)->get();
         return view('index',compact('categorias','products'));
     }
 }
