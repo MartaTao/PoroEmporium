@@ -124,7 +124,7 @@
                                     </div>
                                     <p class="text-3xl font-bold text-gray-900 dark:text-white"><span
                                             class="line-through text-red-500">{{ $descuento->product->precio }}€
-                                        </span>{{ $descuento->product->precio-$descuento->precio }}€</p>
+                                        </span>{{ $descuento->precio }}€</p>
                                     <a href="{{ route('product.show', $descuento->product->id) }}"
                                         class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         Más información
@@ -245,10 +245,10 @@
                                     @if (!is_null($product->discount))
                                         <p class="text-3xl font-bold text-gray-900 dark:text-white"><span
                                                 class="line-through text-red-500">{{ $product->precio }}€
-                                            </span>{{ $product->discount->precio }}€</p>
+                                            </span>{{ $product->precio-$prodct->discount->precio }}€</p>
                                     @else
                                         <p class="text-3xl font-bold text-gray-900 dark:text-white">
-                                            {{ $product->precio-$product->precio }}€</p>
+                                            {{ $product->precio }}€</p>
                                     @endif
                                     </p>
                                     <a href="{{ route('product.show', $product->id) }}"
