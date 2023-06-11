@@ -58,6 +58,7 @@ class ProductController extends Controller
             'cantidad'=>['required'],
         ]);
         $producto = Product::create([
+            'seller_id'=>$request->proveedor,
             'nombre'=>$request->nombre,
             'categoria'=>$request->categoria,
             'descripcion'=>$request->descripcion,

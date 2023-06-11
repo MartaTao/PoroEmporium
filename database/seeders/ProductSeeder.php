@@ -13,7 +13,7 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        Product::create([
+        $product=Product::create([
             'seller_id' => 1,
             'nombre' => 'Poro sudadera',
             'categoria' => 'Sudaderas',
@@ -21,7 +21,10 @@ class ProductSeeder extends Seeder
             'precio' => 18.8,
             'cantidad' => 10,
         ]);
-        Product::create([
+        $product->especificaciones()->create([
+            'descripcion'=>'Prueba'
+        ]);
+        $product=Product::create([
             'seller_id' => 1,
             'nombre' => 'Camiseta proyecto',
             'categoria' => 'Camisetas',
@@ -29,7 +32,10 @@ class ProductSeeder extends Seeder
             'precio' => 20.50,
             'cantidad' => 1,
         ]);
-        Product::create([
+        $product->especificaciones()->create([
+            'descripcion'=>'Prueba'
+        ]);
+        $product=Product::create([
             'seller_id' => 1,
             'nombre' => 'Toalla Grieta del Invocador',
             'categoria' => 'Toallas',
@@ -37,7 +43,10 @@ class ProductSeeder extends Seeder
             'precio' => 1.00,
             'cantidad' => 20,
         ]);
-        Product::create([
+        $product->especificaciones()->create([
+            'descripcion'=>'Prueba'
+        ]);
+        $product=Product::create([
             'seller_id' => 2,
             'nombre' => 'Funco pop de Chibi Ahri',
             'categoria' => 'Funco pops',
@@ -45,7 +54,10 @@ class ProductSeeder extends Seeder
             'precio' => 100.99,
             'cantidad' => 9,
         ]);
-        Product::create([
+        $product->especificaciones()->create([
+            'descripcion'=>'Prueba'
+        ]);
+        $product=Product::create([
             'seller_id' => 2,
             'nombre' => 'Poster de Evelyn Coven',
             'categoria' => 'Posters',
@@ -53,7 +65,10 @@ class ProductSeeder extends Seeder
             'precio' => 15.00,
             'cantidad' => 30,
         ]);
-        Product::create([
+        $product->especificaciones()->create([
+            'descripcion'=>'Prueba'
+        ]);
+        $product=Product::create([
             'seller_id' => 1,
             'nombre' => 'Sudadera de DJ Sona',
             'categoria' => 'Sudaderas',
@@ -61,13 +76,19 @@ class ProductSeeder extends Seeder
             'precio' => 5.98,
             'cantidad' => 100,
         ]);
-        Product::create([
+        $product->especificaciones()->create([
+            'descripcion'=>'Prueba'
+        ]);
+        $product=Product::create([
             'seller_id' => 1,
             'nombre' => 'Ashe Dragomancer',
             'categoria' => 'Funco Pops',
             'descripcion' => 'Chibi Ashe Dragomancer en version chibi xD',
             'precio' => 200,
             'cantidad' => 1,
+        ]);
+        $product->especificaciones()->create([
+            'descripcion'=>'Prueba'
         ]);
     }
 }
