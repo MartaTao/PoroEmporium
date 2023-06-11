@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Carrito\Carrito;
+use App\Models\Especifications\Especification;
 use App\Models\Especifications\Especifications;
 use App\Models\Order\Order;
 use App\Models\Seller\Seller;
@@ -58,6 +59,6 @@ class Product extends Model implements HasMedia
      //Relacion con especificacioens
      public function especificaciones(): HasMany
      {
-         return $this->hasmany(Especifications::class);
+         return $this->hasmany(Especification::class);
      }
 }

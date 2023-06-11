@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Especifications;
 
 use App\Http\Controllers\Controller;
+use App\Models\Especifications\Especification;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class EspecificationsController extends Controller
@@ -28,7 +30,19 @@ class EspecificationsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product=Product::findOrFail($request->id);
+        $request->validate([
+            'descripcion'=>['required','string','max:255',],
+        ]);
+        $esp=$product->especificaciones()->create([
+            'descripcion'=>$request->descripcion,
+        ]);
+        if (isset($request->especificacionest_images)) {
+            foreach ($request->especificacionest_images as $image) {
+                $esp->addMedia($image)->toMediaCollection('products_especifications');
+            }
+        }
+        return redirect(route('product.show',$product->id))->with('message', 'Especificación añadida correctamente.');
     }
 
     /**
@@ -60,6 +74,8 @@ class EspecificationsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $esp=Especification::where('id',$id)->first();
+        $esp->delete();
+        return redirect(route('product.show',$esp->product->id))->with('message', 'Especifricación eliminada correctamente.');
     }
 }

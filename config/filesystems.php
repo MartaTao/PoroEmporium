@@ -65,6 +65,13 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'products_especifications' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/products/'),
+            'url' => env('APP_URL').'/storage/products',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',

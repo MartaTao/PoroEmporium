@@ -8,7 +8,8 @@
                     <div class="grid gap-4">
                         <div>
                             @if (!is_null($product->getMedia('products_avatar')->first()))
-                                <img class="h-auto max-w-full rounded-lg product_images " id="imagen_principal" data-src="{{ $product->getMedia('products_avatar')->first()->getUrl() }}"
+                                <img class="h-auto max-w-full rounded-lg product_images " id="imagen_principal"
+                                    data-src="{{ $product->getMedia('products_avatar')->first()->getUrl() }}"
                                     src="{{ $product->getMedia('products_avatar')->first()->getUrl() }}"
                                     alt="Imagen principal del producto">
                             @else
@@ -17,13 +18,14 @@
                             @endif
                         </div>
                         <div class="grid grid-cols-5 gap-4">
-                                @foreach ($images as $media)
-                                    <div>
-                                        <img class="h-auto max-w-full rounded-lg  product_images" data-src="{{ $media->getUrl() }}" src="{{ $media->getUrl() }}"
-                                            alt="Imagenes del producto">
-                                            <div class="lupa"></div>
-                                    </div>
-                                @endforeach
+                            @foreach ($images as $media)
+                                <div>
+                                    <img class="h-auto max-w-full rounded-lg  product_images"
+                                        data-src="{{ $media->getUrl() }}" src="{{ $media->getUrl() }}"
+                                        alt="Imagenes del producto">
+                                    <div class="lupa"></div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
 
@@ -36,7 +38,7 @@
 
                     <!--Rating-->
                     <div class="flex items-center mt-2.5 mb-5">
-                        @if ($product->valoracion==0)
+                        @if ($product->valoracion == 0)
                             @for ($i = 1; $i <= 5; $i++)
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
                                     stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
@@ -111,7 +113,8 @@
                                         value="1">
                                 </div>
 
-                                <a href="#" class="flex items-center justify-center aniadir" data-cantidad="{{ $product->cantidad }}">
+                                <a href="#" class="flex items-center justify-center aniadir"
+                                    data-cantidad="{{ $product->cantidad }}">
                                     <svg class="dark:text-white w-8 h-8" fill="none" stroke="currentColor"
                                         stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                         aria-hidden="true">
@@ -122,8 +125,7 @@
                             </div>
                             <div class="flex items-center justify-center">
                                 <button href="{{ route('cart.addToCart', $product->id) }}"
-                                    onclick="this.parentNode.submit();"
-                                    {{ $product->cantidad > 0 ? '' : 'disabled' }}
+                                    onclick="this.parentNode.submit();" {{ $product->cantidad > 0 ? '' : 'disabled' }}
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -139,14 +141,45 @@
                 </div>
             </div>
             <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+
+            <!--Especificaciones-->
             <div>
                 <h1 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Especificaciones</h1>
                 <ul>
-                    @foreach ($product->especificaciones as $especificacion )
-                     <li class="text-gray-500 dark:text-gray-400">
-                        {{$especificacion->descripcion}}
-                     </li>
-                @endforeach
+                    @foreach ($product->especificaciones as $especificacion)
+                        <li class="text-gray-500 dark:text-gray-400">
+                            <div class="flex">
+                                {{ $especificacion->descripcion }}
+                                @role('Admin')
+                                    <a href="#" class="eliminar_especificacion" data-id="{{ $especificacion->id }}">
+                                        <svg class="w-6 h-6 dark:text-red-500" fill="none" stroke="currentColor"
+                                            stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                            aria-hidden="true">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </a>
+                                @endrole
+                            </div>
+                        </li>
+                        @if (!is_null($especificacion->getMedia('products_especifications')->first()))
+                            @foreach ($especificacion->getMedia('products_especifications') as $media)
+                                <li class="text-gray-500 dark:text-gray-400">
+                                    <img src="{{ $media->getUrl() }}" alt="Imágen de als especificaciones dle producto.">
+                                </li>
+                            @endforeach
+                        @endif
+                    @endforeach
+                    @role('Admin')
+                        <li>
+                            <a href="#" class="aniadir_especificacion">
+                                <svg class="w-6 h-6 dark:text-white" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </a>
+                        </li>
+                    @endrole
                 </ul>
 
             </div>
@@ -154,7 +187,8 @@
 
             <!--Valoración-->
             <div>
-                <h1 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Comentarios y valoraciones</h1>
+                <h1 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Comentarios y valoraciones
+                </h1>
                 <div class="grid grid-cols-3">
                     <div class="col-span-1 border-r-2 border-gray-700">
                         <form action="{{ route('comment.store') }}" method="POST">
@@ -252,15 +286,18 @@
 @endsection
 @section('scripts')
     <script>
+        //Añade +1 a la cantidad del producto que se desea comprar
         $('.aniadir').click(function() {
             var cant = parseInt($('.cantidad').val());
             var cantProd = $(this).data('cantidad');
             var suma = cant + 1;
-            if(suma <= cantProd){
+            if (suma <= cantProd) {
                 $('.cantidad').val(suma);
             }
 
         })
+
+        //Resta -1 a la cantidad del producto que se desea comprar
         $('.quitar').click(function() {
             var cant = parseInt($('.cantidad').val());
             if (cant > 0) {
@@ -271,6 +308,7 @@
         })
         var selectedValue = 0;
 
+        //Valoraciones
         $('.snowflake').on('mouseover', function() {
             var value = $(this).data('value');
             $('.snowflake').removeClass('text-blue-400 dark:text-blue-200').addClass(
@@ -306,14 +344,101 @@
             $('#rating').val(value);
         });
 
-        $('.product_images').on('click',function(){
-            var src= $(this).data('src');
-            var imagen_principal=$('#imagen_principal').data('src');
-            $('#imagen_principal').attr('src',src);
+        //Intercambia als imagenes
+        $('.product_images').on('click', function() {
+            var src = $(this).data('src');
+            var imagen_principal = $('#imagen_principal').data('src');
+            $('#imagen_principal').attr('src', src);
             $('#imagen_principal').data('src', src);
-            $(this).attr('src',imagen_principal);
+            $(this).attr('src', imagen_principal);
             $(this).data('src', imagen_principal);
         });
+    //Añadir especificaciones
+        $('.aniadir_especificacion').on('click', function() {
+            var url = "{{ route('especificacion.store') }}";
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Añadir especificación",
+                text: "Añadir especificación",
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                                    <form method="POST" action="${url}" id="aniadir_especificacion_form" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="relative z-0 w-full mb-6 group">
+                                            <input type="text" name="descripcion" id="floating_descripcion"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " />
+                                            <label for="floating_descripcion"
+                                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Especificación</label>
+                                            @error('username')
+                                                <div class="text-red-500 text-xs">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="relative z-0 w-full mb-6 group">
+                                            <input type="hidden" name="id" id="floating_descripcion"
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                                placeholder=" " value="{{ $product->id }}" />
+                                            <label for="floating_descripcion"
+                                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Especificación</label>
+                                            @error('username')
+                                                <div class="text-red-500 text-xs">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="relative z-0 w-full mb-6 group">
+                                            <label class=" text-gray-500 " for="file_input">Imágenes</label>
+                                            <input
+                                                class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600  dropify"
+                                                aria-describedby="file_input_help" id="file_input" type="file"
+                                                name="especificacionest_images[]" multiple>
+                                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">PNG or
+                                                JPG.</p>
+                                        </div>
+                                    </form
+                            </div>`,
+                confirmButtonText: "Añadir",
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#aniadir_especificacion_form').submit();
+                }
+            });
+        });
 
+        //Eliminar especificaciones
+        $('.eliminar_especificacion').click(function() {
+            var id = $(this).data('id');
+            var url = "{{ route('especificacion.destroy', ':id') }}";
+            url = url.replace(':id', id);
+            Swal.fire({
+                background: "#111827",
+                color: "#fff",
+                title: "Eliminar especificación",
+                text: "Eliminar especificación",
+                icon: 'warning',
+                iconColor: '#E02424',
+                html: `<div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¿Seguro que desea
+                                        elimianar a este especificación?
+                                    </h3>
+                                    <form method="POST" action="${url}" id="eliminar_especificacion_form">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form
+                            </div>`,
+                confirmButtonText: "Eliminar",
+                confirmButtonColor: '#F05252',
+                showCancelButton: true,
+                cancelButtonText: "Cancelar",
+                reverseButtons: true,
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    $('#eliminar_especificacion_form').submit();
+                }
+            });
+
+
+        });
     </script>
 @endsection
