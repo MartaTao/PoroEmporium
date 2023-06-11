@@ -15,7 +15,7 @@
                         <button
                             class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                             id="productos-tab" data-tabs-target="#productos" type="button" role="tab"
-                            aria-controls="productos" aria-selected="false">Prodcutos</button>
+                            aria-controls="productos" aria-selected="false">Productos</button>
                     </li>
                 </ul>
             </div>
