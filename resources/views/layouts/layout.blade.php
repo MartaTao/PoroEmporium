@@ -25,17 +25,16 @@
 
     <!--Nav-->
     <nav class="border-gray-200">
-        <div class="max-w-screen-8xl flex-wrap items-center justify-between mx-auto p-4 grid grid-cols-12">
-            <div class="grid grid-cols-2 col-span-2">
-                <div>
-                    <a href="/" class="flex items-center">
+        <div
+            class="max-w-screen-8xl flex-wrap items-center justify-between mx-auto p-4 grid lg:grid-cols-12 md:grid-cols-6 sm:grid-cols-3">
+            <div class="col-span-2">
+                <div class="flex">
+                    <a href="/" class=" items-center">
                         <img src="/images/PoroEmporium.png" class="h-8 mr-3" alt="Flowbite Logo" />
                         <span
                             class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">PoroEmporium</span>
                     </a>
-                </div>
-                <div class="flex items-center justify-center dark:text-white">
-                    <a href="{{ route('cart.index') }}" class="relative inline-flex items-center p-3">
+                    <a href="{{ route('cart.index') }}" class="relative inline-flex items-center p-3 dark:text-white">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path
@@ -53,7 +52,7 @@
                 <!--Buscador-->
                 <form action="{{ route('product.index') }}">
                     @csrf
-                    <div class="grid grid-cols-12">
+                    <div class="grid lg:grid-cols-12 md:grid-6 sm:grid-cols-3">
                         <div class="relative z-0 w-full mb-6 group">
                             <select id="categoria" name="categoria"
                                 class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-white dark:bg-gray-950 border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">

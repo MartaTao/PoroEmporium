@@ -1,6 +1,6 @@
 @extends('layouts.layout')
 @section('content')
-    <div class="my-3 grid grid-cols-6 gap-3">
+    <div class="my-3 grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 gap-3">
         @foreach ($products as $product)
             <div class="max-w-sm bg-sky-50 border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
                 @if (!is_null($product->getMedia('products_avatar')->first()))
