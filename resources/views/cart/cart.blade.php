@@ -60,6 +60,7 @@
                 </path>
             </svg> Checkout
         </a>
+        @if(count($cart) > 0)
         <form action="{{ route('cart.destroyAll') }}" method="POST">
             @csrf
             @method('DELETE')
@@ -67,6 +68,7 @@
                 <i class="fa fa-trash-o"></i> Delete All
             </button>
         </form>
+        @endif
     </div>
     @endsection
 
