@@ -50,6 +50,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/configuration/storePass', [ConfigurationController::class, 'storePass'])->name('configuration.storePass');
     Route::post('/configuration/storeEmail', [ConfigurationController::class, 'storeEmail'])->name('configuration.storeEmail');
     Route::resource('/comment',CommentController::class);
+    Route::get('/purchase-confirmation', function () {
+        return view('emails.purchase_confirmation');
+    })->name('purchase.confirmation');
 });
 Route::resource('/product',ProductController::class);
 Route::middleware(['auth', 'role:Admin'])->group(function () {

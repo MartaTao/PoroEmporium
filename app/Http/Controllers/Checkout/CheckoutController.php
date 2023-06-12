@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Checkout;
 
+use App\Http\Controllers\Auth\PurchaseConfirmation;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Carrito\Carrito;
@@ -9,6 +10,7 @@ use App\Models\Categorie\Categorie;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Order\Order;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutController extends Controller
 {
@@ -60,6 +62,9 @@ class CheckoutController extends Controller
                 foreach ($cart as $producto) {
                     $order->products()->attach($producto['id'], ['cantidad' => $producto['cantidad']]);
                 }
+                // Enviar correo de confirmación al usuario
+                $userEmail = $user->email;
+                Mail::to($userEmail)->send(new PurchaseConfirmation($order));
                 // Borrar la sesión del carrito
                 session()->forget('cart');
                 return redirect()->route('product.index')->with('message', 'Thank you for your purchase!');
