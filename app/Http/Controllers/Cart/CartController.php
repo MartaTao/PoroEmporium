@@ -80,7 +80,7 @@ class CartController extends Controller
         // Actualizar el carrito en la sesión
         session()->put('cart', $cart);
 
-        return redirect()->route('cart.index')->with('message', $message);
+        return redirect()->route('product.index')->with('message', $message);
     }
 
     /**
