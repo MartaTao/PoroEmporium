@@ -26,20 +26,20 @@
                             <div
                                 class="max-w-sm bg-sky-50 border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
                                 @if (!is_null($descuento->product->getMedia('products_avatar')->first()))
-                                    <a href="#">
+                                    <a href="{{route('product.show',$descuento->product->id)}}">
                                         <img class="rounded-t-lg"
                                             src="{{ $descuento->product->getMedia('products_avatar')->first()->getUrl() }}"
                                             alt="Imagen del producto" />
                                     </a>
                                 @else
-                                    <a href="#">
+                                    <a href="{{route('product.show',$descuento->product->id)}}">
                                         <img class="rounded-t-lg"
                                             src="https://m.media-amazon.com/images/I/81fV-9eUG5L._AC_SL1500_.jpg"
                                             alt="" />
                                     </a>
                                 @endif
                                 <div class="p-5">
-                                    <a href="#">
+                                    <a href="{{route('product.show',$descuento->product->id)}}">
                                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                             {{ $descuento->product->nombre }}</h5>
                                     </a>
@@ -146,20 +146,20 @@
                             <div
                                 class="max-w-sm bg-sky-50 border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
                                 @if (!is_null($product->getMedia('products_avatar')->first()))
-                                    <a href="#">
+                                    <a href="{{route('product.show',$product->id)}}">
                                         <img class="rounded-t-lg"
                                             src="{{ $product->getMedia('products_avatar')->first()->getUrl() }}"
                                             alt="Imagen del producto" />
                                     </a>
                                 @else
-                                    <a href="#">
+                                    <a href="{{route('product.show',$product->id)}}">
                                         <img class="rounded-t-lg"
                                             src="https://m.media-amazon.com/images/I/81fV-9eUG5L._AC_SL1500_.jpg"
                                             alt="" />
                                     </a>
                                 @endif
                                 <div class="p-5">
-                                    <a href="#">
+                                    <a href="{{route('product.show',$product->id)}}">
                                         <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                                             {{ $product->nombre }}</h5>
                                     </a>
