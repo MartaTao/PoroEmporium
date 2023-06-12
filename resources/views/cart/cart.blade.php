@@ -38,13 +38,13 @@
                         </form>
                     </div>
                 </td>
-                </tr>
-                @endforeach
-                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
-                    Total</th>
-                <td class="px-6 py-4 whitespace-nowrap dark:text-white" data-th="total">
-                    <div class="flex items-center justify-center">{{ $total }}€</div>
-                </td>
+            </tr>
+            @endforeach
+            <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-white uppercase tracking-wider">
+                Total</th>
+            <td class="px-6 py-4 whitespace-nowrap dark:text-white" data-th="total">
+                <div class="flex items-center justify-center">{{ $total }}€</div>
+            </td>
         </tbody>
     </table>
 
@@ -60,7 +60,13 @@
                 </path>
             </svg> Checkout
         </a>
-
+        <form action="{{ route('cart.destroyAll') }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+                <i class="fa fa-trash-o"></i> Delete All
+            </button>
+        </form>
     </div>
     @endsection
 

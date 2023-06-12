@@ -39,6 +39,7 @@ Route::middleware(['auth', 'cartHasProducts'])->group(function () {
     Route::post('/checkout', [CheckoutController::class, 'pay'])->name('checkout.pay');
 });
 Route::delete('cart/remove-product/{nombre}', [CartController::class, 'destroy'])->name('cart.destroy');
+Route::delete('/cart/destroyAll', [CartController::class, 'destroyAll'])->name('cart.destroyAll');
 Route::get('/order',[OrderController::class,'index'])->name('order.index');
 Route::middleware('auth')->group(function () {
     Route::resource('/user',UserController::class);

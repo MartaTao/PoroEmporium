@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Categorie\Categorie;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -63,7 +64,7 @@ class CartController extends Controller
                 $producto = [
                     "id" => $product->id,
                     "nombre" => $product->nombre,
-                    "precio" => $product->discount?  $product->precio-$product->discount->precio : $product->precio,
+                    "precio" => $product->discount ?  $product->precio - $product->discount->precio : $product->precio,
                     "cantidad" => $cantidadSeleccionada
                 ];
                 array_push($cart, $producto);
@@ -103,4 +104,21 @@ class CartController extends Controller
 
         return redirect()->route('cart.index')->with('message', 'Product successfully removed from cart!');
     }
+    /**
+     * Eliminar todos los productos del carrito
+     */
+    public function destroyAll()
+    {
+        $cart = Session::get('cart');
+    
+        foreach ($cart as $producto) {
+            $product = Product::find($producto['id']);
+            $cantidad = $producto['cantidad'];
+            $product->cantidad += $cantidad;
+            $product->save();
+        }
+        Session::forget('cart');
+        return redirect()->back()->with('message', 'The cart has been emptied successfully.');
+    }
+
 }
