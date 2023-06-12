@@ -43,7 +43,7 @@ class CheckoutController extends Controller
             $correctBuy = $this->processPayment($request);
 
             if ($correctBuy) {
-                
+
                 // Clonar datos del carrito en una nueva orden
                 $cart = session()->get('cart', []);
                 $total = 0;
@@ -86,7 +86,7 @@ class CheckoutController extends Controller
     //comprueba que los datos sean correctos
     public function processPayment(Request $request)
     {
-
+        $typeCard = $request->input('cardtype');
         $cardNumber = $request->input('card_number');
         // Eliminar espacios en blanco del número de tarjeta de crédito
         $cardNumber = str_replace(' ', '', $cardNumber);
@@ -99,17 +99,26 @@ class CheckoutController extends Controller
 
         $cvv = $request->input('cvv');
         //pattern para la tarjeta de credito mastercard
-        //tarjeta mastercard prueba 2436052436814934
-        $creditCartPattern = '/^5[1-5][0-9]{14}|^(222[1-9]|22[3-9]\\d|2[3-6]\\d{2}|27[0-1]\\d|2720)[0-9]{12}$/';
+        //tarjeta mastercard prueba 2436052436814934 
+        //visa 4194248737008089
+        $creditCartPatternMastercard = '/^5[1-5][0-9]{14}|^(222[1-9]|22[3-9]\\d|2[3-6]\\d{2}|27[0-1]\\d|2720)[0-9]{12}$/';
+        $creditCartPatternVisa = '/^4[0-9]{12}(?:[0-9]{3})?$/';
         //pattern cvv
         $cvvPattern = '/^[0-9]{3,4}$/';
 
         // Validar la tarjeta de crédito
-        if (!preg_match($creditCartPattern, $cardNumber)) {
-
-            return false;
+        if ($typeCard == 'visa') {
+            if (!preg_match($creditCartPatternVisa, $cardNumber)) {
+                return false;
+            }
         }
+        if ($typeCard == 'mastercard') {
 
+            if (!preg_match($creditCartPatternMastercard, $cardNumber)) {
+
+                return false;
+            }
+        }
 
         // Validar la fecha de expiración
         if ($expirationDate <= $currentDate) {
