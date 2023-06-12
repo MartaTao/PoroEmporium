@@ -111,15 +111,11 @@ class CheckoutController extends Controller
             if (!preg_match($creditCartPatternVisa, $cardNumber)) {
                 return false;
             }
-        }
-        if ($typeCard == 'mastercard') {
-
+        } elseif ($typeCard == 'mastercard') {
             if (!preg_match($creditCartPatternMastercard, $cardNumber)) {
-
                 return false;
             }
         }
-
         // Validar la fecha de expiración
         if ($expirationDate <= $currentDate) {
 
