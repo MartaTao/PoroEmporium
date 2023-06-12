@@ -99,8 +99,8 @@ class CheckoutController extends Controller
 
         $cvv = $request->input('cvv');
         //pattern para la tarjeta de credito mastercard
-        //tarjeta mastercard prueba 2436052436814934 
-        //visa 4194248737008089
+        //tarjeta mastercard de prueba 2436052436814934 
+        //tarjeta visa de prueba 4194248737008089
         $creditCartPatternMastercard = '/^5[1-5][0-9]{14}|^(222[1-9]|22[3-9]\\d|2[3-6]\\d{2}|27[0-1]\\d|2720)[0-9]{12}$/';
         $creditCartPatternVisa = '/^4[0-9]{12}(?:[0-9]{3})?$/';
         //pattern cvv
