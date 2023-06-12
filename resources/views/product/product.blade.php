@@ -2,7 +2,6 @@
 @section('content')
     <div class=" relative flex items-top min-h-screen  py-4 my-7 sm:pt-0">
         <div class="max-w-8xl mx-auto sm:px-6 lg:px-8">
-            <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $product->nombre }}</h1>
             <div class="grid grid-cols-3 gap-5">
                 <div>
                     <div class="grid gap-4">
@@ -31,10 +30,13 @@
 
                 </div>
                 <div>
+                    <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $product->nombre }}</h1>
                     <p class="text-left text-gray-500 dark:text-gray-400">{{ $product->descripcion }}</p>
                     <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     @if (!is_null($product->discount))
-                    <p class="text-3xl font-bold text-gray-900 dark:text-white"><span class="line-through text-red-500">{{ $product->precio }}€ </span>{{$product->precio - $product->discount->precio}}€</p>
+                        <p class="text-3xl font-bold text-gray-900 dark:text-white"><span
+                                class="line-through text-red-500">{{ $product->precio }}€
+                            </span>{{ $product->precio - $product->discount->precio }}€</p>
                     @else
                         <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product->precio }}€</p>
                     @endif
@@ -116,8 +118,8 @@
                                     <input type="number" name="cantidad"
                                         class="bg-transparent w-[55px] text-gray-300 border-0 cantidad" readonly
                                         value="1">
-                                </div>
 
+                                </div>
                                 <a href="#" class="flex items-center justify-center aniadir"
                                     data-cantidad="{{ $product->cantidad }}">
                                     <svg class="dark:text-white w-8 h-8" fill="none" stroke="currentColor"
@@ -128,6 +130,10 @@
                                     </svg>
                                 </a>
                             </div>
+                            <div class="my-1 flex items-center justify-center">
+                                <p class="dark:text-white">Quedan <strong>{{ $product->cantidad }}</strong> en stock.</p>
+                            </div>
+
                             <div class="flex items-center justify-center">
                                 <button href="{{ route('cart.addToCart', $product->id) }}"
                                     onclick="this.parentNode.submit();" {{ $product->cantidad > 0 ? '' : 'disabled' }}
@@ -160,7 +166,8 @@
                                         <svg class="w-6 h-6 dark:text-red-500" fill="none" stroke="currentColor"
                                             stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
                                             aria-hidden="true">
-                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                         </svg>
                                     </a>
                                 @endrole
@@ -358,7 +365,7 @@
             $(this).attr('src', imagen_principal);
             $(this).data('src', imagen_principal);
         });
-    //Añadir especificaciones
+        //Añadir especificaciones
         $('.aniadir_especificacion').on('click', function() {
             var url = "{{ route('especificacion.store') }}";
             Swal.fire({

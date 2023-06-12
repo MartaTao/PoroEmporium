@@ -32,39 +32,55 @@
                     role="tabpanel" aria-labelledby="users-tab">
 
                     <!--Buscador-->
-                    <form class="flex items-center justify-center" action="#">
-                        @csrf
-                        <div class="relative z-0 w-full mb-6 group">
-                            <input type="search" name="email" id="floating_user_search"
-                                class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                                placeholder=" " />
-                            <label for="floating_user_search"
-                                class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Search
-                                by email
-                            </label>
+                    <div class="flex justify-center">
+                        <form action="{{ route('user.index') }}">
+                            @csrf
+                            <div class="grid grid-cols-12">
+                                <div clsss="col-span-2">
+                                    <label for="user_select"
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"></label>
+                                    <select id="user_select" name="col"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">
+                                        <option class="dark:bg-gray-900" value="email" selected>Correo</option>
+                                        <option class="dark:bg-gray-900" value="id">Id</option>
+                                    </select>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group col-span-8">
+                                    <input type="search" name="search" id="floating_user_search"
+                                        class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder=" " />
+                                    <label for="floating_user_search"
+                                        class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Search</label>
+                                </div>
+                                <div class="col-span-2">
+                                    <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                        </svg>
+                                        <span class="sr-only">Search</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div>
+                            <button data-modal-toggle="filterUserModal" class="p-2.5 ml-2 text-sm font-medium text-white">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75">
+                                    </path>
+                                </svg>
+                                <span class="sr-only">Filter</span>
+                            </button>
                         </div>
-                        <button type="submit"
-                            class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                            </svg>
-                            <span class="sr-only">Search</span>
-                        </button>
-                    </form>
+                    </div>
 
                     <!--Botones-->
-                    <div class="grid grid-cols-2">
-                        <div class="flex justify-s p-2">
-                            <a href="#"
-                                class="text-white bg-rose-500 hover:bg-rose-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Usuarios
-                                eliminados</a>
-                        </div>
-                        <div class="flex justify-end p-2">
-                            <button data-modal-target="create-user-modal" data-modal-toggle="create-user-modal"
-                                class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-white">Create user</button>
-                        </div>
+                    <div class="flex justify-end p-2">
+                        <button data-modal-target="create-user-modal" data-modal-toggle="create-user-modal"
+                            class="px-4 py-2 bg-green-600 hover:bg-green-700 rounded-md text-white">Create user</button>
                     </div>
 
                     <!--Tabla de usuarios-->
@@ -862,7 +878,7 @@
                                         class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Proveedor</label>
                                     <select id="proveedor" name="proveedor" autocomplete="role-name"
                                         class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer">
-                                        @foreach ($proveedores as $proveedor)
+                                        @foreach ($sellers as $proveedor)
                                             <option class="dark:bg-gray-900" value="{{ $proveedor->id }}">
                                                 {{ $proveedor->nombre }}</option>
                                         @endforeach
@@ -956,6 +972,85 @@
                                 </div>
                                 <button type="submit"
                                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Filters-->
+
+            <!--User-->
+            <div id="filterUserModal" tabindex="-1" aria-hidden="true" data-modal-backdrop="static"
+                class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full items-center justify-center">
+                <div class="relative w-full max-w-md max-h-full">
+                    <div
+                        class="w-full bg-white dark:bg-gray-900 dark:border dark:border-gray-700 rounded-lg md:mt-0 sm:max-w-md xl:p-0">
+                        <button type="button" data-modal-hide="filterUserModal"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center justify-center dark:hover:bg-gray-800 dark:hover:text-white">
+                            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            <h1
+                                class="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
+                                Filter user
+                            </h1>
+                            <form action="{{ route('user.index') }}">
+                                @csrf
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="string" name="name_filter" id="floating_name_filter_user"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="{{ request()->query('name_filter') }}" />
+                                        <label for="floating_name_filter_user"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Name</label>
+                                        @error('name_filter')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="string" name="first_surname_filter"
+                                            id="floating_first_surname_filter_user"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="{{ request()->query('first_surname_filter') }}" />
+                                        <label for="floating_first_surname_filter_user"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First
+                                            surname</label>
+                                        @error('first_surname_filtere')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="grid md:grid-cols-2 md:gap-6">
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="string" name="second_surname_filter"
+                                            id="floating_second_surname_filter_user"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="{{ request()->query('second_surname_filter') }}" />
+                                        <label for="floating_second_surname_filter_user"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Second
+                                            surname</label>
+                                        @error('second_surname_filter')
+                                            <div class="text-red-500 text-xs">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="relative z-0 w-full mb-6 group">
+                                        <input type="date" name="created_at" id="floating_created_at_filter"
+                                            class="block py-2.5 px-0 w-full text-sm text-gray-900 dark:text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                            placeholder=" " value="{{ request()->query('created_at') }}" />
+                                        <label for="floating_created_at_filter"
+                                            class="peer-focus:font-medium absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Crate
+                                            date</label>
+                                    </div>
+                                </div>
+                                <a
+                                    class="filter-user text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</a>
                             </form>
                         </div>
                     </div>
@@ -1464,7 +1559,7 @@
 
         //Quitar descuento
 
-        $('.delete-descuento_btn').click(function(){
+        $('.delete-descuento_btn').click(function() {
             var id = $(this).data('id');
             var url = "{{ route('discount.destroy', ':id') }}";
             url = url.replace(':id', id);

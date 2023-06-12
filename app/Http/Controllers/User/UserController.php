@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categorie\Categorie;
+use App\Models\Product;
+use App\Models\Seller\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
@@ -13,9 +16,42 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $categorias = Categorie::all();
+        $productos = Product::paginate(10);
+        $sellers = Seller::paginate(10);
+        $users = User::with('userProfile')
+            ->when($request->search, function ($query) use ($request) {
+                return $query->where($request->col, 'LIKE', '%' . $request->search . '%');
+            })
+            ->whereHas('userProfile', function ($query) use ($request) {
+                $query->when($request->name_filter, function ($query, $name) {
+                    return $query->where('name', 'LIKE', '%' . $name . '%');
+                })
+                    ->when($request->first_surname_filter, function ($query, $first_surname) {
+                        return $query->where('first_surname', 'LIKE', '%' . $first_surname . '%');
+                    })
+                    ->when($request->second_surname_filter, function ($query, $second_surname) {
+                        return $query->where('second_surname', 'LIKE', '%' . $second_surname . '%');
+                    });
+            })
+            ->when($request->created_at, function ($query, $created_at) {
+                return $query->whereDate('created_at', $created_at);
+            })
+
+            ->whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'Admin');
+            })->paginate(10);
+            $users->appends([
+                'search' => request('search'),
+                'col' => request('col'),
+                'name_filter' => request('name_filter'),
+                'first_surname_filter' => request('first_surname_filter'),
+                'second_surname_filter' => request('second_surname_filter'),
+                'created_at' => request('created_at')
+            ]);
+        return view('admin.index', compact('users', 'productos', 'categorias', 'sellers'))->with('tab', 'users');
     }
 
     /**
