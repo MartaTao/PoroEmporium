@@ -160,6 +160,7 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $user = User::where('id', $id)->first();
+        $user->userProfile->delete();
         $user->delete();
         return redirect(route('admin.index'))->with('message', 'Usuario eliminado correctamente.')->with('tab', 'users');
     }

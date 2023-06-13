@@ -134,6 +134,7 @@ class ProductController extends Controller
     {
         $producto=Product::where('id',$id)->first();
         $producto->discount->delete();
+        $producto->especificaciones->delete();
         $producto->delete();
         return redirect(route('admin.index'))->with('message', 'Producto eliminado correctamente.')->with('tab','products');
     }
