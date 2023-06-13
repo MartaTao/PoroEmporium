@@ -17,5 +17,6 @@ class IndexController extends Controller
         $descuentos = Discount::all();
         $nuevosProductos = Product::latest()->take(5)->get();
         return view('index',compact('categorias','products','descuentos','nuevosProductos'));
+        
     }
 }

@@ -191,7 +191,7 @@
             </div>
             <div class="hidden p-4 rounded-lg" id="nproductos" role="tabpanel" aria-labelledby="n-productos">
                 <div class="my-3 grid lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-1 gap-3">
-                    @foreach ($products->take(5) as $product)
+                    @foreach ($nuevosProductos->take(5) as $product)
                     <div class="max-w-sm bg-sky-50 border border-gray-200 rounded-lg shadow dark:bg-gray-900 dark:border-gray-700">
                         @if (!is_null($product->getMedia('products_avatar')->first()))
                         <a href="{{route('product.show',$product->id)}}">
