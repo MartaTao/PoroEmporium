@@ -133,6 +133,7 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $producto=Product::where('id',$id)->first();
+        $producto->discount->delete();
         $producto->delete();
         return redirect(route('admin.index'))->with('message', 'Producto eliminado correctamente.')->with('tab','products');
     }
