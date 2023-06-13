@@ -22,7 +22,10 @@ class ProductSeeder extends Seeder
             'cantidad' => 10,
         ]);
         $product->especificaciones()->create([
-            'descripcion'=>'Prueba'
+            'descripcion'=>'100% algodón.'
+        ]);
+        $product->especificaciones()->create([
+            'descripcion'=>'Ideal para el Invierno, y para el Verano si te quieres morir de calor :).'
         ]);
         $product=Product::create([
             'seller_id' => 1,
@@ -33,7 +36,7 @@ class ProductSeeder extends Seeder
             'cantidad' => 1,
         ]);
         $product->especificaciones()->create([
-            'descripcion'=>'Prueba'
+            'descripcion'=>'Camiseta para los amantes de la temática Proyecto.'
         ]);
         $product=Product::create([
             'seller_id' => 1,
@@ -44,18 +47,18 @@ class ProductSeeder extends Seeder
             'cantidad' => 20,
         ]);
         $product->especificaciones()->create([
-            'descripcion'=>'Prueba'
+            'descripcion'=>'Toalla para la piscina y la playa, para presumir de que eres bien gamer.'
         ]);
         $product=Product::create([
             'seller_id' => 2,
             'nombre' => 'Funco pop de Chibi Ahri',
-            'categoria' => 'Funco pops',
+            'categoria' => 'Figuritas',
             'descripcion' => 'Una chibi Ahri de tft en su version Funko',
             'precio' => 100.99,
             'cantidad' => 9,
         ]);
         $product->especificaciones()->create([
-            'descripcion'=>'Prueba'
+            'descripcion'=>'Tamaño 13.90x30.40cm'
         ]);
         $product=Product::create([
             'seller_id' => 2,
@@ -66,7 +69,7 @@ class ProductSeeder extends Seeder
             'cantidad' => 30,
         ]);
         $product->especificaciones()->create([
-            'descripcion'=>'Prueba'
+            'descripcion'=>'Poster de 30x60cm.'
         ]);
         $product=Product::create([
             'seller_id' => 1,
@@ -77,18 +80,18 @@ class ProductSeeder extends Seeder
             'cantidad' => 100,
         ]);
         $product->especificaciones()->create([
-            'descripcion'=>'Prueba'
+            'descripcion'=>'Composición: 30%elastano, 70% poliéster.'
         ]);
         $product=Product::create([
             'seller_id' => 1,
             'nombre' => 'Ashe Dragomancer',
-            'categoria' => 'Funco Pops',
+            'categoria' => 'Funko Pops',
             'descripcion' => 'Chibi Ashe Dragomancer en version chibi xD',
             'precio' => 200,
             'cantidad' => 1,
         ]);
         $product->especificaciones()->create([
-            'descripcion'=>'Prueba'
+            'descripcion'=>'Viene con arco y trono incluido.'
         ]);
     }
 }
