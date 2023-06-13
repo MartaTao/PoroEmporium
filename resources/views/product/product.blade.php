@@ -30,75 +30,87 @@
 
                 </div>
                 <div>
-                    <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $product->nombre }}</h1>
-                    <p class="text-left text-gray-500 dark:text-gray-400">{{ $product->descripcion }}</p>
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-                    @if (!is_null($product->discount))
-                        <p class="text-3xl font-bold text-gray-900 dark:text-white"><span
-                                class="line-through text-red-500">{{ $product->precio }}€
-                            </span>{{ $product->precio - $product->discount->precio }}€</p>
-                    @else
-                        <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product->precio }}€</p>
+                    <h1 class="mb-2 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $product->nombre }}
+                    </h1>
+                    @if ($product->seller)
+                        <p class="text-left text-gray-500 dark:text-gray-400"><span class="font-semibold">Vendedor:
+                            </span>{{ $product->seller->nombre }}</p>
+                        <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
                     @endif
-
-                    <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-
-                    <!--Rating-->
-                    <div class="flex items-center mt-2.5 mb-5">
-                        @if ($product->valoracion == 0)
-                            @for ($i = 1; $i <= 5; $i++)
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
-                                    stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
-                                    viewBox="0 0 16 16">
-                                    <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
-                                    <path
-                                        d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
-                                </svg>
-                            @endfor
+                    <h1 class="mb-2 text-xl font-bold tracking-tight text-gray-900 dark:text-white">Descripción del producto
+                    </h1>
+                    <ul>
+                        <p class="text-left text-gray-500 dark:text-gray-400">{{ $product->descripcion }}</p>
+                        <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
+                        @if (!is_null($product->discount))
+                            <p class="text-3xl font-bold text-gray-900 dark:text-white"><span
+                                    class="line-through text-red-500">{{ $product->precio }}€
+                                </span>{{ $product->precio - $product->discount->precio }}€ <span
+                                    class="uppercase text-2xl bg-red-50 p-0.5 border-red-500 border rounded text-red-700 font-medium justify-end align-bottom">
+                                    {{ $product->discount->descuento }}%
+                                </span></p>
                         @else
-                            @for ($i = 1; $i < $mediaTruncada; $i++)
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
-                                    stroke-width="0.5" class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5"
-                                    viewBox="0 0 16 16">
-                                    <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
-                                    <path
-                                        d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
-                                </svg>
-                            @endfor
-                            @if ($mediaTruncada < $product->valoracion)
-                                <svg xmlns="http://www.w3.org/2000/svg" stroke-width="0.5"
-                                    class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5" viewBox="0 0 16 16">
-                                    <path d="M 8 7.5 a 0.5 0.5 0 1 0 0 1 z" fill="#C3DDFD" stroke="#C3DDFD" />
-                                    <path d="M 8 7.5 a 0.5 0.5 0 0 1 0 1 z" fill="#76A9FA" stroke="#76A9FA" />
-                                    <path
-                                        d="M 8 16 a 0.5 0.5 0 0 1 -0.5 -0.5 v -1.293 l -0.646 0.647 a 0.5 0.5 0 0 1 -0.707 -0.708 L 7.5 12.793 v -1.51 l -2.053 -1.232 l -1.348 0.778 l -0.495 1.85 a 0.5 0.5 0 1 1 -0.966 -0.26 l 0.237 -0.882 l -1.12 0.646 a 0.5 0.5 0 0 1 -0.5 -0.866 l 1.12 -0.646 l -0.883 -0.237 a 0.5 0.5 0 1 1 0.258 -0.966 l 1.85 0.495 L 5 9.155 v -2.31 l -1.4 -0.808 l -1.85 0.495 a 0.5 0.5 0 1 1 -0.259 -0.966 l 0.884 -0.237 l -1.12 -0.646 a 0.5 0.5 0 0 1 0.5 -0.866 l 1.12 0.646 l -0.237 -0.883 a 0.5 0.5 0 1 1 0.966 -0.258 l 0.495 1.849 l 1.348 0.778 L 7.5 4.717 v -1.51 L 6.147 1.854 a 0.5 0.5 0 1 1 0.707 -0.708 l 0.646 0.647 V 0.5 a 0.5 0.5 0 0 1 0.5 -0.5 L 7.955 5.479 L 5.999 6.816 L 5.999 9.291 L 8.004 10.578z "
-                                        fill="#C3DDFD" stroke="#C3DDFD" />
-                                    <path
-                                        d="M 7.991 10.431 L 9.948 9.465 V 6.814 L 8.016 5.501 V 5.424 a 0 0.5 0 0 0 -0.013 -5.424 A 2 -9 0 0 1 8.457 0.505 v 1.293 l 0.647 -0.647 a 0.5 0.5 0 1 1 0.707 0.708 L 8.5 3.207 v 1.51 l 2.053 1.232 l 1.348 -0.778 l 0.495 -1.85 a 0.5 0.5 0 1 1 0.966 0.26 l -0.236 0.882 l 1.12 -0.646 a 0.5 0.5 0 0 1 0.5 0.866 l -1.12 0.646 l 0.883 0.237 a 0.5 0.5 0 1 1 -0.26 0.966 l -1.848 -0.495 l -1.4 0.808 v 2.31 l 1.4 0.808 l 1.849 -0.495 a 0.5 0.5 0 1 1 0.259 0.966 l -0.883 0.237 l 1.12 0.646 a 0.5 0.5 0 0 1 -0.5 0.866 l -1.12 -0.646 l 0.236 0.883 a 0.5 0.5 0 1 1 -0.966 0.258 l -0.495 -1.849 l -1.348 -0.778 L 8.5 11.283 v 1.51 l 1.354 1.353 a 0.5 0.5 0 0 1 -0.707 0.708 l -0.647 -0.647 V 15.512 a 0.5 0.5 0 0 1 -0.5 0.5 z"
-                                        fill="#76A9FA" stroke="#76A9FA" />
-                                </svg>
-                            @else
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
-                                    stroke-width="0.5" class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5"
-                                    viewBox="0 0 16 16">
-                                    <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
-                                    <path
-                                        d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
-                                </svg>
-                            @endif
-                            @for ($i = $mediaTruncada; $i < 5; $i++)
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
-                                    stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
-                                    viewBox="0 0 16 16">
-                                    <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
-                                    <path
-                                        d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
-                                </svg>
-                            @endfor
+                            <p class="text-3xl font-bold text-gray-900 dark:text-white">{{ $product->precio }}€</p>
                         @endif
-                        <span
-                            class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ !is_null($product->valoracion) ? $product->valoracion : '0.0' }}</span>
-                    </div>
+
+                        <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700">
+
+                        <!--Rating-->
+                        <div class="flex items-center mt-2.5 mb-5">
+                            @if ($product->valoracion == 0)
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                                        stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
+                                        viewBox="0 0 16 16">
+                                        <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
+                                        <path
+                                            d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
+                                    </svg>
+                                @endfor
+                            @else
+                                @for ($i = 1; $i < $mediaTruncada; $i++)
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                                        stroke-width="0.5" class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5"
+                                        viewBox="0 0 16 16">
+                                        <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
+                                        <path
+                                            d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
+                                    </svg>
+                                @endfor
+                                @if ($mediaTruncada < $product->valoracion)
+                                    <svg xmlns="http://www.w3.org/2000/svg" stroke-width="0.5"
+                                        class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5" viewBox="0 0 16 16">
+                                        <path d="M 8 7.5 a 0.5 0.5 0 1 0 0 1 z" fill="#C3DDFD" stroke="#C3DDFD" />
+                                        <path d="M 8 7.5 a 0.5 0.5 0 0 1 0 1 z" fill="#76A9FA" stroke="#76A9FA" />
+                                        <path
+                                            d="M 8 16 a 0.5 0.5 0 0 1 -0.5 -0.5 v -1.293 l -0.646 0.647 a 0.5 0.5 0 0 1 -0.707 -0.708 L 7.5 12.793 v -1.51 l -2.053 -1.232 l -1.348 0.778 l -0.495 1.85 a 0.5 0.5 0 1 1 -0.966 -0.26 l 0.237 -0.882 l -1.12 0.646 a 0.5 0.5 0 0 1 -0.5 -0.866 l 1.12 -0.646 l -0.883 -0.237 a 0.5 0.5 0 1 1 0.258 -0.966 l 1.85 0.495 L 5 9.155 v -2.31 l -1.4 -0.808 l -1.85 0.495 a 0.5 0.5 0 1 1 -0.259 -0.966 l 0.884 -0.237 l -1.12 -0.646 a 0.5 0.5 0 0 1 0.5 -0.866 l 1.12 0.646 l -0.237 -0.883 a 0.5 0.5 0 1 1 0.966 -0.258 l 0.495 1.849 l 1.348 0.778 L 7.5 4.717 v -1.51 L 6.147 1.854 a 0.5 0.5 0 1 1 0.707 -0.708 l 0.646 0.647 V 0.5 a 0.5 0.5 0 0 1 0.5 -0.5 L 7.955 5.479 L 5.999 6.816 L 5.999 9.291 L 8.004 10.578z "
+                                            fill="#C3DDFD" stroke="#C3DDFD" />
+                                        <path
+                                            d="M 7.991 10.431 L 9.948 9.465 V 6.814 L 8.016 5.501 V 5.424 a 0 0.5 0 0 0 -0.013 -5.424 A 2 -9 0 0 1 8.457 0.505 v 1.293 l 0.647 -0.647 a 0.5 0.5 0 1 1 0.707 0.708 L 8.5 3.207 v 1.51 l 2.053 1.232 l 1.348 -0.778 l 0.495 -1.85 a 0.5 0.5 0 1 1 0.966 0.26 l -0.236 0.882 l 1.12 -0.646 a 0.5 0.5 0 0 1 0.5 0.866 l -1.12 0.646 l 0.883 0.237 a 0.5 0.5 0 1 1 -0.26 0.966 l -1.848 -0.495 l -1.4 0.808 v 2.31 l 1.4 0.808 l 1.849 -0.495 a 0.5 0.5 0 1 1 0.259 0.966 l -0.883 0.237 l 1.12 0.646 a 0.5 0.5 0 0 1 -0.5 0.866 l -1.12 -0.646 l 0.236 0.883 a 0.5 0.5 0 1 1 -0.966 0.258 l -0.495 -1.849 l -1.348 -0.778 L 8.5 11.283 v 1.51 l 1.354 1.353 a 0.5 0.5 0 0 1 -0.707 0.708 l -0.647 -0.647 V 15.512 a 0.5 0.5 0 0 1 -0.5 0.5 z"
+                                            fill="#76A9FA" stroke="#76A9FA" />
+                                    </svg>
+                                @else
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                                        stroke-width="0.5" class="bi bi-snow3 text-blue-400 dark:text-blue-200 w-5 h-5"
+                                        viewBox="0 0 16 16">
+                                        <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
+                                        <path
+                                            d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
+                                    </svg>
+                                @endif
+                                @for ($i = $mediaTruncada; $i < 5; $i++)
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                                        stroke-width="0.5" class="bi bi-snow3 text-blue-300 dark:text-blue-400 w-5 h-5"
+                                        viewBox="0 0 16 16">
+                                        <path d="M8 7.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1z" />
+                                        <path
+                                            d="M8 16a.5.5 0 0 1-.5-.5v-1.293l-.646.647a.5.5 0 0 1-.707-.708L7.5 12.793v-1.51l-2.053-1.232-1.348.778-.495 1.85a.5.5 0 1 1-.966-.26l.237-.882-1.12.646a.5.5 0 0 1-.5-.866l1.12-.646-.883-.237a.5.5 0 1 1 .258-.966l1.85.495L5 9.155v-2.31l-1.4-.808-1.85.495a.5.5 0 1 1-.259-.966l.884-.237-1.12-.646a.5.5 0 0 1 .5-.866l1.12.646-.237-.883a.5.5 0 1 1 .966-.258l.495 1.849 1.348.778L7.5 4.717v-1.51L6.147 1.854a.5.5 0 1 1 .707-.708l.646.647V.5a.5.5 0 0 1 1 0v1.293l.647-.647a.5.5 0 1 1 .707.708L8.5 3.207v1.51l2.053 1.232 1.348-.778.495-1.85a.5.5 0 1 1 .966.26l-.236.882 1.12-.646a.5.5 0 0 1 .5.866l-1.12.646.883.237a.5.5 0 1 1-.26.966l-1.848-.495-1.4.808v2.31l1.4.808 1.849-.495a.5.5 0 1 1 .259.966l-.883.237 1.12.646a.5.5 0 0 1-.5.866l-1.12-.646.236.883a.5.5 0 1 1-.966.258l-.495-1.849-1.348-.778L8.5 11.283v1.51l1.354 1.353a.5.5 0 0 1-.707.708l-.647-.647V15.5a.5.5 0 0 1-.5.5zm2-6.783V6.783l-2-1.2-2 1.2v2.434l2 1.2 2-1.2z" />
+                                    </svg>
+                                @endfor
+                            @endif
+                            <span
+                                class="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">{{ !is_null($product->valoracion) ? $product->valoracion : '0.0' }}</span>
+                        </div>
                 </div>
 
                 <!--Añadir al carrito-->
@@ -117,8 +129,7 @@
                                 <div class="flex items-center justify-center">
                                     <input type="number" name="cantidad"
                                         class="bg-transparent w-[55px] text-gray-300 border-0 cantidad" readonly
-                                        value="1">
-
+                                        value="{{ $product->cantidad > 0 ? '1' : '0' }}">
                                 </div>
                                 <a href="#" class="flex items-center justify-center aniadir"
                                     data-cantidad="{{ $product->cantidad }}">
@@ -131,20 +142,19 @@
                                 </a>
                             </div>
                             <div class="my-1 flex items-center justify-center">
-                                <p class="dark:text-white">Quedan <strong>{{ $product->cantidad }}</strong> en stock.</p>
+                                <p class="dark:text-white"> {{ $product->cantidad > 0 ? 'Quedan' : '' }} <strong>{{ $product->cantidad > 0 ? $product->cantidad : 'Sin' }}</strong> en stock.</p>
                             </div>
-
                             <div class="flex items-center justify-center">
                                 <button href="{{ route('cart.addToCart', $product->id) }}"
                                     onclick="this.parentNode.submit();" {{ $product->cantidad > 0 ? '' : 'disabled' }}
-                                    class="text-white  {{ $product->cantidad > 0 ? 'bg-blue-700' : 'bg-gray-700' }} {{ $product->cantidad > 0 ? 'hover:bg-blue-800' : '' }}  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    class="text-white  {{ $product->cantidad > 0 ? 'bg-blue-700' : 'bg-gray-700' }} {{ $product->cantidad > 0 ? 'hover:bg-blue-800' : '' }}  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
                                     <svg aria-hidden="true" class="w-5 h-5 mr-2 -ml-1" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z">
                                         </path>
                                     </svg>
-                                    Buy now
+                                    {{ $product->cantidad > 0 ? 'Añadir al carrito' : 'No disponible' }}
                                 </button>
                             </div>
                         </form>
