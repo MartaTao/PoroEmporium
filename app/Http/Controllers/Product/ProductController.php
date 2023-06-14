@@ -51,19 +51,19 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nombre'=>['required','string','max:255','regex:/^[a-zA-Z\s]*$/'],
-            'categoria'=>['required', Rule::in(Categorie::pluck('nombre')->toArray())],
-            'descripcion'=>['required','string','max:255',],
-            'precio'=>['required'],
-            'cantidad'=>['required'],
+            'nombre' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
+            'categoria' => ['required', Rule::in(Categorie::pluck('nombre')->toArray())],
+            'descripcion' => ['required', 'string', 'max:255',],
+            'precio' => ['required'],
+            'cantidad' => ['required'],
         ]);
         $producto = Product::create([
-            'seller_id'=>$request->proveedor,
-            'nombre'=>$request->nombre,
-            'categoria'=>$request->categoria,
-            'descripcion'=>$request->descripcion,
-            'precio'=>$request->precio,
-            'cantidad'=>$request->cantidad,
+            'seller_id' => $request->proveedor,
+            'nombre' => $request->nombre,
+            'categoria' => $request->categoria,
+            'descripcion' => $request->descripcion,
+            'precio' => $request->precio,
+            'cantidad' => $request->cantidad,
         ]);
         if (isset($request->product_avatar)) {
             $producto->addMediaFromRequest('product_avatar')->toMediaCollection('products_avatar');
@@ -74,7 +74,7 @@ class ProductController extends Controller
                 $producto->addMedia($image)->toMediaCollection('products_images');
             }
         }
-        return redirect(route('admin.index'))->with('message', 'Producto añadido correctamente.')->with('tab','products');
+        return redirect(route('admin.index'))->with('message', 'Producto añadido correctamente.')->with('tab', 'products');
     }
 
     /**
@@ -84,9 +84,9 @@ class ProductController extends Controller
     {
         $categorias = Categorie::all();
         $comentarios = Comment::with('user.userProfile')->where('product_id', $product->id)->paginate(10);
-        $images= $product->getMedia('products_images')->sortByDesc('created_at')->take(5);
+        $images = $product->getMedia('products_images')->sortByDesc('created_at')->take(5);
         $mediaTruncada = floor($product->valoracion);
-        return view('product.product', compact('product', 'categorias', 'comentarios', 'mediaTruncada','images'));
+        return view('product.product', compact('product', 'categorias', 'comentarios', 'mediaTruncada', 'images'));
     }
 
     /**
@@ -102,18 +102,18 @@ class ProductController extends Controller
      */
     public function update(Request $request,  $id)
     {
-        $producto=Product::where('id',$id)->first();
+        $producto = Product::where('id', $id)->first();
         $request->validate([
-            'nombre'=>['required','string','max:255','regex:/^[a-zA-Z\s]*$/'],
-            'categoria'=>['required', Rule::in(Categorie::pluck('nombre')->toArray())],
-            'descripcion'=>['required','string','max:255',],
-            'precio'=>['required'],
+            'nombre' => ['required', 'string', 'max:255', 'regex:/^[a-zA-Z\s]*$/'],
+            'categoria' => ['required', Rule::in(Categorie::pluck('nombre')->toArray())],
+            'descripcion' => ['required', 'string', 'max:255',],
+            'precio' => ['required'],
         ]);
         $producto->update([
-            'nombre'=>$request->nombre,
-            'categoria'=>$request->categoria,
-            'descripcion'=>$request->descripcion,
-            'precio'=>$request->precio,
+            'nombre' => $request->nombre,
+            'categoria' => $request->categoria,
+            'descripcion' => $request->descripcion,
+            'precio' => $request->precio,
         ]);
         if (isset($request->product_avatar)) {
             $producto->addMediaFromRequest('product_avatar')->toMediaCollection('products_avatar');
@@ -124,7 +124,7 @@ class ProductController extends Controller
                 $producto->addMedia($image)->toMediaCollection('products_images');
             }
         }
-        return redirect(route('admin.index'))->with('message', 'Producto editado correctamente.')->with('tab','products');
+        return redirect(route('admin.index'))->with('message', 'Producto editado correctamente.')->with('tab', 'products');
     }
 
     /**
@@ -132,32 +132,36 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        $producto=Product::where('id',$id)->first();
-        $producto->discount->delete();
-        $producto->especificaciones->delete();
+        $producto = Product::where('id', $id)->first();
+        if ($producto->discount) {
+            $producto->discount->delete();
+        }
+        if ($producto->especificaciones) {
+            foreach ($producto->especificaciones as $especificacion) {
+                $especificacion->delete();
+            }
+        }
         $producto->delete();
-        return redirect(route('admin.index'))->with('message', 'Producto eliminado correctamente.')->with('tab','products');
+        return redirect(route('admin.index'))->with('message', 'Producto eliminado correctamente.')->with('tab', 'products');
     }
-    public function restockRequest( Product $product, Request $request)
+    public function restockRequest(Product $product, Request $request)
     {
-        Mail::to($product->seller->email)->send(new RestockProduct($product, $request->cantidad),function ($message) use ($product) {
+        Mail::to($product->seller->email)->send(new RestockProduct($product, $request->cantidad), function ($message) use ($product) {
             $message->from("poro@Emporium.com");
         });
-        return redirect(route('admin.index'))->with('message', 'Correo enviado correctamente al proveedor.')->with('tab','products');
-
+        return redirect(route('admin.index'))->with('message', 'Correo enviado correctamente al proveedor.')->with('tab', 'products');
     }
-    public function restock( Product $product,  $cantidad)
+    public function restock(Product $product,  $cantidad)
     {
         $product->update([
-            'cantidad'=>$cantidad,
+            'cantidad' => $cantidad,
         ]);
         Mail::to("poro@Emporium.com")->send(new RestockDone($product), function ($message) use ($product) {
             $message->from($product->seller->email, $product->seller->nombre);
         });
         return response()->view('close-window')->header('Content-Type', 'text/html');
-
     }
-    public function restockRejected( Product $product)
+    public function restockRejected(Product $product)
     {
         Mail::to("poro@Emporium.com")->send(new RestockRejected($product), function ($message) use ($product) {
             $message->from($product->seller->email, $product->seller->nombre);
