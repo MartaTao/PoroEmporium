@@ -24,6 +24,10 @@ class ProductSeeder extends Seeder
         $product->especificaciones()->create([
             'descripcion'=>'100% algodón.'
         ]);
+        $product->discount()->create([
+            'descuento'=>40,
+            'precio'=>$product->precio-$product->precio*40/100,
+        ]);
         $product->especificaciones()->create([
             'descripcion'=>'Ideal para el Invierno, y para el Verano si te quieres morir de calor :).'
         ]);
