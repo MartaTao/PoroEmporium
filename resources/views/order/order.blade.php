@@ -7,7 +7,7 @@
             <h1 class="items-center text-sm font-medium text-center dark:text-white">Mis órdenes</h1>
             <hr class="my-4">
             @if ($orders->isEmpty())
-                <p>No se encontraron órdenes.</p>
+                <p class="dark:text-gray-200">No se encontraron órdenes.</p>
             @else
                 <ul>
                     @foreach ($orders as $order)
