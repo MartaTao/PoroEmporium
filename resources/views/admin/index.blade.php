@@ -528,6 +528,11 @@
                             @endforeach
                         </tbody>
                     </table>
+
+                    <!--Pagination-->
+                    <div class="my-7">
+                        {{ $productos->links('pagination::simple-tailwind') }}
+                    </div>
                 </div>
                 <!--Proveedores-->
                 <div class="{{ Session::get('tab') === 'sellers' ? '' : 'hidden' }} max-w-10xl  p-4" id="seller"
@@ -642,6 +647,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                    <!--Pagination-->
+                    <div class="my-7">
+                        {{ $sellers->links('pagination::simple-tailwind') }}
+                    </div>
                 </div>
             </div>
             <!--Modals-->
