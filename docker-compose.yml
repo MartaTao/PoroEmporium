@@ -1,0 +1,35 @@
+services:
+    web:
+        build: .
+        container_name: apache-php
+        ports:
+            - "9898:80"
+        volumes:
+            - .:/var/www/html
+        networks:
+            - docker-prueba
+        depends_on:
+            - db-prueba
+
+    db-prueba:
+        image: mysql:8.0
+        container_name: mysql-db
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: rootpassword
+            MYSQL_DATABASE: testdb
+            MYSQL_USER: user
+            MYSQL_PASSWORD: password
+        ports:
+            - "33066:3306"
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - docker-prueba
+
+networks:
+    docker-prueba:
+        driver: bridge
+
+volumes:
+    db_data:
